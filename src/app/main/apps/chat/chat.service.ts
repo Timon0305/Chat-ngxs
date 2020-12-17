@@ -11,6 +11,7 @@ export class ChatService implements Resolve<any>
     contacts: any[];
     chats: any[];
     user: any;
+    channel : any;
     onChatSelected: BehaviorSubject<any>;
     onContactSelected: BehaviorSubject<any>;
     onChatsUpdated: Subject<any>;
@@ -36,13 +37,15 @@ export class ChatService implements Resolve<any>
             Promise.all([
                 this.getContacts(),
                 this.getChats(),
-                this.getUser()
+                this.getUser(),
+                this.getChannel()
             ]).then(
-                ([contacts, chats, user]) => {
-                    console.log('contacts', contacts);
+                ([contacts, chats, user, channel]) => {
+                    console.log('contacts', channel);
                     this.contacts = contacts;
                     this.chats = chats;
                     this.user = user;
+                    this.channel = channel;
                     resolve();
                 },
                 reject
@@ -190,5 +193,15 @@ export class ChatService implements Resolve<any>
                     resolve(response[0]);
                 }, reject);
         });
+    }
+
+    getChannel() : Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-channel')
+                .subscribe((response: any) => {
+                    resolve(response[0])
+                }, reject);
+        })
     }
 }
