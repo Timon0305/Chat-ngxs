@@ -19,26 +19,13 @@ export class ChatUserSidenavComponent implements OnInit, OnDestroy
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {ChatService} _chatService
-     */
     constructor(
         private _chatService: ChatService
     )
     {
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         this.user = this._chatService.user;
@@ -61,9 +48,6 @@ export class ChatUserSidenavComponent implements OnInit, OnDestroy
             });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -71,15 +55,6 @@ export class ChatUserSidenavComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Change left sidenav view
-     *
-     * @param view
-     */
     changeLeftSidenavView(view): void
     {
         this._chatService.onLeftSidenavViewChanged.next(view);

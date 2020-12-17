@@ -23,39 +23,22 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
     searchText: string;
     user: any;
 
-    // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {ChatService} _chatService
-     * @param {FuseMatSidenavHelperService} _fuseMatSidenavHelperService
-     * @param {MediaObserver} _mediaObserver
-     */
     constructor(
         private _chatService: ChatService,
         private _fuseMatSidenavHelperService: FuseMatSidenavHelperService,
         public _mediaObserver: MediaObserver
     )
     {
-        // Set the defaults
         this.chatSearch = {
             name: ''
         };
         this.searchText = '';
 
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         this.user = this._chatService.user;
@@ -75,9 +58,6 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
             });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -85,15 +65,7 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Get chat
-     *
-     * @param contact
-     */
     getChat(contact): void
     {
         this._chatService.getChat(contact);
@@ -104,29 +76,16 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
         }
     }
 
-    /**
-     * Set user status
-     *
-     * @param status
-     */
     setUserStatus(status): void
     {
         this._chatService.setUserStatus(status);
     }
 
-    /**
-     * Change left sidenav view
-     *
-     * @param view
-     */
     changeLeftSidenavView(view): void
     {
         this._chatService.onLeftSidenavViewChanged.next(view);
     }
 
-    /**
-     * Logout
-     */
     logout(): void
     {
         console.log('logout triggered');

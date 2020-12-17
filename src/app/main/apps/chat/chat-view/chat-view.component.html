@@ -1,22 +1,17 @@
-<!-- CHAT -->
 <div class="chat" fxFlex fxLayout="column">
 
-    <!-- CHAT TOOLBAR -->
     <mat-toolbar class="chat-toolbar">
 
         <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
 
             <div fxLayout="row" fxLayoutAlign="start center">
 
-                <!-- RESPONSIVE CHATS BUTTON-->
                 <button mat-icon-button fxHide.gt-md class="responsive-chats-button mr-16"
                         fuseMatSidenavToggler="chat-left-sidenav"
                         aria-label="chats button">
                     <mat-icon>chat</mat-icon>
                 </button>
-                <!-- / RESPONSIVE CHATS BUTTON-->
 
-                <!-- CHAT CONTACT-->
                 <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
                      fuseMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">
 
@@ -36,7 +31,6 @@
                     </div>
 
                 </div>
-                <!-- / CHAT CONTACT-->
             </div>
 
             <div>
@@ -80,18 +74,13 @@
                 </div>
 
             </div>
-            <!-- / MESSAGE -->
 
         </div>
-        <!-- CHAT MESSAGES -->
 
     </div>
-    <!-- / CHAT CONTENT -->
 
-    <!-- CHAT FOOTER -->
     <div class="chat-footer" fxFlex="0 0 auto" fxLayout="column">
 
-        <!-- REPLY FORM -->
         <div class="reply-form" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center">
 
             <form #replyForm="ngForm"
@@ -111,10 +100,7 @@
             </form>
 
         </div>
-        <!-- / REPLY FORM -->
 
     </div>
-    <!-- / CHAT FOOTER-->
 
 </div>
-<!-- / CHAT -->

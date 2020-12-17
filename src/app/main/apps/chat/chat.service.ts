@@ -18,16 +18,10 @@ export class ChatService implements Resolve<any>
     onLeftSidenavViewChanged: Subject<any>;
     onRightSidenavViewChanged: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     */
     constructor(
         private _httpClient: HttpClient
     )
     {
-        // Set the defaults
         this.onChatSelected = new BehaviorSubject(null);
         this.onContactSelected = new BehaviorSubject(null);
         this.onChatsUpdated = new Subject();
@@ -36,13 +30,6 @@ export class ChatService implements Resolve<any>
         this.onRightSidenavViewChanged = new Subject();
     }
 
-    /**
-     * Resolver
-     *
-     * @param {ActivatedRouteSnapshot} route
-     * @param {RouterStateSnapshot} state
-     * @returns {Observable<any> | Promise<any> | any}
-     */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
         return new Promise((resolve, reject) => {
@@ -52,6 +39,7 @@ export class ChatService implements Resolve<any>
                 this.getUser()
             ]).then(
                 ([contacts, chats, user]) => {
+                    console.log('contacts', contacts);
                     this.contacts = contacts;
                     this.chats = chats;
                     this.user = user;
@@ -62,19 +50,12 @@ export class ChatService implements Resolve<any>
         });
     }
 
-    /**
-     * Get chat
-     *
-     * @param contactId
-     * @returns {Promise<any>}
-     */
     getChat(contactId): Promise<any>
     {
         const chatItem = this.user.chatList.find((item) => {
             return item.contactId === contactId;
         });
 
-        // Create new chat, if it's not created yet.
         if ( !chatItem )
         {
             this.createNewChat(contactId).then((newChats) => {
@@ -106,12 +87,6 @@ export class ChatService implements Resolve<any>
 
     }
 
-    /**
-     * Create new chat
-     *
-     * @param contactId
-     * @returns {Promise<any>}
-     */
     createNewChat(contactId): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -135,18 +110,14 @@ export class ChatService implements Resolve<any>
                 unread         : null
             };
 
-            // Add new chat list item to the user's chat list
             this.user.chatList.push(chatListItem);
 
-            // Post the created chat
             this._httpClient.post('api/chat-chats', {...chat})
                 .subscribe((response: any) => {
 
-                    // Post the new the user data
                     this._httpClient.post('api/chat-user/' + this.user.id, this.user)
                         .subscribe(newUserData => {
 
-                            // Update the user data from server
                             this.getUser().then(updatedUser => {
                                 this.onUserUpdated.next(updatedUser);
                                 resolve(updatedUser);
@@ -156,31 +127,16 @@ export class ChatService implements Resolve<any>
         });
     }
 
-    /**
-     * Select contact
-     *
-     * @param contact
-     */
     selectContact(contact): void
     {
         this.onContactSelected.next(contact);
     }
 
-    /**
-     * Set user status
-     *
-     * @param status
-     */
     setUserStatus(status): void
     {
         this.user.status = status;
     }
 
-    /**
-     * Update user data
-     *
-     * @param userData
-     */
     updateUserData(userData): void
     {
         this._httpClient.post('api/chat-user/' + this.user.id, userData)
@@ -190,13 +146,6 @@ export class ChatService implements Resolve<any>
             );
     }
 
-    /**
-     * Update the chat dialog
-     *
-     * @param chatId
-     * @param dialog
-     * @returns {Promise<any>}
-     */
     updateDialog(chatId, dialog): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -213,11 +162,6 @@ export class ChatService implements Resolve<any>
         });
     }
 
-    /**
-     * Get contacts
-     *
-     * @returns {Promise<any>}
-     */
     getContacts(): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -228,11 +172,6 @@ export class ChatService implements Resolve<any>
         });
     }
 
-    /**
-     * Get chats
-     *
-     * @returns {Promise<any>}
-     */
     getChats(): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -243,11 +182,6 @@ export class ChatService implements Resolve<any>
         });
     }
 
-    /**
-     * Get user
-     *
-     * @returns {Promise<any>}
-     */
     getUser(): Promise<any>
     {
         return new Promise((resolve, reject) => {

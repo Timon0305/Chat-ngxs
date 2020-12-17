@@ -17,27 +17,17 @@ export class ChatRightSidenavComponent implements OnInit, OnDestroy
 {
     view: string;
 
-    // Private
     private _unsubscribeAll: Subject<any>;
 
     constructor(
         private _chatService: ChatService
     )
     {
-        // Set the defaults
         this.view = 'contact';
 
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void
     {
         this._chatService.onRightSidenavViewChanged
@@ -47,12 +37,8 @@ export class ChatRightSidenavComponent implements OnInit, OnDestroy
             });
     }
 
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }

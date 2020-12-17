@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
 import { NavigationExtras } from '@angular/router';
+import {Action} from '@ngrx/store';
 
 export const GO = '[Router] Go';
 export const BACK = '[Router] Back';
@@ -12,7 +12,7 @@ export class Go implements Action
     /**
      * Constructor
      *
-     * @param {{path: any[]; query?: object; extras?: NavigationExtras}} payload
+     * @param payload
      */
     constructor(
         public payload: {
@@ -20,9 +20,7 @@ export class Go implements Action
             query?: object;
             extras?: NavigationExtras;
         }
-    )
-    {
-    }
+    ) {}
 }
 
 export class Back implements Action

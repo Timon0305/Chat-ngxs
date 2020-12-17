@@ -1,32 +1,35 @@
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
-import { MetaReducer, StoreModule } from '@ngrx/store';
-import { NgModule } from '@angular/core';
-import { storeFreeze } from 'ngrx-store-freeze';
-import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import {NgModule} from '@angular/core';
+import { NgxsModule } from '@ngxs/store';
+import {CommonModule} from '@angular/common';
+import { NgxsFormPluginModule} from '@ngxs/form-plugin';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {NgxsRouterPluginModule} from '@ngxs/router-plugin';
 
 import { environment } from 'environments/environment';
-import { reducers, effects, CustomSerializer } from 'app/store';
+import {TodoState} from './todos/todo/todo.state';
+import {TodosState} from './todos/todos.state';
 
-export const metaReducers: MetaReducer<any>[] = !environment.production
-    ? [storeFreeze]
-    : [];
 
 @NgModule({
-    imports  : [
-        StoreModule.forRoot(reducers, {metaReducers}),
-        EffectsModule.forRoot(effects),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
-        StoreRouterConnectingModule.forRoot()
+    imports: [
+        CommonModule,
+        NgxsFormPluginModule.forRoot(),
+        NgxsLoggerPluginModule.forRoot({logger: console, collapsed: false}),
+        NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production}),
+        NgxsRouterPluginModule.forRoot(),
+        NgxsModule.forRoot([TodosState, TodoState], {
+            developmentMode: !environment.production,
+            selectorOptions: {}
+        })
     ],
-    providers: [
-        {
-            provide : RouterStateSerializer,
-            useClass: CustomSerializer
-        }
+    exports: [
+        NgxsFormPluginModule,
+        NgxsLoggerPluginModule,
+        NgxsReduxDevtoolsPluginModule,
+        NgxsModule
     ]
 })
-
 export class AppStoreModule
 {
 }
