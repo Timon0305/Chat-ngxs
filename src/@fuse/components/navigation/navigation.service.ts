@@ -184,20 +184,7 @@ export class FuseNavigationService
     {
         for ( const item of navigation )
         {
-            if ( item.type === 'item' )
-            {
-                flatNavigation.push(item);
-
-                continue;
-            }
-
-            if ( item.type === 'collapsable' || item.type === 'group' )
-            {
-                if ( item.children )
-                {
-                    this.getFlatNavigation(item.children, flatNavigation);
-                }
-            }
+            flatNavigation.push(item);
         }
 
         return flatNavigation;
@@ -265,9 +252,9 @@ export class FuseNavigationService
                 return item;
             }
 
-            if ( item.children )
+            if ( item.data )
             {
-                const childItem = this.getNavigationItem(id, item.children);
+                const childItem = this.getNavigationItem(id, item.data);
 
                 if ( childItem )
                 {
@@ -302,9 +289,9 @@ export class FuseNavigationService
                 return parent;
             }
 
-            if ( item.children )
+            if ( item.data )
             {
-                const childItem = this.getNavigationItemParent(id, item.children, item);
+                const childItem = this.getNavigationItemParent(id, item.data, item);
 
                 if ( childItem )
                 {
@@ -356,13 +343,13 @@ export class FuseNavigationService
         {
             // Check if parent has a children entry,
             // and add it if it doesn't
-            if ( !parent.children )
+            if ( !parent.data )
             {
-                parent.children = [];
+                parent.data = [];
             }
 
             // Add the item
-            parent.children.push(item);
+            parent.data.push(item);
         }
 
         // Trigger the observable
@@ -414,7 +401,7 @@ export class FuseNavigationService
         // This check is required because of the first level
         // of the navigation, since the first level is not
         // inside the 'children' array
-        parent = parent.children || parent;
+        parent = parent.data || parent;
 
         // Remove the item
         parent.splice(parent.indexOf(item), 1);
