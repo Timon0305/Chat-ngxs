@@ -1,11 +1,14 @@
 <ng-container >
 
     <button mat-button
-            class="contact channel" style="width: 100%;">
+            class="contact channel" style="width: 100%;"
+            (click)="clickChannel(item.id)"
+    >
         <div fxLayout="row" fxLayoutAlign="start center" style="display: flex; ">
             <div class="avatar-wrapper" fxFlex="0 1 auto" fxLayoutAlign="center center">
                 <img class="avatar" [src]="item.data.avatar" alt="">
-                <mat-icon class="s-16 status" [ngClass]="item.data.status"></mat-icon>
+                <mat-icon class="s-16 status" *ngIf="item.data.type==='public'"  [ngClass]="'online'"></mat-icon>
+                <mat-icon class="s-16 status" *ngIf="item.data.type==='private'"  [ngClass]="'offline'"></mat-icon>
             </div>
 
             <div fxLayout="row" fxFlex style="display: flex; justify-content: space-around; width : 100%;">

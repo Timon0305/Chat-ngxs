@@ -1,0 +1,63 @@
+<div id="sub-header">
+    <div class="project-card">
+        <div class="content-card">
+            <mat-sidenav-container>
+
+                <div class="flex-space">
+                    <div></div>
+                    <div></div>
+                    <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
+                    >
+                        <div class="avatar-wrapper">
+                            <mat-icon class="s-24 s-md-24 mat-accent pr-3" style="padding-top: 5px;">
+                                supervisor_account
+                            </mat-icon>
+                        </div>
+
+                        <div class="chat-contact-name">
+                            <span style="padding-left: 10px; font-size: 22px">users</span>
+                        </div>
+                    </div>
+                    <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
+                    >
+                        <div class="avatar-wrapper">
+                            <mat-icon class="s-24 s-md-24 mat-accent pr-3" style="padding-top: 5px;">public</mat-icon>
+                        </div>
+
+                        <div class="chat-contact-name">
+                            <span style="padding-left: 10px; font-size: 22px">public</span>
+                        </div>
+                    </div>
+                    <div class="sidenav-header">
+                        <mat-toolbar style="background: transparent!important;">
+
+                            <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+
+                                <div>
+                                    <button mat-icon-button
+                                            [matMenuTriggerFor]="userMenu"
+                                            aria-label="more">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #userMenu="matMenu">
+                                        <button mat-menu-item>
+                                            Settings
+                                        </button>
+                                        <button mat-menu-item>
+                                            Leave channel
+                                        </button>
+                                    </mat-menu>
+                                </div>
+
+                            </mat-toolbar-row>
+
+
+                        </mat-toolbar>
+
+                    </div>
+                </div>
+
+            </mat-sidenav-container>
+        </div>
+    </div>
+</div>

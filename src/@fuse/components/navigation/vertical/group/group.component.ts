@@ -4,6 +4,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import {ChatService} from '../../../../../app/main/apps/chat/chat.service';
+import {NavigationService} from '../../../../services/navigation.service';
 
 @Component({
     selector   : 'fuse-nav-vertical-group',
@@ -27,10 +29,12 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
 
     /**
      *
+     * @param _chatService
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
+        private _chatService: ChatService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
     )
@@ -71,4 +75,7 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
+    clickChannel(channelId): void {
+        this._chatService.selectChannel(channelId)
+    }
 }

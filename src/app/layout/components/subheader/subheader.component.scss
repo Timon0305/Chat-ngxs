@@ -1,0 +1,20 @@
+.flex-space {
+    display: flex;
+    justify-content: space-between;
+}
+ .project-card .content-card {
+    border-radius: 8px;
+
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+ @media (min-width: 1287px) {
+     #sub-header {
+         padding: 18px 32px 18px 32px;
+     }
+ }
+@media (max-width: 1286px) {
+    #sub-header {
+        padding: 18px 0px 18px 0px;
+    }
+}

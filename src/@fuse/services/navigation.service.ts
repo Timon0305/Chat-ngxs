@@ -4,12 +4,11 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { FuseUtils } from '@fuse/utils';
-import {ChatChannel} from '../../../fake-db/chat-channel';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ChatService implements Resolve<any>
+export class NavigationService implements Resolve<any>
 {
     contacts: any[];
     chats: any[];
@@ -41,7 +40,7 @@ export class ChatService implements Resolve<any>
                 this.getContacts(),
                 this.getChats(),
                 this.getUser(),
-                this.getChannel()
+                this.getChannels()
             ]).then(
                 ([contacts, chats, user, channel]) => {
                     this.contacts = contacts;
@@ -56,16 +55,17 @@ export class ChatService implements Resolve<any>
     }
 
     selectChannel(channelId): Promise<any> {
-        console.log(channelId)
-        this.channel[0].rows.find((item) => {
-            console.log(item)
-        });
+        const channelItem = this.user.chatList.find((item) => {
+            return item.contactId === channelItem
+        })
+        if (!channelItem) {
+            console.log('adsf')
+        }
     }
 
     getChat(contactId): Promise<any>
     {
         const chatItem = this.user.chatList.find((item) => {
-            console.log(item)
             return item.contactId === contactId;
         });
 
@@ -205,13 +205,12 @@ export class ChatService implements Resolve<any>
         });
     }
 
-    getChannel() : Promise<any>
+    getChannels() : Promise<any>
     {
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/chat-channel')
                 .subscribe((response: any) => {
-                    console.log(response)
-                    resolve(response[0])
+                    resolve(response[0].rows)
                 }, reject);
         })
     }

@@ -6,7 +6,7 @@ export class ChatChannel {
                     "id": "a8049096-a6c0-493a-a585-56207355e0b4",
                     "data": {
                         "name": "Channel 1 test",
-                        "avatar": "https://someurl.nl/image1.png",
+                        "avatar": "https://www.pcgamesn.com/wp-content/uploads/2020/10/dota-2-diretide-2020-124x70.jpg",
                         "type": "public",
                         "status": "open",
                         "stats": {
@@ -27,7 +27,7 @@ export class ChatChannel {
                     "id": "b8049096-a6c0-493a-a585-56207355e0b4",
                     "data": {
                         "name": "Name of channel 2 test",
-                        "avatar": "https://someurl.nl/image2.png",
+                        "avatar": "https://pages.firstblood.io/pages/wp-content/uploads/2018/07/dota-2-hero-guide-970x570.jpg",
                         "type": "private",
                         "status": "open",
                         "stats": {
