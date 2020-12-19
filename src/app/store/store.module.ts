@@ -7,9 +7,11 @@ import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsRouterPluginModule} from '@ngxs/router-plugin';
 
 import { environment } from 'environments/environment';
-import {TodoState} from './todos/todo/todo.state';
-import {TodosState} from './todos/todos.state';
 
+import {ChannelsState} from './channels/channels.state';
+import {ChannelState} from './channels/channel/channel.state';
+import {MessagesState} from './messages/messages.state';
+import {MessageState} from './messages/message/message.state';
 
 @NgModule({
     imports: [
@@ -18,7 +20,10 @@ import {TodosState} from './todos/todos.state';
         NgxsLoggerPluginModule.forRoot({logger: console, collapsed: false}),
         NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production}),
         NgxsRouterPluginModule.forRoot(),
-        NgxsModule.forRoot([TodosState, TodoState], {
+        NgxsModule.forRoot([
+            ChannelsState, ChannelState,
+            MessagesState, MessageState
+        ], {
             developmentMode: !environment.production,
             selectorOptions: {}
         })
