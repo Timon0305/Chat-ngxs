@@ -1,52 +1,52 @@
 <div class="chat" fxFlex fxLayout="column">
 
-    <mat-toolbar class="chat-toolbar">
+    <!--<mat-toolbar class="chat-toolbar">-->
 
-        <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+        <!--<div fxFlex fxLayout="row" fxLayoutAlign="space-between center">-->
 
-            <div fxLayout="row" fxLayoutAlign="start center">
+            <!--<div fxLayout="row" fxLayoutAlign="start center">-->
 
-                <button mat-icon-button fxHide.gt-md class="responsive-chats-button mr-16"
-                        fuseMatSidenavToggler="chat-left-sidenav"
-                        aria-label="chats button">
-                    <mat-icon>chat</mat-icon>
-                </button>
+                <!--<button mat-icon-button fxHide.gt-md class="responsive-chats-button mr-16"-->
+                        <!--fuseMatSidenavToggler="chat-left-sidenav"-->
+                        <!--aria-label="chats button">-->
+                    <!--<mat-icon>chat</mat-icon>-->
+                <!--</button>-->
 
-                <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
-                     fuseMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">
+                <!--<div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"-->
+                     <!--fuseMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">-->
 
-                    <div class="avatar-wrapper">
+                    <!--<div class="avatar-wrapper">-->
 
-                        <img [src]="contact.avatar"
-                             class="avatar"
-                             alt="{{contact.name}}"/>
+                        <!--<img [src]="contact.avatar"-->
+                             <!--class="avatar"-->
+                             <!--alt="{{contact.name}}"/>-->
 
-                        <mat-icon class="s-16 status"
-                                  [ngClass]="contact.status">
-                        </mat-icon>
-                    </div>
+                        <!--<mat-icon class="s-16 status"-->
+                                  <!--[ngClass]="contact.status">-->
+                        <!--</mat-icon>-->
+                    <!--</div>-->
 
-                    <div class="chat-contact-name">
-                        {{contact.name}}
-                    </div>
+                    <!--<div class="chat-contact-name">-->
+                        <!--{{contact.name}}-->
+                    <!--</div>-->
 
-                </div>
-            </div>
+                <!--</div>-->
+            <!--</div>-->
 
-            <div>
-                <button mat-icon-button [matMenuTriggerFor]="contactMenu" aria-label="more">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
+            <!--<div>-->
+                <!--<button mat-icon-button [matMenuTriggerFor]="contactMenu" aria-label="more">-->
+                    <!--<mat-icon>more_vert</mat-icon>-->
+                <!--</button>-->
 
-                <mat-menu #contactMenu="matMenu">
-                    <button mat-menu-item fuseMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">
-                        Contact Info
-                    </button>
-                </mat-menu>
-            </div>
+                <!--<mat-menu #contactMenu="matMenu">-->
+                    <!--<button mat-menu-item fuseMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">-->
+                        <!--Contact Info-->
+                    <!--</button>-->
+                <!--</mat-menu>-->
+            <!--</div>-->
 
-        </div>
-    </mat-toolbar>
+        <!--</div>-->
+    <!--</mat-toolbar>-->
     <!-- / CHAT TOOLBAR -->
 
     <!-- CHAT CONTENT -->
@@ -56,21 +56,17 @@
         <div class="chat-messages">
 
             <!-- MESSAGE -->
-            <div *ngFor="let message of dialog; let i = index" class="message-row"
-                 [ngClass]="{
-                            'me': message.who === user.id,
-                            'contact': message.who !== user.id,
-                            'first-of-group': isFirstMessageOfGroup(message, i),
-                            'last-of-group': isLastMessageOfGroup(message, i)
-                            }">
+            <div *ngFor="let message of selectedChat; let i = index" class="message-row contact" style="margin-bottom: 24px"
+                 >
 
-                <img *ngIf="shouldShowContactAvatar(message, i)"
-                     src="{{contact.avatar}}"
+                <img
+                     src="assets/images/avatars/profile.jpg"
                      class="avatar">
 
                 <div class="bubble">
-                    <div class="message">{{message.message}}</div>
-                    <div class="time secondary-text">{{message.time | date:'short'}}</div>
+                    <div class="time secondary-text">{{message.system.updatedAt | date:'short'}}</div>
+                    <div class="message">{{message.data.text}}</div>
+
                 </div>
 
             </div>

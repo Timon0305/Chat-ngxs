@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 
 import { ChatService } from 'app/main/apps/chat/chat.service';
+import {NavigationService} from '../../../../../@fuse/services/navigation.service';
 
 @Component({
     selector     : 'chat-view',
@@ -33,9 +34,8 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
     private _unsubscribeAll: Subject<any>;
 
-
     constructor(
-        private _chatService: ChatService
+        private _chatService: NavigationService
     )
     {
         this._unsubscribeAll = new Subject();
@@ -49,12 +49,14 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             .subscribe(chatData => {
                 if ( chatData )
                 {
+                    console.log('chat data', chatData)
                     this.selectedChat = chatData;
-                    this.contact = chatData.contact;
-                    this.dialog = chatData.dialog;
+                    // this.contact = chatData.contact;
+                    // this.dialog = chatData.dialog;
                     this.readyToReply();
                 }
             });
+
     }
 
     ngAfterViewInit(): void

@@ -6,6 +6,7 @@ import { ProfileFakeDb } from 'app/fake-db/profile';
 import { ChatPanelFakeDb } from 'app/fake-db/chat-panel';
 import {ChatChannel} from './chat-channel';
 import {ChatTopic} from './chat-topic';
+import {ChatMessages} from './chat-messages';
 
 export class FakeDbService implements InMemoryDbService
 {
@@ -35,7 +36,10 @@ export class FakeDbService implements InMemoryDbService
             'chat-channel' : ChatChannel.channel,
 
             // Chat Topic
-            'chat-topic': ChatTopic.topic
+            'chat-topic': ChatTopic.topic,
+
+            // Chat Messages
+            'chat-message': ChatMessages.messages
         };
     }
 }

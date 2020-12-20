@@ -14,6 +14,7 @@ export class NavigationService implements Resolve<any>
     chats: any[];
     user: any;
     channel : any;
+    messages: any;
     changeChannel: BehaviorSubject<any>;
     selectTopic: BehaviorSubject<any>;
     onChatSelected: BehaviorSubject<any>;
@@ -44,13 +45,15 @@ export class NavigationService implements Resolve<any>
                 this.getContacts(),
                 this.getChats(),
                 this.getUser(),
-                this.getChannels()
+                this.getChannels(),
+                this.getMessages()
             ]).then(
-                ([contacts, chats, user, channel]) => {
+                ([contacts, chats, user, channel, message]) => {
                     this.contacts = contacts;
                     this.chats = chats;
                     this.user = user;
                     this.channel = channel;
+                    this.messages = message;
                     resolve();
                 },
                 reject
@@ -60,10 +63,10 @@ export class NavigationService implements Resolve<any>
 
     selectChannel(channelId): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/chat-channel')
-                .subscribe((response: any) => {
-                    resolve(response[0].rows);
-                    const channelItem = response[0].rows.find((item) => {
+            this.getChannels()
+                .then((response: any) => {
+                    resolve(response);
+                    const channelItem = response.find((item) => {
                         return item.id === channelId
                     });
                     if (channelItem) {
@@ -86,40 +89,49 @@ export class NavigationService implements Resolve<any>
         })
     }
 
-    getChat(contactId): Promise<any>
+    getChat(messageId)
     {
-        const chatItem = this.user.chatList.find((item) => {
-            return item.contactId === contactId;
-        });
-
-        if ( !chatItem )
-        {
-            this.createNewChat(contactId).then((newChats) => {
-                this.getChat(contactId);
-            });
-            return;
-        }
-
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/chat-chats/' + chatItem.id)
-                .subscribe((response: any) => {
-                    const chat = response;
-
-                    const chatContact = this.contacts.find((contact) => {
-                        return contact.id === contactId;
-                    });
-
-                    const chatData = {
-                        chatId : chat.id,
-                        dialog : chat.dialog,
-                        contact: chatContact
-                    };
-
-                    this.onChatSelected.next({...chatData});
-
-                }, reject);
-
-        });
+        this.getMessages().then(res => {
+            let chatMessage = [];
+            for (let item of res) {
+                if (item.data.topicId === messageId) {
+                    chatMessage.push(item)
+                }
+            }
+            this.onChatSelected.next(chatMessage);
+        })
+        // const chatItem = this.user.chatList.find((item) => {
+        //     return item.contactId === contactId;
+        // });
+        //
+        // if ( !chatItem )
+        // {
+        //     this.createNewChat(contactId).then((newChats) => {
+        //         this.getChat(contactId);
+        //     });
+        //     return;
+        // }
+        //
+        // return new Promise((resolve, reject) => {
+        //     this._httpClient.get('api/chat-chats/' + chatItem.id)
+        //         .subscribe((response: any) => {
+        //             const chat = response;
+        //
+        //             const chatContact = this.contacts.find((contact) => {
+        //                 return contact.id === contactId;
+        //             });
+        //
+        //             const chatData = {
+        //                 chatId : chat.id,
+        //                 dialog : chat.dialog,
+        //                 contact: chatContact
+        //             };
+        //
+        //             this.onChatSelected.next({...chatData});
+        //
+        //         }, reject);
+        //
+        // });
 
     }
 
@@ -233,7 +245,6 @@ export class NavigationService implements Resolve<any>
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/chat-channel')
                 .subscribe((response: any) => {
-                    console.log('in navigation', response)
                     resolve(response[0].rows)
                 }, reject);
         })
@@ -245,6 +256,15 @@ export class NavigationService implements Resolve<any>
             this._httpClient.get('api/chat-topic')
                 .subscribe((response: any) => {
                     resolve(response[0].rows);
+                }, reject)
+        })
+    }
+    getMessages(): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-message')
+                .subscribe((response: any) => {
+                    resolve(response[0].rows)
                 }, reject)
         })
     }
