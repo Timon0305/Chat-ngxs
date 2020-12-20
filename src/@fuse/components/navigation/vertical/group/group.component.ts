@@ -14,6 +14,8 @@ import {NavigationService} from '../../../../services/navigation.service';
 })
 export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
 {
+    channelStyle: string;
+    channelId: string;
     @HostBinding('class')
     classes = 'nav-group nav-item';
 
@@ -43,16 +45,11 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
     /**
      * On init
      */
     ngOnInit(): void
     {
-        // Subscribe to navigation item
         merge(
             this._fuseNavigationService.onNavigationItemAdded,
             this._fuseNavigationService.onNavigationItemUpdated,
@@ -60,7 +57,6 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
         ).pipe(takeUntil(this._unsubscribeAll))
          .subscribe(() => {
 
-             // Mark for check
              this._changeDetectorRef.markForCheck();
          });
     }
@@ -76,6 +72,10 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
     }
 
     clickChannel(channelId): void {
+        this.channelId = channelId;
         this._chatService.selectChannel(channelId)
+            .then(res => {
+
+            })
     }
 }

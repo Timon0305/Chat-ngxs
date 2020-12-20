@@ -60,7 +60,6 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
 
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
@@ -86,8 +85,4 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
         this._chatService.onLeftSidenavViewChanged.next(view);
     }
 
-    logout(): void
-    {
-        console.log('logout triggered');
-    }
 }

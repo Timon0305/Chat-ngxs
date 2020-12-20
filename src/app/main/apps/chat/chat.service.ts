@@ -4,7 +4,6 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { FuseUtils } from '@fuse/utils';
-import {ChatChannel} from '../../../fake-db/chat-channel';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +13,9 @@ export class ChatService implements Resolve<any>
     contacts: any[];
     chats: any[];
     user: any;
-    channel : any;
+    channel : any[];
+    topic: any[];
+    changeChannel: BehaviorSubject<any>;
     onChatSelected: BehaviorSubject<any>;
     onContactSelected: BehaviorSubject<any>;
     onChatsUpdated: Subject<any>;
@@ -26,6 +27,7 @@ export class ChatService implements Resolve<any>
         private _httpClient: HttpClient
     )
     {
+        this.changeChannel = new BehaviorSubject(null);
         this.onChatSelected = new BehaviorSubject(null);
         this.onContactSelected = new BehaviorSubject(null);
         this.onChatsUpdated = new Subject();
@@ -41,31 +43,47 @@ export class ChatService implements Resolve<any>
                 this.getContacts(),
                 this.getChats(),
                 this.getUser(),
-                this.getChannel()
+                this.getChannel(),
+                this.getTopic()
             ]).then(
-                ([contacts, chats, user, channel]) => {
+                ([contacts, chats, user, channel, topic]) => {
                     this.contacts = contacts;
                     this.chats = chats;
                     this.user = user;
                     this.channel = channel;
+                    this.topic = topic;
+                    console.log('get Topic=>>>',topic);
                     resolve();
                 },
                 reject
             );
         });
+
     }
 
     selectChannel(channelId): Promise<any> {
-        console.log(channelId)
-        this.channel[0].rows.find((item) => {
-            console.log(item)
-        });
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-channel')
+                .subscribe((response: any) => {
+                    resolve(response[0].rows);
+                    const channelItem = response[0].rows.find((item) => {
+                        return item.id === channelId
+                    });
+                    if (channelItem) {
+                        this.changeChannel.next({...channelItem})
+                    }
+
+                    return new Promise((resolve, reject) => {
+                        this._httpClient.get('api/get-topic' + channelItem.id)
+                    })
+                }, reject);
+        })
     }
 
     getChat(contactId): Promise<any>
     {
+
         const chatItem = this.user.chatList.find((item) => {
-            console.log(item)
             return item.contactId === contactId;
         });
 
@@ -210,9 +228,18 @@ export class ChatService implements Resolve<any>
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/chat-channel')
                 .subscribe((response: any) => {
-                    console.log(response)
-                    resolve(response[0])
+                    resolve(response[0].rows);
+                    this.changeChannel.next(response[0].rows[0])
                 }, reject);
+        })
+    }
+    getTopic(): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-topic')
+                .subscribe((response: any) => {
+                    resolve(response[0].rows);
+                }, reject)
         })
     }
 }

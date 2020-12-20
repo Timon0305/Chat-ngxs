@@ -4,8 +4,8 @@ import { ChatFakeDb } from 'app/fake-db/chat';
 import { ContactsFakeDb } from 'app/fake-db/contacts';
 import { ProfileFakeDb } from 'app/fake-db/profile';
 import { ChatPanelFakeDb } from 'app/fake-db/chat-panel';
-import { QuickPanelFakeDb } from 'app/fake-db/quick-panel';
 import {ChatChannel} from './chat-channel';
+import {ChatTopic} from './chat-topic';
 
 export class FakeDbService implements InMemoryDbService
 {
@@ -31,12 +31,11 @@ export class FakeDbService implements InMemoryDbService
             'chat-panel-chats': ChatPanelFakeDb.chats,
             'chat-panel-user': ChatPanelFakeDb.user,
 
-            // Quick Panel
-            'quick-panel-notes' : QuickPanelFakeDb.notes,
-            'quick-panel-events': QuickPanelFakeDb.events,
-
             // Channel Panel
             'chat-channel' : ChatChannel.channel,
+
+            // Chat Topic
+            'chat-topic': ChatTopic.topic
         };
     }
 }

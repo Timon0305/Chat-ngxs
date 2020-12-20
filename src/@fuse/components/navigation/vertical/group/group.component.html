@@ -1,8 +1,8 @@
-<ng-container >
+<ng-container id="select_channel">
 
     <button mat-button
             class="contact channel" style="width: 100%;"
-            (click)="clickChannel(item.id)"
+            (click)="clickChannel(item.id)" [ngClass]="channelStyle"
     >
         <div fxLayout="row" fxLayoutAlign="start center" style="display: flex; ">
             <div class="avatar-wrapper" fxFlex="0 1 auto" fxLayoutAlign="center center">

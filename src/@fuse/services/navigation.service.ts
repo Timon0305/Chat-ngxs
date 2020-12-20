@@ -55,12 +55,7 @@ export class NavigationService implements Resolve<any>
     }
 
     selectChannel(channelId): Promise<any> {
-        const channelItem = this.user.chatList.find((item) => {
-            return item.contactId === channelItem
-        })
-        if (!channelItem) {
-            console.log('adsf')
-        }
+
     }
 
     getChat(contactId): Promise<any>
@@ -210,6 +205,7 @@ export class NavigationService implements Resolve<any>
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/chat-channel')
                 .subscribe((response: any) => {
+                    console.log('in navigation', response)
                     resolve(response[0].rows)
                 }, reject);
         })
