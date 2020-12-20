@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseMatSidenavHelperService } from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
 
-import { ChatService } from 'app/main/apps/chat/chat.service';
 import {NavigationService} from '../../../../../../../@fuse/services/navigation.service';
 import {takeUntil} from 'rxjs/operators';
 
@@ -19,7 +18,6 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class ChatChatsSidenavComponent implements OnInit, OnDestroy
 {
-
     getTopics: any;
     private _unsubscribeAll: Subject<any>;
 
@@ -40,6 +38,8 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
             .subscribe(res => {
                 if (res) {
                     this.getTopics = res;
+                } else {
+                    this.getTopics = []
                 }
             });
     }

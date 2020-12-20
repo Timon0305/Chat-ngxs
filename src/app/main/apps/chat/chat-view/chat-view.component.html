@@ -63,10 +63,15 @@
                      src="assets/images/avatars/profile.jpg"
                      class="avatar">
 
-                <div class="bubble">
-                    <div class="time secondary-text">{{message.system.updatedAt | date:'short'}}</div>
-                    <div class="message">{{message.data.text}}</div>
-
+                <div>
+                    <div style="display: flex;">
+                        <div class="time black-text pr-5 text-16">{{message.id}}</div> &nbsp;
+                        <div class="time secondary-text">{{message.system.updatedAt | date:'short'}}</div>
+                    </div>
+                    
+                    <div class="bubble">
+                        <div class="message">{{message.data.text}}</div>
+                    </div>
                 </div>
 
             </div>
@@ -78,10 +83,10 @@
     <div class="chat-footer" fxFlex="0 0 auto" fxLayout="column">
 
         <div class="reply-form" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center">
-
+            <!--(ngSubmit)="reply($event)"-->
+            <!--(keydown.enter)="reply($event)"-->
             <form #replyForm="ngForm"
-                  (ngSubmit)="reply($event)"
-                  (keydown.enter)="reply($event)"
+
                   fxFlex fxLayout="row" fxLayoutAlign="start center">
 
                 <mat-form-field class="message-text" fxFlex floatLabel="never" appearance="standard">

@@ -1,5 +1,4 @@
 import {Component,  OnInit, } from '@angular/core';
-import {ChatService} from '../../../main/apps/chat/chat.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {NavigationService} from '../../../../@fuse/services/navigation.service';

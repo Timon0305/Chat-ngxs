@@ -1,6 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import { ChatFakeDb } from 'app/fake-db/chat';
 import { ContactsFakeDb } from 'app/fake-db/contacts';
 import { ProfileFakeDb } from 'app/fake-db/profile';
 import { ChatPanelFakeDb } from 'app/fake-db/chat-panel';
@@ -13,10 +12,6 @@ export class FakeDbService implements InMemoryDbService
     createDb(): any
     {
         return {
-            // Chat
-            'chat-contacts': ChatFakeDb.contacts,
-            'chat-chats'   : ChatFakeDb.chats,
-            'chat-user'    : ChatFakeDb.user,
 
             // Contacts
             'contacts-contacts': ContactsFakeDb.contacts,

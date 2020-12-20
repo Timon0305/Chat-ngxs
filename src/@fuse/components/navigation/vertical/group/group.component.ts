@@ -4,7 +4,6 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import {ChatService} from '../../../../../app/main/apps/chat/chat.service';
 import {NavigationService} from '../../../../services/navigation.service';
 
 @Component({

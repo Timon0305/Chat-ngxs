@@ -5,7 +5,6 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 
-import { ChatService } from 'app/main/apps/chat/chat.service';
 import {NavigationService} from '../../../../../@fuse/services/navigation.service';
 
 @Component({
@@ -43,16 +42,12 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
      ngOnInit(): void
     {
-        this.user = this._chatService.user;
         this._chatService.onChatSelected
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(chatData => {
                 if ( chatData )
                 {
-                    console.log('chat data', chatData)
                     this.selectedChat = chatData;
-                    // this.contact = chatData.contact;
-                    // this.dialog = chatData.dialog;
                     this.readyToReply();
                 }
             });
@@ -89,11 +84,6 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     isLastMessageOfGroup(message, i): boolean
     {
         return (i === this.dialog.length - 1 || this.dialog[i + 1] && this.dialog[i + 1].who !== message.who);
-    }
-
-    selectContact(): void
-    {
-        this._chatService.selectContact(this.contact);
     }
 
     readyToReply(): void
@@ -134,17 +124,18 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
         }
 
         const message = {
-            who    : this.user.id,
+            who    : this.selectedChat[0].id,
             message: this.replyForm.form.value.message,
             time   : new Date().toISOString()
         };
 
+        console.log(this.dialog)
         this.dialog.push(message);
+        //
+        // this.replyForm.reset();
 
-        this.replyForm.reset();
-
-        this._chatService.updateDialog(this.selectedChat.chatId, this.dialog).then(response => {
-            this.readyToReply();
-        });
+        // this._chatService.updateDialog(this.selectedChat.chatId, this.dialog).then(response => {
+        //     this.readyToReply();
+        // });
     }
 }

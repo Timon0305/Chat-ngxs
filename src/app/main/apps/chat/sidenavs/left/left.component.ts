@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 
-import { ChatService } from 'app/main/apps/chat/chat.service';
+import {NavigationService} from '../../../../../../@fuse/services/navigation.service';
 
 @Component({
     selector     : 'chat-left-sidenav',
@@ -26,7 +26,7 @@ export class ChatLeftSidenavComponent implements OnInit, OnDestroy
      * @param {ChatService} _chatService
      */
     constructor(
-        private _chatService: ChatService
+        private _chatService: NavigationService
     )
     {
         // Set the defaults

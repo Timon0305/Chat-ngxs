@@ -30,8 +30,6 @@ export class ChatPanelService
     {
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getContacts(),
-                this.getUser()
             ]).then(
                 ([contacts, user]) => {
                     this.contacts = contacts;

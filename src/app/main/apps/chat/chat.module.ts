@@ -14,7 +14,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
-import { ChatService } from 'app/main/apps/chat/chat.service';
 import { ChatComponent } from 'app/main/apps/chat/chat.component';
 import { ChatStartComponent } from 'app/main/apps/chat/chat-start/chat-start.component';
 import { ChatViewComponent } from 'app/main/apps/chat/chat-view/chat-view.component';
@@ -23,6 +22,7 @@ import { ChatUserSidenavComponent } from 'app/main/apps/chat/sidenavs/left/user/
 import { ChatLeftSidenavComponent } from 'app/main/apps/chat/sidenavs/left/left.component';
 import { ChatRightSidenavComponent } from 'app/main/apps/chat/sidenavs/right/right.component';
 import { ChatContactSidenavComponent } from 'app/main/apps/chat/sidenavs/right/contact/contact.component';
+import {NavigationService} from '../../../../@fuse/services/navigation.service';
 
 const routes: Routes = [
     {
@@ -30,7 +30,7 @@ const routes: Routes = [
         component: ChatComponent,
         children: [],
         resolve: {
-            chat: ChatService
+            chat: NavigationService
         }
     }
 ];
@@ -61,9 +61,6 @@ const routes: Routes = [
         MatToolbarModule,
 
         FuseSharedModule
-    ],
-    providers   : [
-        ChatService
     ]
 })
 export class ChatModule

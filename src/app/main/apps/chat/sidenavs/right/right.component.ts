@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 
-import { ChatService } from 'app/main/apps/chat/chat.service';
+import {NavigationService} from '../../../../../../@fuse/services/navigation.service';
 
 @Component({
     selector     : 'chat-right-sidenav',
@@ -20,7 +20,7 @@ export class ChatRightSidenavComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _chatService: ChatService
+        private _chatService: NavigationService
     )
     {
         this.view = 'contact';

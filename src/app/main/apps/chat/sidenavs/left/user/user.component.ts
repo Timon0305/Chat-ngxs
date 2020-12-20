@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-import { ChatService } from 'app/main/apps/chat/chat.service';
+import {NavigationService} from '../../../../../../../@fuse/services/navigation.service';
 
 @Component({
     selector     : 'chat-user-sidenav',
@@ -20,7 +20,7 @@ export class ChatUserSidenavComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _chatService: ChatService
+        private _chatService: NavigationService
     )
     {
         this._unsubscribeAll = new Subject();
@@ -28,7 +28,6 @@ export class ChatUserSidenavComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.user = this._chatService.user;
 
         this.userForm = new FormGroup({
             mood  : new FormControl(this.user.mood),
@@ -44,7 +43,7 @@ export class ChatUserSidenavComponent implements OnInit, OnDestroy
             .subscribe(data => {
                 this.user.mood = data.mood;
                 this.user.status = data.status;
-                this._chatService.updateUserData(this.user);
+                // this._chatService.updateUserData(this.user);
             });
     }
 
