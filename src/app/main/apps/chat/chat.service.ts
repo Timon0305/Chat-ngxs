@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -10,11 +10,13 @@ import { FuseUtils } from '@fuse/utils';
 })
 export class ChatService implements Resolve<any>
 {
+
     contacts: any[];
     chats: any[];
     user: any;
     channel : any[];
     topic: any[];
+
     changeChannel: BehaviorSubject<any>;
     onChatSelected: BehaviorSubject<any>;
     onContactSelected: BehaviorSubject<any>;
@@ -52,7 +54,6 @@ export class ChatService implements Resolve<any>
                     this.user = user;
                     this.channel = channel;
                     this.topic = topic;
-                    console.log('get Topic=>>>',topic);
                     resolve();
                 },
                 reject
@@ -72,17 +73,22 @@ export class ChatService implements Resolve<any>
                     if (channelItem) {
                         this.changeChannel.next({...channelItem})
                     }
-
-                    return new Promise((resolve, reject) => {
-                        this._httpClient.get('api/get-topic' + channelItem.id)
-                    })
+                    this.getTopicByChannel(channelItem.id)
                 }, reject);
+        })
+    }
+
+    getTopicByChannel(channelId) {
+        this.getTopic().then(res => {
+            for (let item of res) {
+                if (item.data.channelId === channelId) {
+                }
+            }
         })
     }
 
     getChat(contactId): Promise<any>
     {
-
         const chatItem = this.user.chatList.find((item) => {
             return item.contactId === contactId;
         });

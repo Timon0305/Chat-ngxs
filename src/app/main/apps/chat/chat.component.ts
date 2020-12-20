@@ -16,7 +16,6 @@ import { ChatService } from 'app/main/apps/chat/chat.service';
 export class ChatComponent implements OnInit, OnDestroy
 {
     selectedChat: any;
-    selectedChannel: string;
     private _unsubscribeAll: Subject<any>;
 
     constructor(
@@ -33,11 +32,6 @@ export class ChatComponent implements OnInit, OnDestroy
             .subscribe(chatData => {
                 this.selectedChat = chatData;
             });
-        this._chatService.changeChannel
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(channelData => {
-                this.selectedChannel = channelData
-            })
     }
 
     ngOnDestroy(): void

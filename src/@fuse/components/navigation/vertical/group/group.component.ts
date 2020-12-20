@@ -36,7 +36,7 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
-        private _chatService: ChatService,
+        private _chatService: NavigationService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
     )

@@ -1,12 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseMatSidenavHelperService } from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
 
 import { ChatService } from 'app/main/apps/chat/chat.service';
+import {NavigationService} from '../../../../../../../@fuse/services/navigation.service';
+import {takeUntil} from 'rxjs/operators';
+
 
 @Component({
     selector     : 'chat-chats-sidenav',
@@ -17,44 +19,28 @@ import { ChatService } from 'app/main/apps/chat/chat.service';
 })
 export class ChatChatsSidenavComponent implements OnInit, OnDestroy
 {
-    chats: any[];
-    chatSearch: any;
-    contacts: any[];
-    searchText: string;
-    user: any;
 
+    getTopics: any;
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _chatService: ChatService,
+        private _chatService: NavigationService,
         private _fuseMatSidenavHelperService: FuseMatSidenavHelperService,
         public _mediaObserver: MediaObserver
     )
     {
-        this.chatSearch = {
-            name: ''
-        };
-        this.searchText = '';
 
         this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void
     {
-        this.user = this._chatService.user;
-        this.chats = this._chatService.chats;
-        this.contacts = this._chatService.contacts;
-
-        this._chatService.onChatsUpdated
+        this._chatService.selectTopic
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(updatedChats => {
-                this.chats = updatedChats;
-            });
-
-        this._chatService.onUserUpdated
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(updatedUser => {
-                this.user = updatedUser;
+            .subscribe(res => {
+                if (res) {
+                    this.getTopics = res;
+                }
             });
     }
 

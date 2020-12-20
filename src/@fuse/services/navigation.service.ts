@@ -14,6 +14,8 @@ export class NavigationService implements Resolve<any>
     chats: any[];
     user: any;
     channel : any;
+    changeChannel: BehaviorSubject<any>;
+    selectTopic: BehaviorSubject<any>;
     onChatSelected: BehaviorSubject<any>;
     onContactSelected: BehaviorSubject<any>;
     onChatsUpdated: Subject<any>;
@@ -25,6 +27,8 @@ export class NavigationService implements Resolve<any>
         private _httpClient: HttpClient
     )
     {
+        this.changeChannel = new BehaviorSubject(null);
+        this.selectTopic = new BehaviorSubject(null);
         this.onChatSelected = new BehaviorSubject(null);
         this.onContactSelected = new BehaviorSubject(null);
         this.onChatsUpdated = new Subject();
@@ -55,7 +59,31 @@ export class NavigationService implements Resolve<any>
     }
 
     selectChannel(channelId): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-channel')
+                .subscribe((response: any) => {
+                    resolve(response[0].rows);
+                    const channelItem = response[0].rows.find((item) => {
+                        return item.id === channelId
+                    });
+                    if (channelItem) {
+                        this.changeChannel.next({...channelItem})
+                    }
+                    this.getTopicByChannel(channelItem.id)
+                }, reject);
+        })
+    }
 
+    getTopicByChannel(channelId) {
+        this.getTopic().then(res => {
+            let topicData = [];
+            for (let item of res) {
+                if (item.data.channelId === channelId) {
+                    topicData.push(item);
+                }
+            }
+            this.selectTopic.next(topicData)
+        })
     }
 
     getChat(contactId): Promise<any>
@@ -208,6 +236,16 @@ export class NavigationService implements Resolve<any>
                     console.log('in navigation', response)
                     resolve(response[0].rows)
                 }, reject);
+        })
+    }
+
+    getTopic(): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-topic')
+                .subscribe((response: any) => {
+                    resolve(response[0].rows);
+                }, reject)
         })
     }
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component,  OnInit, } from '@angular/core';
 import {ChatService} from '../../../main/apps/chat/chat.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {NavigationService} from '../../../../@fuse/services/navigation.service';
 
 @Component({
   selector: 'app-subheader',
@@ -17,16 +18,12 @@ export class SubheaderComponent implements OnInit {
     private _unsubscribeAll: Subject<any>;
 
   constructor(
-      private _chatService: ChatService
+      private _chatService: NavigationService
   ) {
       this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-      setTimeout(this.getChannel(), 3000)
-  }
-
-  getChannel(): void {
       this._chatService.changeChannel
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(channelData => {
@@ -38,4 +35,5 @@ export class SubheaderComponent implements OnInit {
               }
           })
   }
+
 }
