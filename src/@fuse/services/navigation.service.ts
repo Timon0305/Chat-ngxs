@@ -12,8 +12,10 @@ export class NavigationService implements Resolve<any>
 {
     channel : any;
     messages: any;
+    topic: any;
     changeChannel: BehaviorSubject<any>;
     selectTopic: BehaviorSubject<any>;
+    onTopicSelect: BehaviorSubject<any>;
     onChatSelected: BehaviorSubject<any>;
     onContactSelected: BehaviorSubject<any>;
     onChatsUpdated: Subject<any>;
@@ -27,6 +29,7 @@ export class NavigationService implements Resolve<any>
     {
         this.changeChannel = new BehaviorSubject(null);
         this.selectTopic = new BehaviorSubject(null);
+        this.onTopicSelect = new BehaviorSubject(null);
         this.onChatSelected = new BehaviorSubject(null);
         this.onContactSelected = new BehaviorSubject(null);
         this.onChatsUpdated = new Subject();
@@ -40,10 +43,12 @@ export class NavigationService implements Resolve<any>
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getChannels(),
+                this.getTopic(),
                 this.getMessages()
             ]).then(
-                ([ channel, message]) => {
+                ([ channel, topic, message]) => {
                     this.channel = channel;
+                    this.topic = topic;
                     this.messages = message;
                     resolve();
                 },
@@ -90,6 +95,15 @@ export class NavigationService implements Resolve<any>
                 }
             }
             this.onChatSelected.next(chatMessage);
+        });
+
+        this.getTopic().then(res => {
+            for (let item of res) {
+                if (item.id === messageId) {
+                    this.onTopicSelect.next(item)
+                }
+            }
+
         })
     }
 

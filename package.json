@@ -30,6 +30,9 @@
         "@angular/platform-browser-dynamic": "11.0.0",
         "@angular/router": "11.0.0",
         "@ngx-translate/core": "13.0.0",
+        "@ngxs/form-plugin": "latest",
+        "@ngxs/logger-plugin": "latest",
+        "@ngxs/router-plugin": "latest",
         "@ngxs/store": "3.7.1",
         "@swimlane/dragula": "3.8.0",
         "@swimlane/ngx-charts": "16.0.0",
@@ -51,11 +54,9 @@
         "prismjs": "1.22.0",
         "rxjs": "6.6.3",
         "tslib": "2.0.3",
+        "uuid-random": "1.3.2",
         "web-animations-js": "2.3.2",
-        "zone.js": "0.10.3",
-        "@ngxs/form-plugin": "latest",
-        "@ngxs/router-plugin": "latest",
-        "@ngxs/logger-plugin": "latest"
+        "zone.js": "0.10.3"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "0.1100.0",

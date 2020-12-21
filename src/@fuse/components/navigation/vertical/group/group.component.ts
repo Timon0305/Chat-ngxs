@@ -13,8 +13,7 @@ import {NavigationService} from '../../../../services/navigation.service';
 })
 export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
 {
-    channelStyle: string;
-    channelId: string;
+
     @HostBinding('class')
     classes = 'nav-group nav-item';
 
@@ -70,11 +69,4 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    clickChannel(channelId): void {
-        this.channelId = channelId;
-        this._chatService.selectChannel(channelId)
-            .then(res => {
-
-            })
-    }
 }

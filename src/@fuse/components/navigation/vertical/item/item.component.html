@@ -1,46 +1,17 @@
 <ng-container>
-    <!-- item.url -->
-    <!--<a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && !item.externalUrl && !item.function"-->
-       <!--[routerLink]="[item.url]" [routerLinkActive]="['active', 'accent']"-->
-       <!--[routerLinkActiveOptions]="{exact: item.exactMatch || false}"-->
-       <!--[target]="item.openInNewTab ? '_blank' : '_self'">-->
-        <!--<ng-container *ngTemplateOutlet="itemContent"></ng-container>-->
-    <!--</a>-->
 
-    <!--&lt;!&ndash; item.externalUrl &ndash;&gt;-->
-    <!--<a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && item.externalUrl && !item.function"-->
-       <!--[href]="item.url" [target]="item.openInNewTab ? '_blank' : '_self'">-->
-        <!--<ng-container *ngTemplateOutlet="itemContent"></ng-container>-->
-    <!--</a>-->
-
-    <!--&lt;!&ndash; item.function &ndash;&gt;-->
-    <!--<span class="nav-link" [ngClass]="item.classes" *ngIf="!item.url && item.function"-->
-          <!--(click)="item.function()">-->
-        <!--<ng-container *ngTemplateOutlet="itemContent"></ng-container>-->
-    <!--</span>-->
-
-    <!--&lt;!&ndash; item.url && item.function &ndash;&gt;-->
-    <!--<a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && !item.externalUrl && item.function"-->
-       <!--(click)="item.function()"-->
-       <!--[routerLink]="[item.url]" [routerLinkActive]="['active', 'accent']"-->
-       <!--[routerLinkActiveOptions]="{exact: item.exactMatch || false}"-->
-       <!--[target]="item.openInNewTab ? '_blank' : '_self'">-->
-        <!--<ng-container *ngTemplateOutlet="itemContent"></ng-container>-->
-    <!--</a>-->
-
-    <!--&lt;!&ndash; item.externalUrl && item.function &ndash;&gt;-->
-    <!--<a class="nav-link" [ngClass]="item.classes" *ngIf="item.url && item.externalUrl && item.function"-->
-       <!--(click)="item.function()"-->
-       <!--[href]="item.url" [target]="item.openInNewTab ? '_blank' : '_self'">-->
-        <!--<ng-container *ngTemplateOutlet="itemContent"></ng-container>-->
-    <!--</a>-->
+    <a class="nav-link " [class.active]="item.id === activeState"
+       [routerLinkActive] = "['active', 'accent']"
+       (click)="clickChannel(item.id)">
+        <ng-container *ngTemplateOutlet="itemContent"></ng-container>
+    </a>
 
     <ng-template #itemContent>
-        <mat-icon class="nav-link-icon" *ngIf="item.data.name">{{item.avatar}}</mat-icon>
+        <img class="nav-link-icon" [src]="item.data.avatar">
         <span class="nav-link-title">{{item.data.name}}</span>
-        <span class="nav-link-badge" *ngIf="item.stats"
-              [ngStyle]="{'background-color': item.badge.bg,'color': item.badge.fg}">
-            {{item.stats.users}}
+        <span class="nav-link-badge"
+              >
+            {{item.data.stats.users}}
         </span>
     </ng-template>
 

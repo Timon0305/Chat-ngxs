@@ -111,15 +111,17 @@ chat-view {
                             order: 2;
                             margin: 0 0 0 16px;
                         }
-
+                        .me-text {
+                            margin-left: auto;
+                        }
                         .bubble {
                             margin-left: auto;
 
                             border-top-left-radius: 20px;
                             border-bottom-left-radius: 20px;
 
-                            border-top-right-radius: 5px;
-                            border-bottom-right-radius: 5px;
+                            border-top-right-radius: 20px;
+                            border-bottom-right-radius: 20px;
 
                             .time {
                                 justify-content: flex-end;

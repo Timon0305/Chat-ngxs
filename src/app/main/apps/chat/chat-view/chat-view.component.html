@@ -1,71 +1,50 @@
 <div class="chat" fxFlex fxLayout="column">
 
-    <!--<mat-toolbar class="chat-toolbar">-->
+    <mat-toolbar class="chat-toolbar">
 
-        <!--<div fxFlex fxLayout="row" fxLayoutAlign="space-between center">-->
+        <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
 
-            <!--<div fxLayout="row" fxLayoutAlign="start center">-->
+            <div fxLayout="row" fxLayoutAlign="start center">
 
-                <!--<button mat-icon-button fxHide.gt-md class="responsive-chats-button mr-16"-->
-                        <!--fuseMatSidenavToggler="chat-left-sidenav"-->
-                        <!--aria-label="chats button">-->
-                    <!--<mat-icon>chat</mat-icon>-->
-                <!--</button>-->
+                <button mat-icon-button fxHide.gt-md class="responsive-chats-button mr-16"
+                        fuseMatSidenavToggler="chat-left-sidenav"
+                        aria-label="chats button">
+                    <mat-icon>chat</mat-icon>
+                </button>
 
-                <!--<div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"-->
-                     <!--fuseMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">-->
+                <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
+                     fuseMatSidenavToggler="chat-right-sidenav">
 
-                    <!--<div class="avatar-wrapper">-->
+                    <div class="chat-contact-name">
+                        {{selectedTopic}}
+                    </div>
 
-                        <!--<img [src]="contact.avatar"-->
-                             <!--class="avatar"-->
-                             <!--alt="{{contact.name}}"/>-->
+                </div>
+            </div>
 
-                        <!--<mat-icon class="s-16 status"-->
-                                  <!--[ngClass]="contact.status">-->
-                        <!--</mat-icon>-->
-                    <!--</div>-->
+        </div>
+    </mat-toolbar>
 
-                    <!--<div class="chat-contact-name">-->
-                        <!--{{contact.name}}-->
-                    <!--</div>-->
-
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div>-->
-                <!--<button mat-icon-button [matMenuTriggerFor]="contactMenu" aria-label="more">-->
-                    <!--<mat-icon>more_vert</mat-icon>-->
-                <!--</button>-->
-
-                <!--<mat-menu #contactMenu="matMenu">-->
-                    <!--<button mat-menu-item fuseMatSidenavToggler="chat-right-sidenav" (click)="selectContact()">-->
-                        <!--Contact Info-->
-                    <!--</button>-->
-                <!--</mat-menu>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    <!--</mat-toolbar>-->
-    <!-- / CHAT TOOLBAR -->
-
-    <!-- CHAT CONTENT -->
     <div id="chat-content" fxFlex="1 1 auto"  fusePerfectScrollbar>
 
         <!-- CHAT MESSAGES -->
         <div class="chat-messages">
 
             <!-- MESSAGE -->
-            <div *ngFor="let message of selectedChat; let i = index" class="message-row contact" style="margin-bottom: 24px"
-                 >
+            <div *ngFor="let message of selectedChat; let i = index" class="message-row" style="margin-bottom: 24px"
+                 [ngClass]="{
+                            'me': message.system.userId === user.id,
+                            'contact': message.system.userId !== user.id
+                            }"
+            >
 
-                <img
+                <img *ngIf="message.system.userId !== user.id"
                      src="assets/images/avatars/profile.jpg"
                      class="avatar">
 
-                <div>
+                <div class="me-text">
                     <div style="display: flex;">
-                        <div class="time black-text pr-5 text-16">{{message.id}}</div> &nbsp;
+                        <div class="time black-text pr-5 text-16">{{message.system.userId === user.id ? 'me' : '' }}</div> &nbsp;
                         <div class="time secondary-text">{{message.system.updatedAt | date:'short'}}</div>
                     </div>
                     
@@ -73,7 +52,6 @@
                         <div class="message">{{message.data.text}}</div>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -83,10 +61,10 @@
     <div class="chat-footer" fxFlex="0 0 auto" fxLayout="column">
 
         <div class="reply-form" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center">
-            <!--(ngSubmit)="reply($event)"-->
-            <!--(keydown.enter)="reply($event)"-->
-            <form #replyForm="ngForm"
 
+            <form #replyForm="ngForm"
+                  (ngSubmit)="reply($event)"
+                  (keydown.enter)="reply($event)"
                   fxFlex fxLayout="row" fxLayoutAlign="start center">
 
                 <mat-form-field class="message-text" fxFlex floatLabel="never" appearance="standard">

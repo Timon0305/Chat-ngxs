@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import uuid from 'uuid-random';
 
-import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
+import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 
 import {NavigationService} from '../../../../../@fuse/services/navigation.service';
 
@@ -21,6 +22,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     contact: any;
     replyInput: any;
     selectedChat: any;
+    selectedTopic: string;
 
     @ViewChild(FusePerfectScrollbarDirective)
     directiveScroll: FusePerfectScrollbarDirective;
@@ -42,6 +44,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
      ngOnInit(): void
     {
+        this.user = {id : 'f32dc9ae-7ca8-44ca-8f25-f258f7331c55'};
         this._chatService.onChatSelected
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(chatData => {
@@ -52,6 +55,13 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
                 }
             });
 
+        this._chatService.onTopicSelect
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(res => {
+                if (res) {
+                    this.selectedTopic = res.data.name;
+                }
+            })
     }
 
     ngAfterViewInit(): void
@@ -122,17 +132,16 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
         {
             return;
         }
-
-        const message = {
-            who    : this.selectedChat[0].id,
-            message: this.replyForm.form.value.message,
-            time   : new Date().toISOString()
+        let replyMessage = {
+            data: {text: ''},
+            id: uuid(),
+            system: {updatedAt: '', userId: this.user.id}
         };
-
-        console.log(this.dialog)
-        this.dialog.push(message);
+        replyMessage.data.text = this.replyForm.form.value.message;
+        replyMessage.system.updatedAt = new Date().toISOString();
+        this.selectedChat.push(replyMessage);
         //
-        // this.replyForm.reset();
+        this.replyForm.reset();
 
         // this._chatService.updateDialog(this.selectedChat.chatId, this.dialog).then(response => {
         //     this.readyToReply();

@@ -7,6 +7,7 @@ export interface FuseNavigationItem
     type?: string,
     status?: string,
     users?: number,
+    classes?: string,
     topics?: number,
     newMessages?: number,
     createdAt?: string,

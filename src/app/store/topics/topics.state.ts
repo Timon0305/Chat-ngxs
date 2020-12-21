@@ -35,7 +35,7 @@ export class TopicsState {
             patch({
                 topicInfo: patch({
                     model: patch({
-                        toppings: (topping: any) => 'Topic.' + topping
+                        rows: (topping: any) => 'Topic.' + rows
                     })
                 })
             })
@@ -44,7 +44,7 @@ export class TopicsState {
 
     @Action(LoadData)
     public loadData({patchState}: StateContext<TopicStateModel>) {
-        const data = {toppings: 'topic', extra: [false, false, true]};
+        const data = {rows: 'topic', extra: [false, false, true]};
         return of(data).pipe(tap(values => patchState({topicInfo: {model: {...values}}})))
     }
 }
