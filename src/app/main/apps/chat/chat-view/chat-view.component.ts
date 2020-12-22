@@ -120,11 +120,11 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
         replyMessage.data.text = this.replyForm.form.value.message;
         replyMessage.system.updatedAt = new Date().toISOString();
         this.selectedChat.push(replyMessage);
-        //
+
         this.replyForm.reset();
 
-        // this._chatService.updateDialog(this.selectedChat.chatId, this.dialog).then(response => {
-        //     this.readyToReply();
-        // });
+        this._chatService.updateDialog(this.user.id, this.selectedChat).then(response => {
+            this.readyToReply();
+        });
     }
 }

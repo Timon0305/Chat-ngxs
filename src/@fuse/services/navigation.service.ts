@@ -152,4 +152,20 @@ export class NavigationService implements Resolve<any>
                 }, reject)
         })
     }
+
+    updateDialog(chatId, dialog): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+
+            const newData = {
+                id    : chatId,
+                dialog: dialog
+            };
+
+            this._httpClient.post('api/chat-message/' + chatId, newData)
+                .subscribe(updatedChat => {
+                    resolve(updatedChat);
+                }, reject);
+        });
+    }
 }
