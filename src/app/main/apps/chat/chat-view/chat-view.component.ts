@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, Vi
 import {NgForm} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import uuid from 'uuid-random';
+import { v4 as uuidv4 } from 'uuid';
 
 import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 
@@ -17,7 +17,6 @@ import {NavigationService} from '../../../../../@fuse/services/navigation.servic
 export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 {
     user: any;
-    chat: any;
     dialog: any;
     contact: any;
     replyInput: any;
@@ -77,25 +76,6 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
         this._unsubscribeAll.complete();
     }
 
-
-    shouldShowContactAvatar(message, i): boolean
-    {
-        return (
-            message.who === this.contact.id &&
-            ((this.dialog[i + 1] && this.dialog[i + 1].who !== this.contact.id) || !this.dialog[i + 1])
-        );
-    }
-
-    isFirstMessageOfGroup(message, i): boolean
-    {
-        return (i === 0 || this.dialog[i - 1] && this.dialog[i - 1].who !== message.who);
-    }
-
-    isLastMessageOfGroup(message, i): boolean
-    {
-        return (i === this.dialog.length - 1 || this.dialog[i + 1] && this.dialog[i + 1].who !== message.who);
-    }
-
     readyToReply(): void
     {
         setTimeout(() => {
@@ -134,7 +114,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
         }
         let replyMessage = {
             data: {text: ''},
-            id: uuid(),
+            id: uuidv4(),
             system: {updatedAt: '', userId: this.user.id}
         };
         replyMessage.data.text = this.replyForm.form.value.message;

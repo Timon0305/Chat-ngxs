@@ -1,12 +1,10 @@
 import {
     ChangeDetectorRef,
     Component,
-    ElementRef,
     HostBinding,
     Input,
     OnDestroy,
     OnInit,
-    ViewChild
 } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -22,8 +20,6 @@ import {NavigationService} from '../../../../services/navigation.service';
 })
 export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
 {
-    activeState: string;
-    selectedItem: string;
     @HostBinding('class')
     classes = 'nav-item';
 
@@ -77,11 +73,10 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
 
 
     clickChannel(channelId): void {
-        this.activeState = channelId;
         this._chatService.selectChannel(channelId)
-            .then(res => {
+            .then(() => {
 
-            })
+            });
     }
 
     /**

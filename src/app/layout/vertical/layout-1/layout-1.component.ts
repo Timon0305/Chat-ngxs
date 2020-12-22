@@ -35,10 +35,6 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
     /**
      * On init
      */
@@ -48,7 +44,6 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
-                console.log('config=>', config)
                 this.fuseConfig = config;
             });
     }

@@ -44,7 +44,7 @@
 
                 <div class="me-text">
                     <div style="display: flex;">
-                        <div class="time black-text pr-5 text-16">{{message.system.userId === user.id ? 'me' : '' }}</div> &nbsp;
+                        <div class="time black-text pr-5 text-16">{{message.system.userId === user.id ? 'me' : message.system.userId }}</div> &nbsp;
                         <div class="time secondary-text">{{message.system.updatedAt | date:'short'}}</div>
                     </div>
                     

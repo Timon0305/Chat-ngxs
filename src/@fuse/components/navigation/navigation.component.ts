@@ -3,6 +3,7 @@ import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import {NavigationService} from '../../services/navigation.service';
 
 @Component({
     selector       : 'fuse-navigation',
@@ -24,10 +25,12 @@ export class FuseNavigationComponent implements OnInit
 
     /**
      *
+     * @param _chatService
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
+        private _chatService: NavigationService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
     )
@@ -51,12 +54,21 @@ export class FuseNavigationComponent implements OnInit
         this._fuseNavigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-
                 // Load the navigation
                 this.navigation = this._fuseNavigationService.getCurrentNavigation();
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
+            });
+
+        this._chatService.getActiveChannel
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
+                if (res) {
+                    for (let item of this.navigation[0].rows) {
+                        item.active = item.id === res.id;
+                    }
+                }
             });
 
         // Subscribe to navigation item
@@ -66,7 +78,6 @@ export class FuseNavigationComponent implements OnInit
             this._fuseNavigationService.onNavigationItemRemoved
         ).pipe(takeUntil(this._unsubscribeAll))
          .subscribe(() => {
-
              // Mark for check
              this._changeDetectorRef.markForCheck();
          });

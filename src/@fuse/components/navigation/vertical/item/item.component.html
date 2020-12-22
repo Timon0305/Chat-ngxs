@@ -1,7 +1,8 @@
 <ng-container>
 
-    <a class="nav-link " [class.active]="item.id === activeState"
+    <a class="nav-link"
        [routerLinkActive] = "['active', 'accent']"
+       [ngClass] = "item.active === true ? 'active accent' : ''"
        (click)="clickChannel(item.id)">
         <ng-container *ngTemplateOutlet="itemContent"></ng-container>
     </a>

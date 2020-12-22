@@ -14,6 +14,7 @@ export class NavigationService implements Resolve<any>
     messages: any;
     topic: any;
     changeChannel: BehaviorSubject<any>;
+    getActiveChannel: BehaviorSubject<any>;
     selectTopic: BehaviorSubject<any>;
     onTopicSelect: BehaviorSubject<any>;
     onChatSelected: BehaviorSubject<any>;
@@ -28,6 +29,7 @@ export class NavigationService implements Resolve<any>
     )
     {
         this.changeChannel = new BehaviorSubject(null);
+        this.getActiveChannel = new BehaviorSubject(null);
         this.selectTopic = new BehaviorSubject(null);
         this.onTopicSelect = new BehaviorSubject(null);
         this.onChatSelected = new BehaviorSubject(null);
@@ -66,11 +68,12 @@ export class NavigationService implements Resolve<any>
                         return item.id === channelId
                     });
                     if (channelItem) {
-                        this.changeChannel.next({...channelItem})
+                        this.changeChannel.next({...channelItem});
+                        this.getActiveChannel.next({...channelItem});
                     }
-                    this.getTopicByChannel(channelItem.id)
+                    this.getTopicByChannel(channelItem.id);
                 }, reject);
-        })
+        });
     }
 
     getTopicByChannel(channelId) {
