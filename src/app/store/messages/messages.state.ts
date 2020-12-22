@@ -16,9 +16,7 @@ const MESSAGE_TOKEN: StateToken<MessageStateModel> = new StateToken('messages');
     name: MESSAGE_TOKEN,
     defaults: {
         message: [],
-        messageInfo: {
-            model: undefined
-        }
+        messageInfo: {}
     },
     children: [MessageState]
 })
@@ -35,8 +33,8 @@ export class MessagesState {
         setState(
             patch({
                 messageInfo: patch({
-                    model: patch({
-                        toppings: (topping: any) => 'Message.' + topping
+                    data: patch({
+                        selectedMessageInfo: (selectedMessageInfo: any) => 'Message Data' + selectedMessageInfo
                     })
                 })
             })
@@ -45,7 +43,7 @@ export class MessagesState {
 
     @Action(LoadData)
     public loadData({patchState}: StateContext<MessageStateModel>) {
-        const data = {toppings: 'message', extra: [false, false, true]};
-        return of(data).pipe(tap(values => patchState({messageInfo: {model: {...values}}})))
+        const data = {selectedMessageInfo: 'message', extra: [false, false, true]};
+        return of(data).pipe(tap(values => patchState({messageInfo: {data: {...values}}})))
     }
 }

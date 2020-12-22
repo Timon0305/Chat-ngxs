@@ -16,9 +16,7 @@ const CHANNEL_TOKEN: StateToken<ChannelStateModel> = new StateToken('channels');
     name: CHANNEL_TOKEN,
     defaults: {
         channel: [],
-        channelInfo: {
-            model: undefined
-        }
+        channelInfo: {}
     },
     children: [ChannelState]
 })
@@ -35,8 +33,8 @@ export class ChannelsState {
         setState(
             patch({
                 channelInfo: patch({
-                    model: patch({
-                        toppings: (topping: any) => 'Channel.' + topping
+                    data: patch({
+                        selectChannelInfo: (selectChannelInfo: any) => 'Channel Data' + selectChannelInfo
                     })
                 })
             })
@@ -45,8 +43,8 @@ export class ChannelsState {
 
     @Action(LoadData)
     public loadData({patchState}: StateContext<ChannelStateModel>) {
-        const data = {toppings: 'channel', extra: [false, false, true]};
-        return of(data).pipe(tap(values => patchState({channelInfo: {model: {...values}}})))
+        const data = {selectChannelInfo: 'channel', extra: [false, false, true]};
+        return of(data).pipe(tap(values => patchState({channelInfo: {data: {...values}}})))
     }
 }
 

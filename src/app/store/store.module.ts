@@ -12,6 +12,8 @@ import {ChannelsState} from './channels/channels.state';
 import {ChannelState} from './channels/channel/channel.state';
 import {MessagesState} from './messages/messages.state';
 import {MessageState} from './messages/message/message.state';
+import {TopicState} from './topics/topic/topic.state';
+import {TopicsState} from './topics/topics.state';
 
 @NgModule({
     imports: [
@@ -22,6 +24,7 @@ import {MessageState} from './messages/message/message.state';
         NgxsRouterPluginModule.forRoot(),
         NgxsModule.forRoot([
             ChannelsState, ChannelState,
+            TopicState, TopicsState,
             MessagesState, MessageState
         ], {
             developmentMode: !environment.production,

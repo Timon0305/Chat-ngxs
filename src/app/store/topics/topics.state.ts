@@ -9,15 +9,13 @@ import {TopicState} from './topic/topic.state';
 import {TopicInfo, TopicStateModel} from './topics.model';
 import {LoadData, SetPrefix} from './topics.actions';
 
-const TOPIC_TOKEN: StateToken<TopicStateModel> = new StateToken('topic');
+const TOPIC_TOKEN: StateToken<TopicStateModel> = new StateToken('topics');
 
 @State<TopicStateModel>({
     name: TOPIC_TOKEN,
     defaults: {
         topic: [],
-        topicInfo: {
-            model: undefined
-        }
+        topicInfo: {}
     },
     children: [TopicState]
 })
@@ -34,8 +32,8 @@ export class TopicsState {
         setState(
             patch({
                 topicInfo: patch({
-                    model: patch({
-                        rows: (topping: any) => 'Topic.' + rows
+                    data: patch({
+                        selectedTopicInfo: (selectedTopicInfo: any) => 'Topic data.' + selectedTopicInfo
                     })
                 })
             })
@@ -44,7 +42,7 @@ export class TopicsState {
 
     @Action(LoadData)
     public loadData({patchState}: StateContext<TopicStateModel>) {
-        const data = {rows: 'topic', extra: [false, false, true]};
-        return of(data).pipe(tap(values => patchState({topicInfo: {model: {...values}}})))
+        const data = {selectedTopicInfo: 'topic', extra: [false, false, true]};
+        return of(data).pipe(tap(values => patchState({topicInfo: {data: {...values}}})))
     }
 }
