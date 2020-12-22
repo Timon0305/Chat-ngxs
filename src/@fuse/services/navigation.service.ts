@@ -17,6 +17,7 @@ export class NavigationService implements Resolve<any>
     getActiveChannel: BehaviorSubject<any>;
     selectTopic: BehaviorSubject<any>;
     onTopicSelect: BehaviorSubject<any>;
+    getActiveTopics: BehaviorSubject<any>;
     onChatSelected: BehaviorSubject<any>;
     onContactSelected: BehaviorSubject<any>;
     onChatsUpdated: Subject<any>;
@@ -33,6 +34,7 @@ export class NavigationService implements Resolve<any>
         this.selectTopic = new BehaviorSubject(null);
         this.onTopicSelect = new BehaviorSubject(null);
         this.onChatSelected = new BehaviorSubject(null);
+        this.getActiveTopics = new BehaviorSubject(null);
         this.onContactSelected = new BehaviorSubject(null);
         this.onChatsUpdated = new Subject();
         this.onUserUpdated = new Subject();
@@ -94,6 +96,7 @@ export class NavigationService implements Resolve<any>
             let chatMessage = [];
             for (let item of res) {
                 if (item.data.topicId === messageId) {
+
                     chatMessage.push(item)
                 }
             }
@@ -103,11 +106,12 @@ export class NavigationService implements Resolve<any>
         this.getTopic().then(res => {
             for (let item of res) {
                 if (item.id === messageId) {
-                    this.onTopicSelect.next(item)
+                    this.onTopicSelect.next(item);
+                    this.getActiveTopics.next(item);
                 }
             }
-
         })
+
     }
 
     selectContact(contact): void

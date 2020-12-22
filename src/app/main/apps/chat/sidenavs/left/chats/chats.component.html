@@ -27,6 +27,7 @@
 
             <button mat-button class="contact"
                     *ngFor="let topic of getTopics"
+                    [ngClass]="topic.active === true ? 'accent active': ''"
                     (click)="getChat(topic.id)" ngClass="{'unread':contact.unread}"
                     [@animate]="{value:'*',params:{y:'100%'}}">
 

@@ -42,6 +42,16 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
                     this.getTopics = []
                 }
             });
+
+        this._chatService.getActiveTopics
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(res => {
+                if (res) {
+                    for (let item of this.getTopics) {
+                        item.active = item.id === res.id;
+                    }
+                }
+            })
     }
 
     ngOnDestroy(): void
