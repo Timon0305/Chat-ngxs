@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 
 import {NavigationService} from '../../../../../@fuse/services/navigation.service';
+import {Store} from '@ngxs/store';
 
 @Component({
     selector     : 'chat-view',
@@ -35,7 +36,8 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _chatService: NavigationService
+        private _chatService: NavigationService,
+        private store: Store
     )
     {
         this._unsubscribeAll = new Subject();
