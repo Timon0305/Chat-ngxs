@@ -7,6 +7,8 @@ import { FuseMatSidenavHelperService } from '@fuse/directives/fuse-mat-sidenav/f
 
 import {NavigationService} from '../../../../../../../@fuse/services/navigation.service';
 import {takeUntil} from 'rxjs/operators';
+import {TopicActions} from '../../../../../../store/topic/topic-actions';
+import {Store} from '@ngxs/store';
 
 
 @Component({
@@ -22,6 +24,7 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
     private _unsubscribeAll: Subject<any>;
 
     constructor(
+        private store: Store,
         private _chatService: NavigationService,
         private _fuseMatSidenavHelperService: FuseMatSidenavHelperService,
         public _mediaObserver: MediaObserver
@@ -63,6 +66,7 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
 
     getChat(id): void
     {
+        // this.store.dispatch(new TopicActions.ChangeTopic({id: id}));
         this._chatService.getChat(id);
 
         if ( !this._mediaObserver.isActive('gt-md') )

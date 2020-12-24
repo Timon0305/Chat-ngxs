@@ -1,0 +1,20 @@
+export interface TopicModel {
+    rows?: any,
+    id?: string,
+    data?: any,
+    channelId?: string,
+    name?: string,
+    status?: string,
+    stats?: any,
+    newMessages?: number,
+    system?: any,
+    createdAt?: string,
+    updatedAt?: string,
+    spaceId?: string,
+    userId?: string,
+    model?: number,
+    total?: number,
+    page?: number,
+    pageSize?: number,
+    totalPages?: number
+}
