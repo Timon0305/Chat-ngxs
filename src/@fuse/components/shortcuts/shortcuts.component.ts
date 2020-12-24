@@ -49,18 +49,12 @@ export class FuseShortcutsComponent implements OnInit, AfterViewInit, OnDestroy
         private _renderer: Renderer2
     )
     {
-        // Set the defaults
         this.shortcutItems = [];
         this.searching = false;
         this.mobileShortcutsPanelActive = false;
 
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * On init

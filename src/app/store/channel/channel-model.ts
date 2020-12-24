@@ -1,8 +1,4 @@
-export const CHANNELS_STORAGE_KEY = 'channels.channel';
-
-export type Channel = string;
-
-export interface ChannelInfo<T = any> {
+export interface ChannelModel {
     rows?: any,
     id?: string,
     data?: any,
@@ -24,9 +20,4 @@ export interface ChannelInfo<T = any> {
     page?: number,
     pageSize?: number,
     totalPages?: number
-}
-
-export class ChannelStateModel {
-    public channel: string[];
-    public channelInfo: ChannelInfo;
 }

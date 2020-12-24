@@ -4,6 +4,8 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { FuseUtils } from '@fuse/utils';
+import {Store} from '@ngxs/store';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +28,8 @@ export class NavigationService implements Resolve<any>
     onRightSidenavViewChanged: Subject<any>;
 
     constructor(
-        private _httpClient: HttpClient
+        private _httpClient: HttpClient,
+        private store: Store,
     )
     {
         this.changeChannel = new BehaviorSubject(null);
@@ -112,11 +115,6 @@ export class NavigationService implements Resolve<any>
             }
         })
 
-    }
-
-    selectContact(contact): void
-    {
-        this.onContactSelected.next(contact);
     }
 
     setUserStatus(status): void

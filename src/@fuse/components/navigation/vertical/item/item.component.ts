@@ -6,12 +6,15 @@ import {
     OnDestroy,
     OnInit,
 } from '@angular/core';
-import { merge, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {merge, Observable, Subject} from 'rxjs';
+import {takeUntil, tap} from 'rxjs/operators';
 
 import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import {NavigationService} from '../../../../services/navigation.service';
+import {Select, Store} from '@ngxs/store';
+import {ChannelActions} from '../../../../../app/store/channel/channel-actions';
+
 
 @Component({
     selector   : 'fuse-nav-vertical-item',
@@ -35,11 +38,13 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
 
     /**
      *
+     * @param store
      * @param _chatService
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
+        private store: Store,
         private _chatService: NavigationService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
@@ -49,9 +54,6 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * On init
@@ -73,10 +75,9 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
 
 
     clickChannel(channelId): void {
+        // this.store.dispatch(new ChannelActions.ChangeChannel({id: channelId}))
         this._chatService.selectChannel(channelId)
-            .then(() => {
-
-            });
+            .then(() => {})
     }
 
     /**

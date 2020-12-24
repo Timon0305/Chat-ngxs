@@ -20,7 +20,6 @@ export class FuseNavigationComponent implements OnInit
     @Input()
     navigation: any;
 
-    // Private
     private _unsubscribeAll: Subject<any>;
 
     /**
@@ -35,13 +34,8 @@ export class FuseNavigationComponent implements OnInit
         private _fuseNavigationService: FuseNavigationService
     )
     {
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * On init
@@ -71,14 +65,12 @@ export class FuseNavigationComponent implements OnInit
                 }
             });
 
-        // Subscribe to navigation item
         merge(
             this._fuseNavigationService.onNavigationItemAdded,
             this._fuseNavigationService.onNavigationItemUpdated,
             this._fuseNavigationService.onNavigationItemRemoved
         ).pipe(takeUntil(this._unsubscribeAll))
          .subscribe(() => {
-             // Mark for check
              this._changeDetectorRef.markForCheck();
          });
     }

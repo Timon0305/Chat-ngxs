@@ -1,6 +1,7 @@
 import {Component,  OnInit, } from '@angular/core';
-import {takeUntil} from 'rxjs/operators';
+import {takeUntil, tap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {Store} from '@ngxs/store';
 import {NavigationService} from '../../../../@fuse/services/navigation.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class SubheaderComponent implements OnInit {
     private _unsubscribeAll: Subject<any>;
 
   constructor(
-      private _chatService: NavigationService
+      private _chatService: NavigationService,
+      private store: Store,
   ) {
       this._unsubscribeAll = new Subject();
   }

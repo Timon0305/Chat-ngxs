@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {Store} from '@ngxs/store';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,7 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 
 import {NavigationService} from '../../../../../@fuse/services/navigation.service';
-import {Store} from '@ngxs/store';
+import {MessageActions} from '../../../../store/message/message-actions';
+import AddMessage = MessageActions.AddMessage;
+
 
 @Component({
     selector     : 'chat-view',
@@ -119,14 +122,18 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             id: uuidv4(),
             system: {updatedAt: '', userId: this.user.id}
         };
+
         replyMessage.data.text = this.replyForm.form.value.message;
         replyMessage.system.updatedAt = new Date().toISOString();
+
         this.selectedChat.push(replyMessage);
 
         this.replyForm.reset();
 
-        this._chatService.updateDialog(this.user.id, this.selectedChat).then(response => {
-            this.readyToReply();
-        });
+        this.store.dispatch(new MessageActions.AddMessage(this.user.id, this.selectedChat));
+
+        // this._chatService.updateDialog(this.user.id, this.selectedChat).then(() => {
+        //     this.readyToReply();
+        // });
     }
 }

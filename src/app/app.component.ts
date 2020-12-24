@@ -2,8 +2,9 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import {Select, Store} from '@ngxs/store';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
@@ -14,6 +15,7 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
+import {NavigationService} from '../@fuse/services/navigation.service';
 
 @Component({
     selector   : 'app',
@@ -32,6 +34,8 @@ export class AppComponent implements OnInit, OnDestroy
      * Constructor
      *
      * @param {DOCUMENT} document
+     * @param store
+     * @param _chatService
      * @param {FuseConfigService} _fuseConfigService
      * @param {FuseNavigationService} _fuseNavigationService
      * @param {FuseSidebarService} _fuseSidebarService
@@ -42,6 +46,8 @@ export class AppComponent implements OnInit, OnDestroy
      */
     constructor(
         @Inject(DOCUMENT) private document: any,
+        private store: Store,
+        private _chatService: NavigationService,
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
@@ -88,10 +94,6 @@ export class AppComponent implements OnInit, OnDestroy
          * service.
          */
 
-        // Set the default language to 'en' and then back to 'tr'.
-        // '.use' cannot be used here as ngxTranslate won't switch to a language that's already
-        // been selected and there is no way to force it, so we overcome the issue by switching
-        // the default language back and forth.
         /**
          * setTimeout(() => {
          * this._translateService.setDefaultLang('en');
@@ -114,10 +116,6 @@ export class AppComponent implements OnInit, OnDestroy
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * On init
@@ -154,6 +152,8 @@ export class AppComponent implements OnInit, OnDestroy
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
+
+
     }
 
     /**

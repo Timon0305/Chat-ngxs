@@ -1,6 +1,5 @@
-<div class="nav" [ngClass]="{'horizontal':layout === 'horizontal', 'vertical':layout === 'vertical'}">
+<div class="nav" [ngClass]="{'vertical':layout === 'vertical'}">
 
-    <!-- Vertical Navigation Layout -->
     <ng-container *ngIf="layout === 'vertical'">
 
         <ng-container *ngFor="let item of navigation[0].rows">

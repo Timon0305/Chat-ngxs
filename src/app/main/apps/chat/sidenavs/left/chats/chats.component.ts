@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { Subject } from 'rxjs';
 
@@ -69,16 +69,6 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
         {
             this._fuseMatSidenavHelperService.getSidenav('chat-left-sidenav').toggle();
         }
-    }
-
-    setUserStatus(status): void
-    {
-        this._chatService.setUserStatus(status);
-    }
-
-    changeLeftSidenavView(view): void
-    {
-        this._chatService.onLeftSidenavViewChanged.next(view);
     }
 
 }
