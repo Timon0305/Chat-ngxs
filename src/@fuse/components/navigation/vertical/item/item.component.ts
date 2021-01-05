@@ -13,7 +13,6 @@ import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import {NavigationService} from '../../../../services/navigation.service';
 import {Select, Store} from '@ngxs/store';
-import {ChannelActions} from '../../../../../app/store/channel/channel-actions';
 
 
 @Component({

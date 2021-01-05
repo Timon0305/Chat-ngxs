@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { FuseUtils } from '@fuse/utils';
 import {Store} from '@ngxs/store';
 import {tap} from 'rxjs/operators';
+import {ChannelModel} from '../../app/store/channel/channel-model';
 
 @Injectable({
     providedIn: 'root'
@@ -125,7 +126,7 @@ export class NavigationService implements Resolve<any>
     getChannels() : Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/chat-channel')
+            this._httpClient.get<ChannelModel[]>('api/chat-channel')
                 .subscribe((response: any) => {
                     resolve(response[0].rows)
                 }, reject);

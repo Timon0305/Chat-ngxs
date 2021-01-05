@@ -12,10 +12,14 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 
-import { navigation } from 'app/navigation/navigation';
+// import { channel } from './fake-db/chat-channel';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import {NavigationService} from '../@fuse/services/navigation.service';
+import {ChannelState} from './store/channel/channel-state';
+import {ChannelModel} from './store/channel/channel-model'
+import {FetchAllChannel} from './store/channel/channel-actions';
+import {channel} from './fake-db/chat-channel';
 
 @Component({
     selector   : 'app',
@@ -24,6 +28,9 @@ import {NavigationService} from '../@fuse/services/navigation.service';
 })
 export class AppComponent implements OnInit, OnDestroy
 {
+
+    @Select(ChannelState.getChannelList) channels: Observable<ChannelModel[]>;
+
     fuseConfig: any;
     navigation: any;
 
@@ -58,8 +65,7 @@ export class AppComponent implements OnInit, OnDestroy
     )
     {
         // Get default navigation
-        this.navigation = navigation;
-
+        this.navigation = channel;
         // Register the navigation to the service
         this._fuseNavigationService.register('main', this.navigation);
 
@@ -152,8 +158,7 @@ export class AppComponent implements OnInit, OnDestroy
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
-
-
+        this.store.dispatch(new FetchAllChannel()).subscribe(res => console.log('channel list =>',res))
     }
 
     /**
@@ -166,17 +171,4 @@ export class AppComponent implements OnInit, OnDestroy
         this._unsubscribeAll.complete();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
-    toggleSidebarOpen(key): void
-    {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
-    }
 }

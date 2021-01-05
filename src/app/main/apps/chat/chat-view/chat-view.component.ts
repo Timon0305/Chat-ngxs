@@ -1,15 +1,16 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Store} from '@ngxs/store';
-import {Subject} from 'rxjs';
+import {Select, Store} from '@ngxs/store';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 
 import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 
 import {NavigationService} from '../../../../../@fuse/services/navigation.service';
-import {MessageActions} from '../../../../store/message/message-actions';
-import AddMessage = MessageActions.AddMessage;
+import {FetchAllMessage, AddMessage} from '../../../../store/message/message-actions';
+import {MessageState} from '../../../../store/message/message-state';
+import {MessageModel} from '../../../../store/message/message-model';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     replyInput: any;
     selectedChat: any;
     selectedTopic: string;
+
+    @Select(MessageState.getSelectedMessage) selectedMessage: Observable<MessageModel>;
+    private messageSubscription : Subscription = new Subscription();
 
     @ViewChild(FusePerfectScrollbarDirective)
     directiveScroll: FusePerfectScrollbarDirective;
@@ -130,7 +134,13 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
         this.replyForm.reset();
 
-        this.store.dispatch(new MessageActions.AddMessage(this.user.id, this.selectedChat));
+        this.messageSubscription.add(
+            this.store.dispatch(new AddMessage(this.user.id, this.selectedChat)).subscribe(() => {
+
+            })
+        )
+
+        // this.store.dispatch(new AddMessage(this.user.id, this.selectedChat));
 
         // this._chatService.updateDialog(this.user.id, this.selectedChat).then(() => {
         //     this.readyToReply();
