@@ -156,7 +156,7 @@ export class AppComponent implements OnInit, OnDestroy
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
-        this.store.dispatch(new FetchAllChannel()).subscribe(res => console.log('channel list =>',res))
+        this.store.dispatch(new FetchAllChannel())
     }
 
     /**

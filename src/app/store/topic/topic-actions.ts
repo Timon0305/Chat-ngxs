@@ -1,7 +1,7 @@
 import {TopicModel} from './topic-model';
 
-export class FetchAllTopic {
-    static readonly type = '[Topic] Fetch All'
+export class FetchTopic {
+    static readonly type = '[Topic] Fetch Topic';
 }
 
 export class ChangeTopic {

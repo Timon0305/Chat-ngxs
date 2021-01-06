@@ -22,6 +22,8 @@ import {NgxsModule} from '@ngxs/store';
 import {ChannelState} from './store/channel/channel-state';
 import {environment} from '../environments/environment';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {TopicState} from './store/topic/topic-state';
+import {MessageState} from './store/message/message-state';
 
 const appRoutes: Routes = [
     {
@@ -67,7 +69,7 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
 
-        NgxsModule.forRoot([ChannelState], {
+        NgxsModule.forRoot([ChannelState, TopicState, MessageState], {
             developmentMode: !environment.production
         }),
         NgxsLoggerPluginModule.forRoot()

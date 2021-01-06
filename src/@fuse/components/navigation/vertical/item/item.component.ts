@@ -6,13 +6,13 @@ import {
     OnDestroy,
     OnInit,
 } from '@angular/core';
-import {merge, Observable, Subject} from 'rxjs';
-import {takeUntil, tap} from 'rxjs/operators';
+import {merge, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import {NavigationService} from '../../../../services/navigation.service';
-import {Select, Store} from '@ngxs/store';
+import {Store} from '@ngxs/store';
 import {ChangeChannel} from '../../../../../app/store/channel/channel-actions';
 
 

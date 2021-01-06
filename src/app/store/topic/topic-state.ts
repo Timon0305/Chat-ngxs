@@ -1,58 +1,90 @@
 import {Injectable} from '@angular/core';
-import {State, NgxsOnInit, Action, StateContext, Selector} from '@ngxs/store';
-import {ChangeTopic, FetchAllTopic} from './topic-actions';
-import {patch, updateItem} from '@ngxs/store/operators';
+import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
+import {ChangeTopic, FetchTopic} from './topic-actions';
 import {TopicModel} from './topic-model';
 import {NavigationService} from '../../../@fuse/services/navigation.service';
+import {HttpClient} from '@angular/common/http';
+import {MessageModel} from '../message/message-model';
 
 export interface TopicStateModel {
     topicList: TopicModel[];
-    selectedTopic: TopicModel
+    selectedTopic: TopicModel,
+    getMessageByTopic: MessageModel[]
 }
 @State<TopicStateModel>({
     name: 'topicList',
     defaults: {
         topicList: [],
-        selectedTopic: null
+        selectedTopic: null,
+        getMessageByTopic: null
     }
 })
 
 @Injectable()
-export class TopicState  {
+export class TopicState {
 
     constructor(
-        private _chatService: NavigationService
+        private _chatService: NavigationService,
+        private _httpClient: HttpClient,
     ) {}
-
-    @Selector()
-    static fetchTopicList(state: TopicStateModel) {
-        return state.topicList
-    }
 
     @Selector()
     static getSelectedTopic(state: TopicStateModel) {
         return state.topicList
     }
 
-    @Action(FetchAllTopic)
-    fetchAllTopic({getState, setState}: StateContext<TopicStateModel>) {
-        return this._chatService.getTopic().then((result) => {
-            const state = getState();
-            setState({
-                ...state,
-                topicList: result
-            });
+    @Selector()
+    static getActiveTopic(state: TopicStateModel) {
+        return state.selectedTopic
+    }
+
+    @Selector()
+    static getMessageByTopic(state: TopicStateModel) {
+        return state.getMessageByTopic
+    }
+
+    @Action(FetchTopic)
+    fetchTopic({getState, setState}: StateContext<TopicStateModel>) {
+        const state = getState();
+        return new Promise((resolve, reject) => {
+            this._httpClient.get<TopicModel[]>('api/chat-topic')
+                .subscribe((response: any) => {
+                    let res = response[0].rows;
+                    resolve(res);
+                    setState({
+                        ...state,
+                        topicList: res
+                    })
+                }, reject);
         });
     }
 
     @Action(ChangeTopic)
     changeTopic({getState, setState}: StateContext<TopicStateModel>, {payload}: ChangeTopic) {
         const state = getState();
-        setState({
-            ...state,
-            selectedTopic: payload
-        });
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-message')
+                .subscribe((response: any) => {
+                    let res = response[0].rows;
+                    let chatMessage = [];
+                    for (let item of res) {
+                        if (item.data.topicId === payload.id) {
+                            chatMessage.push(item)
+                        }
+                    }
 
-        return this._chatService.getChat(payload.id)
+                    setState({
+                        ...state,
+                        selectedTopic: payload,
+                        getMessageByTopic: chatMessage
+                    });
+                    resolve(res)
+                }, reject)
+
+        })
+
+
+
+
     }
 }

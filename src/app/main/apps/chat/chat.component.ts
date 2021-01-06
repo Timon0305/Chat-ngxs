@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
+import {Observable, Subject} from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
-
-import {NavigationService} from '../../../../@fuse/services/navigation.service';
+import {Select} from '@ngxs/store';
+import {TopicState} from '../../../store/topic/topic-state';
+import {MessageModel} from '../../../store/message/message-model';
 
 @Component({
     selector     : 'chat',
@@ -17,18 +16,15 @@ export class ChatComponent implements OnInit, OnDestroy
 {
     selectedChat: any;
     private _unsubscribeAll: Subject<any>;
+    @Select(TopicState.getMessageByTopic) getMessage: Observable<MessageModel>;
 
-    constructor(
-        private _chatService: NavigationService
-    )
-    {
+    constructor() {
         this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void
     {
-        this._chatService.onChatSelected
-            .pipe(takeUntil(this._unsubscribeAll))
+       this.getMessage
             .subscribe(chatData => {
                 this.selectedChat = chatData;
             });

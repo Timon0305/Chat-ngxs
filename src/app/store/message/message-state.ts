@@ -6,12 +6,12 @@ import {MessageModel} from './message-model';
 import {NavigationService} from '../../../@fuse/services/navigation.service';
 
 export interface MessageStateModel {
-    messageList: MessageModel[]
+    messageList: MessageModel[],
 }
 @State<MessageStateModel>({
     name: 'messageList',
     defaults: {
-        messageList: []
+        messageList: [],
     }
 })
 

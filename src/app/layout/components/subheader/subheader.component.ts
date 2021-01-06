@@ -1,8 +1,6 @@
 import {Component,  OnInit, } from '@angular/core';
-import {takeUntil, tap} from 'rxjs/operators';
-import {Observable, Subject} from 'rxjs';
-import {Select, Selector, Store} from '@ngxs/store';
-import {NavigationService} from '../../../../@fuse/services/navigation.service';
+import {Observable} from 'rxjs';
+import {Select} from '@ngxs/store';
 import {ChannelState} from '../../../store/channel/channel-state';
 import {ChannelModel} from '../../../store/channel/channel-model';
 

@@ -7,11 +7,12 @@ import { FuseMatSidenavHelperService } from '@fuse/directives/fuse-mat-sidenav/f
 
 import {NavigationService} from '../../../../../../../@fuse/services/navigation.service';
 import {takeUntil} from 'rxjs/operators';
-import {FetchAllTopic, ChangeTopic} from '../../../../../../store/topic/topic-actions';
+import {ChangeTopic, FetchTopic} from '../../../../../../store/topic/topic-actions';
 import {Select, Store} from '@ngxs/store';
 import {TopicState} from '../../../../../../store/topic/topic-state';
 import {TopicModel} from '../../../../../../store/topic/topic-model';
 import {ChannelState} from '../../../../../../store/channel/channel-state';
+import {ChangeChannel} from '../../../../../../store/channel/channel-actions';
 
 
 @Component({
@@ -25,8 +26,8 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
 {
     getTopics: any;
     private _unsubscribeAll: Subject<any>;
-    @Select(TopicState.getSelectedTopic) selectedTopic: Observable<TopicModel>;
-    private topicSubscription: Subscription = new Subscription();
+    @Select(ChannelState.getTopicByChannel) getTopicByChannel: Observable<TopicModel>;
+
 
     constructor(
         private store: Store,
@@ -41,8 +42,7 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.channelState.selectTopic
-            .pipe(takeUntil(this._unsubscribeAll))
+        this.getTopicByChannel
             .subscribe(res => {
                 if (res) {
                     this.getTopics = res;
@@ -50,16 +50,6 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
                     this.getTopics = []
                 }
             });
-
-        this._chatService.getActiveTopics
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(res => {
-                if (res) {
-                    for (let item of this.getTopics) {
-                        item.active = item.id === res.id;
-                    }
-                }
-            })
     }
 
     ngOnDestroy(): void
@@ -69,14 +59,10 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
     }
 
 
-    getChat(id): void
-    {
-        this.topicSubscription.add(
-            this.store.dispatch(new ChangeTopic({id: id})).subscribe((res) => {
+    getChat(id): void {
+        this.store.dispatch(new ChangeTopic({id: id}));
 
-            })
-        );
-        this._chatService.getChat(id);
+        this.store.dispatch(new FetchTopic);
         if ( !this._mediaObserver.isActive('gt-md') )
         {
             this._fuseMatSidenavHelperService.getSidenav('chat-left-sidenav').toggle();
