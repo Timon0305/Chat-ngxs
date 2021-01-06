@@ -1,17 +1,19 @@
 import {Injectable} from '@angular/core';
 import {State, NgxsOnInit, Action, StateContext, Store, Selector} from '@ngxs/store';
-import {FetchAllMessage, AddMessage} from './message-actions';
+import {SelectMessage, AddMessage, UpdateMessage} from './message-actions';
 import {patch, updateItem} from '@ngxs/store/operators';
 import {MessageModel} from './message-model';
-import {NavigationService} from '../../../@fuse/services/navigation.service';
+import {HttpClient} from '@angular/common/http';
 
 export interface MessageStateModel {
     messageList: MessageModel[],
+    selectedMessage: any[]
 }
 @State<MessageStateModel>({
     name: 'messageList',
     defaults: {
         messageList: [],
+        selectedMessage: null
     }
 })
 
@@ -19,8 +21,7 @@ export interface MessageStateModel {
 export class MessageState {
 
     constructor(
-        private store: Store,
-        private _chatService: NavigationService
+        private _httpClient: HttpClient
     ) {}
 
     @Selector()
@@ -33,24 +34,36 @@ export class MessageState {
         return state.messageList
     }
 
-    @Action(FetchAllMessage)
-    fetchAllMessage({getState, setState}: StateContext<MessageStateModel>) {
-        return this._chatService.getMessages().then(result => {
-            const state = getState();
-            setState({
-                ...state,
-                messageList: result
-            })
-        })
+    @Action(SelectMessage)
+    selectMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: any) {
+        let state = getState();
+        return new Promise((resolve, reject) => {
+            this._httpClient.get('api/chat-message')
+                .subscribe((response: any) => {
+                    let res = response[0].rows;
+                    resolve(res);
+                    let topicChat = [];
+                    for (let item of res) {
+                        if (item.data.topicId === payload.id) {
+                            topicChat.push(item)
+                        }
+                    }
+                    setState({
+                        ...state,
+                        selectedMessage: topicChat
+                    });
+                }, reject);
+        });
+
     }
 
     @Action(AddMessage)
-    addMessage({getState, patchState}: StateContext<MessageStateModel>, {id, payload}: AddMessage) {
-        return this._chatService.updateDialog(id, payload).then((result) => {
-            const state = getState();
-            patchState({
-                messageList: [...state.messageList, result]
-            })
-        })
+    addMessage({getState, patchState}: StateContext<MessageStateModel>, {payload}: AddMessage) {
+        const state = getState();
+        patchState({
+            selectedMessage: [...state.selectedMessage, payload]
+        });
     }
+
+
 }

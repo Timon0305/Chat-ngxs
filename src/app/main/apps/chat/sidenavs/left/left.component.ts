@@ -1,10 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
 import { fuseAnimations } from '@fuse/animations';
-
-import {NavigationService} from '../../../../../../@fuse/services/navigation.service';
 
 @Component({
     selector     : 'chat-left-sidenav',
@@ -23,10 +19,8 @@ export class ChatLeftSidenavComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {ChatService} _chatService
      */
     constructor(
-        private _chatService: NavigationService
     )
     {
         // Set the defaults
@@ -44,13 +38,7 @@ export class ChatLeftSidenavComponent implements OnInit, OnDestroy
      * On init
      */
     ngOnInit(): void
-    {
-        this._chatService.onLeftSidenavViewChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(view => {
-                this.view = view;
-            });
-    }
+    {}
 
     /**
      * On destroy

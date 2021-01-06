@@ -13,7 +13,6 @@ import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
-import {NavigationService} from '../@fuse/services/navigation.service';
 import {ChannelState} from './store/channel/channel-state';
 import {ChannelModel} from './store/channel/channel-model'
 import {FetchAllChannel} from './store/channel/channel-actions';
@@ -40,7 +39,6 @@ export class AppComponent implements OnInit, OnDestroy
      *
      * @param {DOCUMENT} document
      * @param store
-     * @param _chatService
      * @param {FuseConfigService} _fuseConfigService
      * @param {FuseNavigationService} _fuseNavigationService
      * @param {FuseSidebarService} _fuseSidebarService
@@ -52,7 +50,6 @@ export class AppComponent implements OnInit, OnDestroy
     constructor(
         @Inject(DOCUMENT) private document: any,
         private store: Store,
-        private _chatService: NavigationService,
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,

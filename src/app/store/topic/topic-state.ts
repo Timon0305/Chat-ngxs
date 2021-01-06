@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
+import {State, Action, StateContext, Selector} from '@ngxs/store';
 import {ChangeTopic, FetchTopic} from './topic-actions';
 import {TopicModel} from './topic-model';
-import {NavigationService} from '../../../@fuse/services/navigation.service';
 import {HttpClient} from '@angular/common/http';
 import {MessageModel} from '../message/message-model';
 
@@ -24,7 +23,6 @@ export interface TopicStateModel {
 export class TopicState {
 
     constructor(
-        private _chatService: NavigationService,
         private _httpClient: HttpClient,
     ) {}
 

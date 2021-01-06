@@ -22,16 +22,13 @@ import { ChatUserSidenavComponent } from 'app/main/apps/chat/sidenavs/left/user/
 import { ChatLeftSidenavComponent } from 'app/main/apps/chat/sidenavs/left/left.component';
 import { ChatRightSidenavComponent } from 'app/main/apps/chat/sidenavs/right/right.component';
 import { ChatContactSidenavComponent } from 'app/main/apps/chat/sidenavs/right/contact/contact.component';
-import {NavigationService} from '../../../../@fuse/services/navigation.service';
 
 const routes: Routes = [
     {
         path: '**',
         component: ChatComponent,
         children: [],
-        resolve: {
-            chat: NavigationService
-        }
+
     }
 ];
 

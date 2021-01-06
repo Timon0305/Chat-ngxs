@@ -54,7 +54,6 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy
 
              this._changeDetectorRef.markForCheck();
          });
-
     }
 
     /**

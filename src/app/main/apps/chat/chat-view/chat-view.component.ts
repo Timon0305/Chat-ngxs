@@ -1,16 +1,14 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
-import {Observable, Subject, Subscription} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import {MessageModel} from '../../../../store/message/message-model';
 import {TopicState} from '../../../../store/topic/topic-state';
 import {TopicModel} from '../../../../store/topic/topic-model';
-import {ChannelModel} from '../../../../store/channel/channel-model';
-import {forEachComment} from 'tslint';
+import {AddMessage} from '../../../../store/message/message-actions';
 
 
 @Component({
@@ -27,10 +25,11 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     replyInput: any;
     selectedChat: any;
     selectedTopic: string;
+    topicId: string;
 
     @Select(TopicState.getMessageByTopic) getMessage: Observable<MessageModel>;
     @Select(TopicState.getSelectedTopic) getSelectedTopic: Observable<TopicModel>;
-    @Select(TopicState.getActiveTopic) getActiveTopic: Observable<ChannelModel>;
+    @Select(TopicState.getActiveTopic) getActiveTopic: Observable<TopicModel>;
 
     @ViewChild(FusePerfectScrollbarDirective)
     directiveScroll: FusePerfectScrollbarDirective;
@@ -43,7 +42,9 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
     private _unsubscribeAll: Subject<any>;
 
-    constructor() {
+    constructor(
+        private store: Store
+    ) {
         this._unsubscribeAll = new Subject();
     }
 
@@ -60,6 +61,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             });
 
         this.getActiveTopic.subscribe(response => {
+            this.topicId = response.id;
             this.getSelectedTopic
                 .subscribe((res) => {
                     for (let item in res) {
@@ -69,7 +71,6 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
                     }
                 })
         });
-
     }
 
     ngAfterViewInit(): void
@@ -122,23 +123,35 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             return;
         }
         let replyMessage = {
-            data: {text: ''},
+            data: {
+                text: '',
+                topicId: this.topicId,
+                stats: {
+                    isRead: false,
+                }
+            },
             id: uuidv4(),
-            system: {updatedAt: '', userId: this.user.id}
+            system: {
+                createdAt: '',
+                updatedAt: '',
+                spaceId: uuidv4(),
+                model: 0,
+                userId: this.user.id
+            }
         };
 
         replyMessage.data.text = this.replyForm.form.value.message;
         replyMessage.system.updatedAt = new Date().toISOString();
+        replyMessage.system.createdAt = new Date().toISOString();
 
-        this.selectedChat.push(replyMessage);
+        this.store.dispatch(new AddMessage(replyMessage)).subscribe(res => {
+            this.selectedChat = res.messageList.selectedMessage;
+        });
 
         this.replyForm.reset();
 
-
-        // this.store.dispatch(new AddMessage(this.user.id, this.selectedChat));
-
-        // this._chatService.updateDialog(this.user.id, this.selectedChat).then(() => {
-        //     this.readyToReply();
-        // });
+        // this.store.dispatch(new UpdateMessage(this.user.id, this.selectedChat)).subscribe(() => {
+        //     this.readyToReply()
+        // })
     }
 }

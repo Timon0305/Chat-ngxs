@@ -3,7 +3,6 @@ import {merge, Observable, Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import {NavigationService} from '../../services/navigation.service';
 import {Select, Store} from '@ngxs/store';
 import {ChannelState} from '../../../app/store/channel/channel-state';
 import {ChannelModel} from '../../../app/store/channel/channel-model';
@@ -30,14 +29,12 @@ export class FuseNavigationComponent implements OnInit
      *
      * @param store
      * @param channelState
-     * @param _chatService
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
         private store: Store,
         private channelState: ChannelState,
-        private _chatService: NavigationService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
     )

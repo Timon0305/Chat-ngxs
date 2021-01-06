@@ -3,8 +3,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfigService } from '@fuse/services/config.service';
-import {NavigationService} from '../../../../@fuse/services/navigation.service';
-// import { navigation } from 'app/navigation/navigation';
 
 @Component({
     selector     : 'vertical-layout-1',
@@ -23,18 +21,12 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param _chatService
      * @param {FuseConfigService} _fuseConfigService
      */
     constructor(
-        private _chatService: NavigationService,
         private _fuseConfigService: FuseConfigService
     )
     {
-        // Set the defaults
-        // this.navigation = navigation;
-
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
@@ -49,10 +41,6 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
             .subscribe((config) => {
                 this.fuseConfig = config;
             });
-        // this._chatService.getChannels()
-        //     .then(res => {
-        //         this.navigation = res
-        //     })
     }
 
     /**
@@ -60,7 +48,6 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
      */
     ngOnDestroy(): void
     {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }

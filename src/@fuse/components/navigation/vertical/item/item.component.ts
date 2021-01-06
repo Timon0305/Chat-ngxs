@@ -11,7 +11,6 @@ import {takeUntil} from 'rxjs/operators';
 
 import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
-import {NavigationService} from '../../../../services/navigation.service';
 import {Store} from '@ngxs/store';
 import {ChangeChannel} from '../../../../../app/store/channel/channel-actions';
 
@@ -39,13 +38,11 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
     /**
      *
      * @param store
-     * @param _chatService
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
         private store: Store,
-        private _chatService: NavigationService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
     )
