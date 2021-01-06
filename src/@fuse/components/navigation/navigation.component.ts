@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { merge, Subject } from 'rxjs';
+import {merge, Observable, Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import {NavigationService} from '../../services/navigation.service';
+import {Select, Store} from '@ngxs/store';
+import {ChannelState} from '../../../app/store/channel/channel-state';
+import {ChannelModel} from '../../../app/store/channel/channel-model';
 
 @Component({
     selector       : 'fuse-navigation',
@@ -14,6 +17,7 @@ import {NavigationService} from '../../services/navigation.service';
 })
 export class FuseNavigationComponent implements OnInit
 {
+    @Select(ChannelState.getSelectedChannel) selectedChannel: Observable<ChannelModel>;
     @Input()
     layout = 'vertical';
 
@@ -24,11 +28,15 @@ export class FuseNavigationComponent implements OnInit
 
     /**
      *
+     * @param store
+     * @param channelState
      * @param _chatService
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
+        private store: Store,
+        private channelState: ChannelState,
         private _chatService: NavigationService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
@@ -55,8 +63,7 @@ export class FuseNavigationComponent implements OnInit
                 this._changeDetectorRef.markForCheck();
             });
 
-        this._chatService.getActiveChannel
-            .pipe(takeUntil(this._unsubscribeAll))
+        this.selectedChannel
             .subscribe((res) => {
                 if (res) {
                     for (let item of this.navigation[0].rows) {

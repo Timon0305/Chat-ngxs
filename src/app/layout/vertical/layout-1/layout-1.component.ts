@@ -49,10 +49,10 @@ export class VerticalLayout1Component implements OnInit, OnDestroy
             .subscribe((config) => {
                 this.fuseConfig = config;
             });
-        this._chatService.getChannels()
-            .then(res => {
-                this.navigation = res
-            })
+        // this._chatService.getChannels()
+        //     .then(res => {
+        //         this.navigation = res
+        //     })
     }
 
     /**

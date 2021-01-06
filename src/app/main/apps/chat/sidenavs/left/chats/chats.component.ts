@@ -11,6 +11,7 @@ import {FetchAllTopic, ChangeTopic} from '../../../../../../store/topic/topic-ac
 import {Select, Store} from '@ngxs/store';
 import {TopicState} from '../../../../../../store/topic/topic-state';
 import {TopicModel} from '../../../../../../store/topic/topic-model';
+import {ChannelState} from '../../../../../../store/channel/channel-state';
 
 
 @Component({
@@ -30,17 +31,17 @@ export class ChatChatsSidenavComponent implements OnInit, OnDestroy
     constructor(
         private store: Store,
         private _chatService: NavigationService,
+        private channelState : ChannelState,
         private _fuseMatSidenavHelperService: FuseMatSidenavHelperService,
         public _mediaObserver: MediaObserver
     )
     {
-
         this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void
     {
-        this._chatService.selectTopic
+        this.channelState.selectTopic
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(res => {
                 if (res) {

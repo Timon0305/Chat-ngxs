@@ -47,7 +47,6 @@ export class TopicState  {
 
     @Action(ChangeTopic)
     changeTopic({getState, setState}: StateContext<TopicStateModel>, {payload}: ChangeTopic) {
-        console.log('payload =>>>>>>>>....',payload)
         const state = getState();
         setState({
             ...state,

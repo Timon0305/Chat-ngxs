@@ -1,8 +1,10 @@
 import {Component,  OnInit, } from '@angular/core';
 import {takeUntil, tap} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-import {Store} from '@ngxs/store';
+import {Observable, Subject} from 'rxjs';
+import {Select, Selector, Store} from '@ngxs/store';
 import {NavigationService} from '../../../../@fuse/services/navigation.service';
+import {ChannelState} from '../../../store/channel/channel-state';
+import {ChannelModel} from '../../../store/channel/channel-model';
 
 @Component({
   selector: 'app-subheader',
@@ -11,24 +13,19 @@ import {NavigationService} from '../../../../@fuse/services/navigation.service';
 })
 export class SubheaderComponent implements OnInit {
 
-    selectedChannel: any;
+    @Select(ChannelState.getSelectedChannel) selectedChannel: Observable<ChannelModel>;
+
+    selectChannel: any;
     channelName: string;
     userNum: number;
     channelType: string;
-    private _unsubscribeAll: Subject<any>;
 
-  constructor(
-      private _chatService: NavigationService,
-      private store: Store,
-  ) {
-      this._unsubscribeAll = new Subject();
-  }
+  constructor() {}
 
   ngOnInit(): void {
-      this._chatService.changeChannel
-          .pipe(takeUntil(this._unsubscribeAll))
+      this.selectedChannel
           .subscribe(channelData => {
-              this.selectedChannel = channelData;
+              this.selectChannel = channelData;
               if (channelData) {
                   this.channelName = channelData.data.name;
                   this.userNum = channelData.data.stats.users;

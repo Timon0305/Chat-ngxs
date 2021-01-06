@@ -50,12 +50,12 @@ export class NavigationService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getChannels(),
+                // this.getChannels(),
                 this.getTopic(),
                 this.getMessages()
             ]).then(
-                ([ channel, topic, message]) => {
-                    this.channel = channel;
+                ([  topic, message]) => {
+                    // this.channel = channel;
                     this.topic = topic;
                     this.messages = message;
                     resolve();
@@ -65,22 +65,22 @@ export class NavigationService implements Resolve<any>
         });
     }
 
-    selectChannel(channelId): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.getChannels()
-                .then((response: any) => {
-                    resolve(response);
-                    const channelItem = response.find((item) => {
-                        return item.id === channelId
-                    });
-                    if (channelItem) {
-                        this.changeChannel.next({...channelItem});
-                        this.getActiveChannel.next({...channelItem});
-                    }
-                    this.getTopicByChannel(channelItem.id);
-                }, reject);
-        });
-    }
+    // selectChannel(channelId): Promise<any> {
+    //     return new Promise((resolve, reject) => {
+    //         this.getChannels()
+    //             .then((response: any) => {
+    //                 resolve(response);
+    //                 const channelItem = response.find((item) => {
+    //                     return item.id === channelId
+    //                 });
+    //                 if (channelItem) {
+    //                     this.changeChannel.next({...channelItem});
+    //                     this.getActiveChannel.next({...channelItem});
+    //                 }
+    //                 this.getTopicByChannel(channelItem.id);
+    //             }, reject);
+    //     });
+    // }
 
     getTopicByChannel(channelId) {
         this.getTopic().then(res => {
@@ -118,20 +118,15 @@ export class NavigationService implements Resolve<any>
 
     }
 
-    setUserStatus(status): void
-    {
-        // this.user.status = status;
-    }
-
-    getChannels() : Promise<any>
-    {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get<ChannelModel[]>('api/chat-channel')
-                .subscribe((response: any) => {
-                    resolve(response[0].rows)
-                }, reject);
-        })
-    }
+    // getChannels() : Promise<any>
+    // {
+    //     return new Promise((resolve, reject) => {
+    //         this._httpClient.get<ChannelModel[]>('api/chat-channel')
+    //             .subscribe((response: any) => {
+    //                 resolve(response[0].rows)
+    //             }, reject);
+    //     })
+    // }
 
     getTopic(): Promise<any>
     {
