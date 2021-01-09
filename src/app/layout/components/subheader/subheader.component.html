@@ -6,30 +6,30 @@
                 <div class="flex-space" *ngIf="selectChannel">
                     <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center">
                         <div class="chat-contact-name" >
-                            <h1 style="margin-left: 10px;">{{channelName}}</h1>
+                            <span class="s-24">&nbsp;{{channelName}}</span>
                         </div>
                     </div>
                     <div></div>
                     <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
                     >
                         <div class="avatar-wrapper">
-                            <mat-icon class="s-24 s-md-24 mat-accent pr-3" style="padding-top: 5px;">
+                            <mat-icon class="s-16 s-sm-24 s-md-24 mat-accent pr-3" style="padding-top: 5px;">
                                 supervisor_account
                             </mat-icon>
                         </div>
 
                         <div class="chat-contact-name" >
-                            <span style="padding-left: 10px; font-size: 22px">{{userNum + ' users'}}</span>
+                            <span class="s-24" style="padding-left: 10px;">{{userNum + ' users'}}</span>
                         </div>
                     </div>
                     <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
                     >
                         <div class="avatar-wrapper">
-                            <mat-icon class="s-24 s-md-24 mat-accent pr-3" style="padding-top: 5px;">public</mat-icon>
+                            <mat-icon class="s-16 s-sm-24 s-md-24 mat-accent pr-3" style="padding-top: 5px;">public</mat-icon>
                         </div>
 
                         <div class="chat-contact-name">
-                            <span style="padding-left: 10px; font-size: 22px">{{channelType}}</span>
+                            <span class="s-24" style="padding-left: 10px;">{{channelType}}</span>
                         </div>
                     </div>
                     <div class="sidenav-header">

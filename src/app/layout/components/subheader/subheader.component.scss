@@ -18,3 +18,13 @@
         padding: 18px 0px 18px 0px;
     }
 }
+@media (max-width: 768px) {
+    .s-24 {
+        font-size: 16px;
+    }
+}
+@media (min-width: 769px) {
+    .s-24 {
+        font-size: 24px;
+    }
+}

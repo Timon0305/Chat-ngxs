@@ -91,14 +91,6 @@
     </toolbar>
 </ng-template>
 
-<ng-template #footer>
-    <footer *ngIf="!fuseConfig.layout.footer.hidden"
-            [ngClass]="fuseConfig.layout.footer.customBackgroundColor === true ?
-            fuseConfig.layout.footer.position + ' ' + fuseConfig.layout.footer.background :
-            fuseConfig.layout.footer.position">
-    </footer>
-</ng-template>
-
 <ng-template #leftNavbar>
     <fuse-sidebar name="navbar" class="navbar-fuse-sidebar"
                   [folded]="fuseConfig.layout.navbar.folded"
