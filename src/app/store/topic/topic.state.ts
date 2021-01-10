@@ -23,15 +23,8 @@ export class TopicState implements NgxsOnInit {
     ) {}
 
 
-    ngxsOnInit({getState, setState}): void {
-        let state = getState();
-        this.topicService.fetchTopic()
-            .subscribe((res: object) => {
-                setState({
-                    ...state,
-                    topicList: res[0].rows
-                })
-            })
+    ngxsOnInit(ctx: StateContext<TopicStateModel>): void {
+        ctx.dispatch(new FetchTopic)
     }
 
     @Selector()

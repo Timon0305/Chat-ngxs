@@ -15,7 +15,6 @@ import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import {ChannelState} from './store/channel/channel.state';
 import {ChannelModel} from './store/channel/channel.model'
-import {ChatChannel} from './fake-db/chat.channel';
 
 @Component({
     selector   : 'app',

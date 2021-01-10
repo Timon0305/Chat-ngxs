@@ -41,7 +41,7 @@ export class ChannelState implements NgxsOnInit
         let state = getState();
         return new Promise((resolve, reject) => {
             this.channelService.fetchChannel()
-                .subscribe((response: any) => {
+                .subscribe((response: object) => {
                     let res = response[0].rows;
                     resolve(res);
                     setState({
@@ -55,21 +55,12 @@ export class ChannelState implements NgxsOnInit
     @Action(ChangeChannel)
     changeChannel({getState, setState} : StateContext<ChannelStateModel>, {payload}: ChangeChannel) {
         let state = getState();
-        return new Promise((resolve, reject) => {
-            this.channelService.fetchChannel()
-                .subscribe((response: any) => {
-                    let res = response[0].rows;
-                    resolve(res);
-                    let channelItem = res.find((item) => {
-                        return item.id === payload.id
-                    });
-                    setState({
-                        ...state,
-                        selectedChannel: channelItem,
-                    });
-
-                }, reject);
-
-        })
+        let channelItem = state.channelList.find((item) => {
+            return item.id === payload.id
+        });
+        setState({
+            ...state,
+            selectedChannel: channelItem,
+        });
     }
 }
