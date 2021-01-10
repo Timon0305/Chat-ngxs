@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {State, Action, StateContext, Selector} from '@ngxs/store';
-import {ChangeTopic, FetchTopic} from './topic-actions';
-import {TopicModel} from './topic-model';
+import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
+import {ChangeTopic, FetchTopic} from './topic.actions';
+import {TopicModel} from './topic.model';
 import {HttpClient} from '@angular/common/http';
-import {MessageModel} from '../message/message-model';
+import {MessageModel} from '../message/message.model';
+import {TopicService} from './topic.service';
+import {MessageService} from '../message/message.service';
 
 export interface TopicStateModel {
     topicList: TopicModel[];
@@ -18,13 +20,21 @@ export interface TopicStateModel {
         getMessageByTopic: null
     }
 })
-
 @Injectable()
-export class TopicState {
+export class TopicState implements NgxsOnInit {
 
     constructor(
-        private _httpClient: HttpClient,
+        private topicService: TopicService,
+        private messageService: MessageService
     ) {}
+
+
+    ngxsOnInit(): void {
+        this.topicService.fetchTopic()
+            .subscribe(res => {
+
+            })
+    }
 
     @Selector()
     static getSelectedTopic(state: TopicStateModel) {
@@ -43,9 +53,9 @@ export class TopicState {
 
     @Action(FetchTopic)
     fetchTopic({getState, setState}: StateContext<TopicStateModel>) {
-        const state = getState();
+        let state = getState();
         return new Promise((resolve, reject) => {
-            this._httpClient.get<TopicModel[]>('api/chat-topic')
+            this.topicService.fetchTopic()
                 .subscribe((response: any) => {
                     let res = response[0].rows;
                     resolve(res);
@@ -59,9 +69,9 @@ export class TopicState {
 
     @Action(ChangeTopic)
     changeTopic({getState, setState}: StateContext<TopicStateModel>, {payload}: ChangeTopic) {
-        const state = getState();
+        let state = getState();
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/chat-message')
+            this.messageService.fetchMessage()
                 .subscribe((response: any) => {
                     let res = response[0].rows;
                     let chatMessage = [];

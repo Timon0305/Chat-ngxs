@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {State,  Action, StateContext, Selector} from '@ngxs/store';
-import {FetchAllChannel, ChangeChannel} from './channel-actions';
-import {ChannelModel} from './channel-model';
-import {BehaviorSubject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {TopicModel} from '../topic/topic-model';
+import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
+import {FetchAllChannel, ChangeChannel} from './channel.actions';
+import {ChannelModel} from './channel.model';
+import {TopicModel} from '../topic/topic.model';
+import {ChannelService} from './channel.service';
+import {TopicService} from '../topic/topic.service';
 
 export interface ChannelStateModel {
     channelList: ChannelModel[],
@@ -20,9 +20,12 @@ export interface ChannelStateModel {
     }
 })
 @Injectable()
-export class ChannelState
+export class ChannelState implements NgxsOnInit
 {
-    constructor(private _httpClient: HttpClient) {}
+    constructor(
+        private channelService: ChannelService,
+        private topicService: TopicService
+    ) {}
 
     @Selector()
     static getChannelList(state: ChannelStateModel) {
@@ -39,12 +42,19 @@ export class ChannelState
         return state.getTopic
     }
 
+    ngxsOnInit(): void {
+        this.channelService.fetchChannel()
+            .subscribe(res => {
+
+            })
+    }
+
 
     @Action(FetchAllChannel)
     fetchAllChannel({getState, setState}: StateContext<ChannelStateModel>) {
-        const state = getState();
+        let state = getState();
         return new Promise((resolve, reject) => {
-            this._httpClient.get<ChannelModel[]>('api/chat-channel')
+            this.channelService.fetchChannel()
                 .subscribe((response: any) => {
                     let res = response[0].rows;
                     resolve(res);
@@ -58,15 +68,15 @@ export class ChannelState
 
     @Action(ChangeChannel)
     changeChannel({getState, setState} : StateContext<ChannelStateModel>, {payload}: ChangeChannel) {
-        const state = getState();
+        let state = getState();
         return new Promise((resolve, reject) => {
-            this._httpClient.get<ChannelModel[]>('api/chat-channel')
+            this.channelService.fetchChannel()
                 .subscribe((response: any) => {
                     let res = response[0].rows;
-                    const channelItem = res.find((item) => {
+                    let channelItem = res.find((item) => {
                         return item.id === payload.id
                     });
-                    this._httpClient.get('api/chat-topic')
+                    this.topicService.fetchTopic()
                         .subscribe((response: any) => {
                             let res = response[0].rows;
                             let topicData = [];

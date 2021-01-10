@@ -49,7 +49,7 @@ export class ChatPanelService
      */
     getChat(contactId): Promise<any>
     {
-        const chatItem = this.user.chatList.find((item) => {
+        let chatItem = this.user.chatList.find((item) => {
             return item.contactId === contactId;
         });
 
@@ -148,33 +148,4 @@ export class ChatPanelService
         });
     }
 
-    /**
-     * Get contacts
-     *
-     * @returns {Promise<any>}
-     */
-    getContacts(): Promise<any>
-    {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/chat-panel-contacts')
-                .subscribe((response: any) => {
-                    resolve(response);
-                }, reject);
-        });
-    }
-
-    /**
-     * Get user
-     *
-     * @returns {Promise<any>}
-     */
-    getUser(): Promise<any>
-    {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/chat-panel-user')
-                .subscribe((response: any) => {
-                    resolve(response[0]);
-                }, reject);
-        });
-    }
 }

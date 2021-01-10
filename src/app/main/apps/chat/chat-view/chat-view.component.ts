@@ -5,10 +5,10 @@ import {Observable, Subject} from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
-import {MessageModel} from '../../../../store/message/message-model';
-import {TopicState} from '../../../../store/topic/topic-state';
-import {TopicModel} from '../../../../store/topic/topic-model';
-import {AddMessage} from '../../../../store/message/message-actions';
+import {MessageModel} from '../../../../store/message/message.model';
+import {TopicState} from '../../../../store/topic/topic.state';
+import {TopicModel} from '../../../../store/topic/topic.model';
+import {AddMessage} from '../../../../store/message/message.actions';
 
 
 @Component({

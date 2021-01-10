@@ -1,8 +1,8 @@
 import {Component,  OnInit, } from '@angular/core';
 import {Observable} from 'rxjs';
 import {Select} from '@ngxs/store';
-import {ChannelState} from '../../../store/channel/channel-state';
-import {ChannelModel} from '../../../store/channel/channel-model';
+import {ChannelState} from '../../../store/channel/channel.state';
+import {ChannelModel} from '../../../store/channel/channel.model';
 
 @Component({
   selector: 'app-subheader',

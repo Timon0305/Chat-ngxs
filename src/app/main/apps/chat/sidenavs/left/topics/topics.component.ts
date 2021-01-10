@@ -3,21 +3,21 @@ import { MediaObserver } from '@angular/flex-layout';
 import {Observable, Subject } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseMatSidenavHelperService } from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
-import {ChangeTopic, FetchTopic} from '../../../../../../store/topic/topic-actions';
+import {ChangeTopic, FetchTopic} from '../../../../../../store/topic/topic.actions';
 import {Select, Store} from '@ngxs/store';
-import {TopicModel} from '../../../../../../store/topic/topic-model';
-import {ChannelState} from '../../../../../../store/channel/channel-state';
-import {TopicState} from '../../../../../../store/topic/topic-state';
-import {SelectMessage} from '../../../../../../store/message/message-actions';
+import {TopicModel} from '../../../../../../store/topic/topic.model';
+import {ChannelState} from '../../../../../../store/channel/channel.state';
+import {TopicState} from '../../../../../../store/topic/topic.state';
+import {SelectMessage} from '../../../../../../store/message/message.actions';
 
 @Component({
-    selector     : 'chat-chats-sidenav',
-    templateUrl  : './chats.component.html',
-    styleUrls    : ['./chats.component.scss'],
+    selector     : 'topics-sidenav',
+    templateUrl  : './topics.component.html',
+    styleUrls    : ['./topics.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class ChatChatsSidenavComponent implements OnInit, OnDestroy
+export class TopicsComponent implements OnInit, OnDestroy
 {
     getTopics: any;
     private _unsubscribeAll: Subject<any>;

@@ -4,8 +4,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import {Select, Store} from '@ngxs/store';
-import {ChannelState} from '../../../app/store/channel/channel-state';
-import {ChannelModel} from '../../../app/store/channel/channel-model';
+import {ChannelState} from '../../../app/store/channel/channel.state';
+import {ChannelModel} from '../../../app/store/channel/channel.model';
 
 @Component({
     selector       : 'fuse-navigation',

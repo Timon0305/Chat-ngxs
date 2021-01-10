@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import {Select} from '@ngxs/store';
-import {TopicState} from '../../../store/topic/topic-state';
-import {MessageModel} from '../../../store/message/message-model';
+import {TopicState} from '../../../store/topic/topic.state';
+import {MessageModel} from '../../../store/message/message.model';
 
 @Component({
     selector     : 'chat',

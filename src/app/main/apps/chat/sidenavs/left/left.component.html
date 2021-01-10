@@ -1,8 +1,8 @@
 <div [ngSwitch]="view" class="views">
-    <chat-chats-sidenav class="view"
+    <topics-sidenav class="view"
                         *ngSwitchCase="'chats'"
                         [@slideInRight]>
-    </chat-chats-sidenav>
+    </topics-sidenav>
 
     <chat-user-sidenav class="view"
                        *ngSwitchCase="'user'"

@@ -19,11 +19,11 @@ import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import {NgxsModule} from '@ngxs/store';
-import {ChannelState} from './store/channel/channel-state';
+import {ChannelState} from './store/channel/channel.state';
 import {environment} from '../environments/environment';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
-import {TopicState} from './store/topic/topic-state';
-import {MessageState} from './store/message/message-state';
+import {TopicState} from './store/topic/topic.state';
+import {MessageState} from './store/message/message.state';
 
 const appRoutes: Routes = [
     {

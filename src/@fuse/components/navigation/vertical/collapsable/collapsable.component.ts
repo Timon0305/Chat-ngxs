@@ -215,7 +215,7 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
             return true;
         }
 
-        for ( const child of children )
+        for ( let child of children )
         {
             if ( child.children )
             {
@@ -246,7 +246,7 @@ export class FuseNavVerticalCollapsableComponent implements OnInit, OnDestroy
             return false;
         }
 
-        for ( const child of children )
+        for ( let child of children )
         {
             if ( child.children )
             {

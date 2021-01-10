@@ -1,8 +1,8 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import {channel} from './chat-channel';
-import {ChatTopic} from './chat-topic';
-import {ChatMessages} from './chat-messages';
+import {ChatChannel} from './chat.channel';
+import {ChatTopic} from './chat.topic';
+import {ChatMessages} from './chat.messages';
 
 export class FakeDbService implements InMemoryDbService
 {
@@ -11,7 +11,7 @@ export class FakeDbService implements InMemoryDbService
         return {
 
             // Channel Panel
-            'chat-channel' : channel,
+            'chat-channel' : ChatChannel.channel,
 
             // Chat Topic
             'chat-topic': ChatTopic.topic,

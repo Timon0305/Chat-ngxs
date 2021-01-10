@@ -14,7 +14,7 @@ export class KeysPipe implements PipeTransform
     {
         const keys: any[] = [];
 
-        for ( const key in value )
+        for ( let key in value )
         {
             if ( value.hasOwnProperty(key) )
             {

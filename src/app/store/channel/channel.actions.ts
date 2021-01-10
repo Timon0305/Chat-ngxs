@@ -1,4 +1,4 @@
-import {ChannelModel} from './channel-model';
+import {ChannelModel} from './channel.model';
 
 export class FetchAllChannel {
     static readonly type = '[Channel] Fetch All';

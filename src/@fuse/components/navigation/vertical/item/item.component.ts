@@ -12,7 +12,7 @@ import {takeUntil} from 'rxjs/operators';
 import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import {Store} from '@ngxs/store';
-import {ChangeChannel} from '../../../../../app/store/channel/channel-actions';
+import {ChangeChannel} from '../../../../../app/store/channel/channel.actions';
 
 
 @Component({
@@ -73,8 +73,6 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
 
     clickChannel(channelId): void {
         this.store.dispatch(new ChangeChannel({id: channelId}))
-        // this._chatService.selectChannel(channelId)
-        //     .then(() => {})
     }
 
     /**

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {State, NgxsOnInit, Action, StateContext, Store, Selector} from '@ngxs/store';
-import {SelectMessage, AddMessage, UpdateMessage} from './message-actions';
-import {patch, updateItem} from '@ngxs/store/operators';
-import {MessageModel} from './message-model';
+import {SelectMessage, AddMessage, UpdateMessage} from './message.actions';
+import {MessageModel} from './message.model';
 import {HttpClient} from '@angular/common/http';
+import {MessageService} from './message.service';
 
 export interface MessageStateModel {
     messageList: MessageModel[],
@@ -21,7 +21,7 @@ export interface MessageStateModel {
 export class MessageState {
 
     constructor(
-        private _httpClient: HttpClient
+        private messageService: MessageService
     ) {}
 
     @Selector()
@@ -38,7 +38,7 @@ export class MessageState {
     selectMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: any) {
         let state = getState();
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/chat-message')
+            this.messageService.fetchMessage()
                 .subscribe((response: any) => {
                     let res = response[0].rows;
                     resolve(res);
@@ -59,7 +59,7 @@ export class MessageState {
 
     @Action(AddMessage)
     addMessage({getState, patchState}: StateContext<MessageStateModel>, {payload}: AddMessage) {
-        const state = getState();
+        let state = getState();
         patchState({
             selectedMessage: [...state.selectedMessage, payload]
         });

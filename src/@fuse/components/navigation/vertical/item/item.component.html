@@ -4,7 +4,7 @@
        [routerLinkActive] = "['active', 'accent']"
        [ngClass] = "item.active === true ? 'active accent' : ''"
        (click)="clickChannel(item.id)">
-        <ng-container *ngTemplateOutlet="itemContent"></ng-container>
+        <ng-container *ngTemplateOutlet="itemContent" ></ng-container>
     </a>
 
     <ng-template #itemContent>
