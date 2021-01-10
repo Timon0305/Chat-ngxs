@@ -2,7 +2,7 @@
 
     <ng-container *ngIf="layout === 'vertical'">
 
-        <ng-container *ngFor="let item of navigation[0].rows">
+        <ng-container *ngFor="let item of navigation">
             <fuse-nav-vertical-group  [item]="item"></fuse-nav-vertical-group>
 
         </ng-container>

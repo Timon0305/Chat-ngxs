@@ -1,14 +1,15 @@
-import {Component,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
-import {Observable, Subject } from 'rxjs';
-import { fuseAnimations } from '@fuse/animations';
-import { FuseMatSidenavHelperService } from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {MediaObserver} from '@angular/flex-layout';
+import {Observable, Subject} from 'rxjs';
+import {fuseAnimations} from '@fuse/animations';
+import {FuseMatSidenavHelperService} from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
 import {ChangeTopic, FetchTopic} from '../../../../../../store/topic/topic.actions';
 import {Select, Store} from '@ngxs/store';
 import {TopicModel} from '../../../../../../store/topic/topic.model';
 import {ChannelState} from '../../../../../../store/channel/channel.state';
 import {TopicState} from '../../../../../../store/topic/topic.state';
 import {SelectMessage} from '../../../../../../store/message/message.actions';
+import {ChannelModel} from '../../../../../../store/channel/channel.model';
 
 @Component({
     selector     : 'topics-sidenav',
@@ -21,7 +22,8 @@ export class TopicsComponent implements OnInit, OnDestroy
 {
     getTopics: any;
     private _unsubscribeAll: Subject<any>;
-    @Select(ChannelState.getTopicByChannel) getTopicByChannel: Observable<TopicModel>;
+    @Select(ChannelState.getSelectedChannel) getSelectedChannel: Observable<ChannelModel>;
+    @Select(TopicState.getSelectedTopic) getTopicByChannel: Observable<TopicModel>;
     @Select(TopicState.getActiveTopic) getActiveTopic: Observable<TopicModel>;
 
     constructor(
@@ -36,14 +38,23 @@ export class TopicsComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-        this.getTopicByChannel
-            .subscribe(res => {
-                if (res) {
-                    this.getTopics = res;
+        this.getSelectedChannel
+            .subscribe(response => {
+                if (response) {
+                    this.getTopicByChannel
+                        .subscribe(res => {
+                            this.getTopics = [];
+                            for (let item in res) {
+                                if (res[item].data.channelId === response.id) {
+                                    this.getTopics.push(res[item])
+                                }
+                            }
+                        });
                 } else {
                     this.getTopics = []
                 }
             });
+
 
         this.getActiveTopic.subscribe(response => {
             if (response) {

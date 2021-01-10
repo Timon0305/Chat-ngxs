@@ -4,6 +4,8 @@ import { fuseAnimations } from '@fuse/animations';
 import {Select} from '@ngxs/store';
 import {TopicState} from '../../../store/topic/topic.state';
 import {MessageModel} from '../../../store/message/message.model';
+import {MessageState} from '../../../store/message/message.state';
+import {TopicModel} from '../../../store/topic/topic.model';
 
 @Component({
     selector     : 'chat',
@@ -16,7 +18,8 @@ export class ChatComponent implements OnInit, OnDestroy
 {
     selectedChat: any;
     private _unsubscribeAll: Subject<any>;
-    @Select(TopicState.getMessageByTopic) getMessage: Observable<MessageModel>;
+    @Select(MessageState.getSelectedMessage) getMessage: Observable<MessageModel>;
+    @Select(TopicState.getActiveTopic) selectedTopic: Observable<TopicModel>;
 
     constructor() {
         this._unsubscribeAll = new Subject();
@@ -24,10 +27,16 @@ export class ChatComponent implements OnInit, OnDestroy
 
     ngOnInit(): void
     {
-       this.getMessage
-            .subscribe(chatData => {
-                this.selectedChat = chatData;
+        this.selectedTopic
+            .subscribe(res => {
+                if (res) {
+                    this.getMessage
+                        .subscribe(chatData => {
+                           this.selectedChat = chatData;
+                        });
+                }
             });
+
     }
 
     ngOnDestroy(): void

@@ -15,7 +15,6 @@ import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import {ChannelState} from './store/channel/channel.state';
 import {ChannelModel} from './store/channel/channel.model'
-import {FetchAllChannel} from './store/channel/channel.actions';
 import {ChatChannel} from './fake-db/chat.channel';
 
 @Component({
@@ -60,7 +59,10 @@ export class AppComponent implements OnInit, OnDestroy
     )
     {
         // Get default navigation
-        this.navigation = ChatChannel.channel;
+        this.channels
+            .subscribe(res => {
+                this.navigation = res;
+            });
         // Register the navigation to the service
         this._fuseNavigationService.register('main', this.navigation);
 
@@ -123,7 +125,6 @@ export class AppComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
@@ -153,7 +154,6 @@ export class AppComponent implements OnInit, OnDestroy
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
-        this.store.dispatch(new FetchAllChannel())
     }
 
     /**

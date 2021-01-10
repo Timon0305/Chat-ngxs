@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
-import {State, NgxsOnInit, Action, StateContext, Store, Selector} from '@ngxs/store';
-import {SelectMessage, AddMessage, UpdateMessage} from './message.actions';
+import {State, NgxsOnInit, Action, StateContext, Selector} from '@ngxs/store';
+import {SelectMessage, AddMessage} from './message.actions';
 import {MessageModel} from './message.model';
-import {HttpClient} from '@angular/common/http';
 import {MessageService} from './message.service';
 
 export interface MessageStateModel {
     messageList: MessageModel[],
-    selectedMessage: any[]
+    selectedMessage: MessageModel[];
 }
 @State<MessageStateModel>({
     name: 'messageList',
@@ -18,11 +17,22 @@ export interface MessageStateModel {
 })
 
 @Injectable()
-export class MessageState {
+export class MessageState implements NgxsOnInit {
 
     constructor(
         private messageService: MessageService
     ) {}
+
+    ngxsOnInit({getState, setState}): void {
+        const state = getState();
+        this.messageService.fetchMessage()
+            .subscribe((res: object) => {
+                setState({
+                    ...state,
+                    messageList: res[0].rows
+                })
+            })
+    }
 
     @Selector()
     static getMessageList(state: MessageStateModel) {
@@ -31,7 +41,7 @@ export class MessageState {
 
     @Selector()
     static getSelectedMessage(state: MessageStateModel) {
-        return state.messageList
+        return state.selectedMessage
     }
 
     @Action(SelectMessage)
@@ -39,7 +49,7 @@ export class MessageState {
         let state = getState();
         return new Promise((resolve, reject) => {
             this.messageService.fetchMessage()
-                .subscribe((response: any) => {
+                .subscribe((response: object) => {
                     let res = response[0].rows;
                     resolve(res);
                     let topicChat = [];

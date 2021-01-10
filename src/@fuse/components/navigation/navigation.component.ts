@@ -1,25 +1,25 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {merge, Observable, Subject} from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 import {Select, Store} from '@ngxs/store';
 import {ChannelState} from '../../../app/store/channel/channel.state';
 import {ChannelModel} from '../../../app/store/channel/channel.model';
 
+'use strict';
+
 @Component({
-    selector       : 'fuse-navigation',
-    templateUrl    : './navigation.component.html',
-    styleUrls      : ['./navigation.component.scss'],
-    encapsulation  : ViewEncapsulation.None,
+    selector: 'fuse-navigation',
+    templateUrl: './navigation.component.html',
+    styleUrls: ['./navigation.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FuseNavigationComponent implements OnInit
-{
+export class FuseNavigationComponent implements OnInit {
     @Select(ChannelState.getSelectedChannel) selectedChannel: Observable<ChannelModel>;
     @Input()
     layout = 'vertical';
-
     @Input()
     navigation: any;
 
@@ -37,16 +37,14 @@ export class FuseNavigationComponent implements OnInit
         private channelState: ChannelState,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService
-    )
-    {
+    ) {
         this._unsubscribeAll = new Subject();
     }
 
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Load the navigation either from the input or from the service
         this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
         // Subscribe to the current navigation changes
@@ -59,13 +57,22 @@ export class FuseNavigationComponent implements OnInit
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
-
         this.selectedChannel
             .subscribe((res) => {
                 if (res) {
-                    for (let item of this.navigation[0].rows) {
-                        item.active = item.id === res.id;
+                    let data = [];
+                    for (let item of this.navigation) {
+                        if (item.active === undefined) {
+                            item = item.id === res.id ?
+                                Object.assign({active: true}, item) :
+                                Object.assign({active: false}, item);
+
+                        } else {
+                            item.active = item.id === res.id;
+                        }
+                        data.push(item);
                     }
+                    this.navigation = data;
                 }
             });
 
@@ -74,8 +81,8 @@ export class FuseNavigationComponent implements OnInit
             this._fuseNavigationService.onNavigationItemUpdated,
             this._fuseNavigationService.onNavigationItemRemoved
         ).pipe(takeUntil(this._unsubscribeAll))
-         .subscribe(() => {
-             this._changeDetectorRef.markForCheck();
-         });
+            .subscribe(() => {
+                this._changeDetectorRef.markForCheck();
+            });
     }
 }

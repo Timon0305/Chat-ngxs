@@ -2,21 +2,17 @@ import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
 import {FetchAllChannel, ChangeChannel} from './channel.actions';
 import {ChannelModel} from './channel.model';
-import {TopicModel} from '../topic/topic.model';
 import {ChannelService} from './channel.service';
-import {TopicService} from '../topic/topic.service';
 
 export interface ChannelStateModel {
     channelList: ChannelModel[],
     selectedChannel: ChannelModel,
-    getTopic: TopicModel[]
 }
 @State<ChannelStateModel>({
     name: 'channelList',
     defaults: {
         channelList: [],
         selectedChannel: null,
-        getTopic: null
     }
 })
 @Injectable()
@@ -24,7 +20,6 @@ export class ChannelState implements NgxsOnInit
 {
     constructor(
         private channelService: ChannelService,
-        private topicService: TopicService
     ) {}
 
     @Selector()
@@ -37,18 +32,9 @@ export class ChannelState implements NgxsOnInit
         return state.selectedChannel
     }
 
-    @Selector()
-    static getTopicByChannel(state: ChannelStateModel) {
-        return state.getTopic
+    ngxsOnInit(ctx: StateContext<ChannelStateModel>) {
+        ctx.dispatch(new FetchAllChannel)
     }
-
-    ngxsOnInit(): void {
-        this.channelService.fetchChannel()
-            .subscribe(res => {
-
-            })
-    }
-
 
     @Action(FetchAllChannel)
     fetchAllChannel({getState, setState}: StateContext<ChannelStateModel>) {
@@ -73,25 +59,14 @@ export class ChannelState implements NgxsOnInit
             this.channelService.fetchChannel()
                 .subscribe((response: any) => {
                     let res = response[0].rows;
+                    resolve(res);
                     let channelItem = res.find((item) => {
                         return item.id === payload.id
                     });
-                    this.topicService.fetchTopic()
-                        .subscribe((response: any) => {
-                            let res = response[0].rows;
-                            let topicData = [];
-                            for (let item of res) {
-                                if (item.data.channelId === channelItem.id) {
-                                    topicData.push(item);
-                                }
-                            }
-                            setState({
-                                ...state,
-                                selectedChannel: channelItem,
-                                getTopic: topicData
-                            });
-                            resolve(res);
-                        }, reject);
+                    setState({
+                        ...state,
+                        selectedChannel: channelItem,
+                    });
 
                 }, reject);
 

@@ -1,4 +1,4 @@
-export interface ChannelModel {
+export class ChannelModel {
     id?: string;
     data?: {
         name?: string;
@@ -10,12 +10,13 @@ export interface ChannelModel {
             topics: number;
             newMessages: number
         }
-    },
+    };
     system?: {
         createdAt?: string;
         updatedAt?: string;
         spaceId?: string;
         userId?: string;
         model?: number
-    }
+    };
+    active?: boolean;
 }

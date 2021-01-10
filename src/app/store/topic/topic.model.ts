@@ -1,4 +1,4 @@
-export interface TopicModel {
+export class TopicModel {
     id: string;
     data?: {
         channelId: string;
@@ -6,7 +6,7 @@ export interface TopicModel {
         status: string;
         stats: {
             newMessages: number;
-        },
+        };
         system: {
             createdAt: string;
             updatedAt: string;

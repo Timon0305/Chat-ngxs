@@ -9,6 +9,7 @@ import {MessageModel} from '../../../../store/message/message.model';
 import {TopicState} from '../../../../store/topic/topic.state';
 import {TopicModel} from '../../../../store/topic/topic.model';
 import {AddMessage} from '../../../../store/message/message.actions';
+import {MessageState} from '../../../../store/message/message.state';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     selectedTopic: string;
     topicId: string;
 
-    @Select(TopicState.getMessageByTopic) getMessage: Observable<MessageModel>;
+    @Select(MessageState.getSelectedMessage) getMessage: Observable<MessageModel>;
     @Select(TopicState.getSelectedTopic) getSelectedTopic: Observable<TopicModel>;
     @Select(TopicState.getActiveTopic) getActiveTopic: Observable<TopicModel>;
 
@@ -61,15 +62,17 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             });
 
         this.getActiveTopic.subscribe(response => {
-            this.topicId = response.id;
-            this.getSelectedTopic
-                .subscribe((res) => {
-                    for (let item in res) {
-                        if (res[item].id === response.id) {
-                            this.selectedTopic = res[item].data.name;
+            if (response) {
+                this.topicId = response.id;
+                this.getSelectedTopic
+                    .subscribe((res) => {
+                        for (let item in res) {
+                            if (res[item].id === response.id) {
+                                this.selectedTopic = res[item].data.name;
+                            }
                         }
-                    }
-                })
+                    })
+            }
         });
     }
 
@@ -144,14 +147,8 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
         replyMessage.system.updatedAt = new Date().toISOString();
         replyMessage.system.createdAt = new Date().toISOString();
 
-        this.store.dispatch(new AddMessage(replyMessage)).subscribe(res => {
-            this.selectedChat = res.messageList.selectedMessage;
-        });
-
+        this.store.dispatch(new AddMessage(replyMessage));
         this.replyForm.reset();
 
-        // this.store.dispatch(new UpdateMessage(this.user.id, this.selectedChat)).subscribe(() => {
-        //     this.readyToReply()
-        // })
     }
 }
