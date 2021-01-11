@@ -6,7 +6,7 @@ import {MessageService} from './message.service';
 
 export interface MessageStateModel {
     messageList: MessageModel[],
-    selectedMessage: any;
+    selectedMessage: MessageModel[];
 }
 @State<MessageStateModel>({
     name: 'messageList',
@@ -54,7 +54,7 @@ export class MessageState implements NgxsOnInit {
     }
 
     @Action(SelectMessage)
-    selectMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: any) {
+    selectMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: SelectMessage) {
         let state = getState();
         let topicChat = [];
         for (let item of state.messageList) {

@@ -1,10 +1,12 @@
+import {MessageModel} from './message.model';
+
 export class FetchMessage {
     static readonly type = '[Message] Fetch Message'
 }
 
 export class SelectMessage {
     static readonly type = '[Message] Select Message';
-    constructor(public payload: any) {}
+    constructor(public payload: MessageModel) {}
 }
 
 export class AddMessage {
