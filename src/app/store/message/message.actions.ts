@@ -4,7 +4,7 @@ export class FetchMessage {
 
 export class SelectMessage {
     static readonly type = '[Message] Select Message';
-    constructor(public payload: any){}
+    constructor(public payload: any) {}
 }
 
 export class AddMessage {

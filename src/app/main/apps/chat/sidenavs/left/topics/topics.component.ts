@@ -76,7 +76,6 @@ export class TopicsComponent implements OnInit, OnDestroy
 
     getChat(id): void {
         this.store.dispatch(new ChangeTopic({id: id}));
-        this.store.dispatch(new FetchTopic);
         this.store.dispatch(new SelectMessage({id: id}));
 
         if ( !this._mediaObserver.isActive('gt-md') )

@@ -55,6 +55,7 @@ export class ChannelState implements NgxsOnInit
     @Action(ChangeChannel)
     changeChannel({getState, setState} : StateContext<ChannelStateModel>, {payload}: ChangeChannel) {
         let state = getState();
+
         let channelItem = state.channelList.find((item) => {
             return item.id === payload.id
         });

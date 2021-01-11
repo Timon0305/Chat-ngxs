@@ -6,7 +6,7 @@ import {MessageService} from './message.service';
 
 export interface MessageStateModel {
     messageList: MessageModel[],
-    selectedMessage: MessageModel[];
+    selectedMessage: any;
 }
 @State<MessageStateModel>({
     name: 'messageList',
