@@ -24,7 +24,7 @@ export class TopicState implements NgxsOnInit {
 
 
     ngxsOnInit(ctx: StateContext<TopicStateModel>): void {
-        ctx.dispatch(new FetchTopic)
+        // ctx.dispatch(new FetchTopic)
     }
 
     @Selector()

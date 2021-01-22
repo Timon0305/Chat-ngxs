@@ -17,22 +17,23 @@ import {ChannelModel} from '../../../app/store/channel/channel.model';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FuseNavigationComponent implements OnInit {
+    @Select(ChannelState.getChannelList) channels: Observable<ChannelModel[]>;
     @Select(ChannelState.getSelectedChannel) selectedChannel: Observable<ChannelModel>;
-    @Input()
-    layout = 'vertical';
-    @Input()
+    @Input() layout = 'vertical';
     navigation: any;
 
     private _unsubscribeAll: Subject<any>;
 
     /**
      *
+     * @param def
      * @param store
      * @param channelState
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
+        private def: ChangeDetectorRef,
         private store: Store,
         private channelState: ChannelState,
         private _changeDetectorRef: ChangeDetectorRef,
@@ -46,8 +47,14 @@ export class FuseNavigationComponent implements OnInit {
      */
     ngOnInit(): void {
         // Load the navigation either from the input or from the service
-        this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
-        // Subscribe to the current navigation changes
+        setTimeout(() => {
+            this.channels
+                .subscribe(res => {
+                    this.navigation = res;
+                    this.def.detectChanges();
+                });
+        }, 3000);
+
         this._fuseNavigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {

@@ -24,7 +24,7 @@ export class MessageState implements NgxsOnInit {
     ) {}
 
     ngxsOnInit(ctx: StateContext<MessageStateModel>): void {
-        ctx.dispatch(new FetchMessage);
+        // ctx.dispatch(new FetchMessage);
     }
 
     @Selector()
@@ -76,6 +76,4 @@ export class MessageState implements NgxsOnInit {
             selectedMessage: [...state.selectedMessage, payload]
         });
     }
-
-
 }

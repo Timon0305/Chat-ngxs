@@ -33,7 +33,7 @@ export class ChannelState implements NgxsOnInit
     }
 
     ngxsOnInit(ctx: StateContext<ChannelStateModel>) {
-        ctx.dispatch(new FetchAllChannel)
+        ctx.dispatch(new FetchAllChannel())
     }
 
     @Action(FetchAllChannel)
@@ -41,13 +41,13 @@ export class ChannelState implements NgxsOnInit
         let state = getState();
         return new Promise((resolve, reject) => {
             this.channelService.fetchChannel()
-                .subscribe((response: object) => {
-                    let res = response[0].rows;
-                    resolve(res);
+                .subscribe((response: any) => {
+                    let res = response['rows'];
                     setState({
                         ...state,
                         channelList: res
-                    })
+                    });
+                    resolve(res);
                 }, reject);
         });
     }

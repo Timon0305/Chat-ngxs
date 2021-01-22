@@ -58,10 +58,12 @@ export class AppComponent implements OnInit, OnDestroy
     )
     {
         // Get default navigation
-        this.channels
-            .subscribe(res => {
-                this.navigation = res;
-            });
+
+        // this.channels
+        //     .subscribe(res => {
+        //     this.navigation = res;
+        // });
+
         // Register the navigation to the service
         this._fuseNavigationService.register('main', this.navigation);
 
@@ -124,6 +126,11 @@ export class AppComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        // this.channels
+        //     .subscribe(res => {
+        //         this.navigation = res;
+        //     });
+
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {

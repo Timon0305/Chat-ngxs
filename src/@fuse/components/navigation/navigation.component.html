@@ -1,11 +1,10 @@
 <div class="nav" [ngClass]="{'vertical':layout === 'vertical'}">
 
     <ng-container *ngIf="layout === 'vertical'">
-
         <ng-container *ngFor="let item of navigation">
+
             <fuse-nav-vertical-group  [item]="item"></fuse-nav-vertical-group>
 
         </ng-container>
-
     </ng-container>
 </div>

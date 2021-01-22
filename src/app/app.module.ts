@@ -69,7 +69,7 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
 
-        NgxsModule.forRoot([ChannelState, TopicState, MessageState], {
+        NgxsModule.forRoot([MessageState, TopicState, ChannelState], {
             developmentMode: !environment.production
         }),
         NgxsLoggerPluginModule.forRoot()
