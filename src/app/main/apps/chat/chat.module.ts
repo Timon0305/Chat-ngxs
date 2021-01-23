@@ -23,6 +23,7 @@ import { ChatRightSidenavComponent } from 'app/main/apps/chat/sidenavs/right/rig
 import { ChatContactSidenavComponent } from 'app/main/apps/chat/sidenavs/right/contact/contact.component';
 import { TopicsComponent } from './sidenavs/left/topics/topics.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 const routes: Routes = [
     {
@@ -57,7 +58,7 @@ const routes: Routes = [
         MatRadioModule,
         MatSidenavModule,
         MatToolbarModule,
-
+        MatTabsModule,
         FuseSharedModule
     ]
 })

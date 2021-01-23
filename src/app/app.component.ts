@@ -13,8 +13,6 @@ import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
-import {ChannelState} from './store/channel/channel.state';
-import {ChannelModel} from './store/channel/channel.model'
 
 @Component({
     selector   : 'app',

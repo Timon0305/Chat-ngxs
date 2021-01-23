@@ -24,17 +24,13 @@ export class AddChannelComponent {
     createComposeForm(): FormGroup
     {
         return new FormGroup({
-            from   : new FormControl({
-                value   : 'johndoe@creapond.com',
-                disabled: true
-            }),
-            to     : new FormControl(''),
-            cc     : new FormControl(''),
-            bcc    : new FormControl(''),
-            subject: new FormControl(''),
-            message: new FormControl('')
+            title: new FormControl(''),
+            subtitle: new FormControl(''),
+            publish: new FormControl(''),
+            public: new FormControl('')
         });
     }
+
     toggleExtraToFields(): void
     {
         this.showExtraToFields = !this.showExtraToFields;
