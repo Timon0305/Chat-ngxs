@@ -23,7 +23,9 @@ import { ChatRightSidenavComponent } from 'app/main/apps/chat/sidenavs/right/rig
 import { ChatContactSidenavComponent } from 'app/main/apps/chat/sidenavs/right/contact/contact.component';
 import { TopicsComponent } from './sidenavs/left/topics/topics.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
+import { MatTableModule } from '@angular/material/table';
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 const routes: Routes = [
     {
@@ -57,7 +59,9 @@ const routes: Routes = [
         MatMenuModule,
         MatRadioModule,
         MatSidenavModule,
+        MatTableModule,
         MatToolbarModule,
+        MatCheckboxModule,
         MatTabsModule,
         FuseSharedModule
     ]
