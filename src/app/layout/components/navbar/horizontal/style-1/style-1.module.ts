@@ -14,7 +14,6 @@ import { NavbarHorizontalStyle1Component } from 'app/layout/components/navbar/ho
     imports     : [
         MatButtonModule,
         MatIconModule,
-
         FuseSharedModule,
         FuseNavigationModule
     ],

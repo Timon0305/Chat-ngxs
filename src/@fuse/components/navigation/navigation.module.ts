@@ -12,6 +12,7 @@ import { FuseNavVerticalCollapsableComponent } from './vertical/collapsable/coll
 import { FuseNavVerticalGroupComponent } from './vertical/group/group.component';
 import { FuseNavHorizontalItemComponent } from './horizontal/item/item.component';
 import { FuseNavHorizontalCollapsableComponent } from './horizontal/collapsable/collapsable.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     imports     : [
@@ -20,7 +21,7 @@ import { FuseNavHorizontalCollapsableComponent } from './horizontal/collapsable/
 
         MatIconModule,
         MatRippleModule,
-
+        MatDialogModule,
         TranslateModule.forChild()
     ],
     exports     : [

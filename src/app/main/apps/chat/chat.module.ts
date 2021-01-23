@@ -22,6 +22,7 @@ import { ChatLeftSidenavComponent } from 'app/main/apps/chat/sidenavs/left/left.
 import { ChatRightSidenavComponent } from 'app/main/apps/chat/sidenavs/right/right.component';
 import { ChatContactSidenavComponent } from 'app/main/apps/chat/sidenavs/right/contact/contact.component';
 import { TopicsComponent } from './sidenavs/left/topics/topics.component';
+import { AddChannelComponent } from './add-channel/add-channel.component';
 
 const routes: Routes = [
     {
@@ -40,7 +41,8 @@ const routes: Routes = [
         ChatLeftSidenavComponent,
         ChatRightSidenavComponent,
         ChatContactSidenavComponent,
-        TopicsComponent
+        TopicsComponent,
+        AddChannelComponent
     ],
     imports     : [
         RouterModule.forChild(routes),

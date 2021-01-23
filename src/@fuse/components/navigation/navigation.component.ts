@@ -6,6 +6,9 @@ import {FuseNavigationService} from '@fuse/components/navigation/navigation.serv
 import {Select, Store} from '@ngxs/store';
 import {ChannelState} from '../../../app/store/channel/channel.state';
 import {ChannelModel} from '../../../app/store/channel/channel.model';
+import {MatDialog} from '@angular/material/dialog';
+import {FormGroup} from '@angular/forms';
+import {AddChannelComponent} from '../../../app/main/apps/chat/add-channel/add-channel.component';
 
 'use strict';
 
@@ -21,7 +24,7 @@ export class FuseNavigationComponent implements OnInit {
     @Select(ChannelState.getSelectedChannel) selectedChannel: Observable<ChannelModel>;
     @Input() layout = 'vertical';
     navigation: any;
-
+    dialogRef: any;
     private _unsubscribeAll: Subject<any>;
 
     /**
@@ -31,13 +34,15 @@ export class FuseNavigationComponent implements OnInit {
      * @param channelState
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
+     * @param _matDialog
      */
     constructor(
         private def: ChangeDetectorRef,
         private store: Store,
         private channelState: ChannelState,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        public _matDialog: MatDialog
     ) {
         this._unsubscribeAll = new Subject();
     }
@@ -46,14 +51,11 @@ export class FuseNavigationComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // Load the navigation either from the input or from the service
-        setTimeout(() => {
-            this.channels
-                .subscribe(res => {
-                    this.navigation = res;
-                    this.def.detectChanges();
-                });
-        }, 3000);
+        this.channels
+            .subscribe(res => {
+                this.navigation = res;
+                this.def.detectChanges();
+            });
 
         this._fuseNavigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -91,5 +93,35 @@ export class FuseNavigationComponent implements OnInit {
             .subscribe(() => {
                 this._changeDetectorRef.markForCheck();
             });
+    }
+
+    addChannel(): void {
+        this.dialogRef = this._matDialog.open(AddChannelComponent, {
+            panelClass: 'mail-compose-dialog'
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if ( !response )
+                {
+                    return;
+                }
+                const actionType: string = response[0];
+                const formData: FormGroup = response[1];
+                switch ( actionType )
+                {
+                    /**
+                     * Send
+                     */
+                    case 'send':
+                        console.log('new Mail', formData.getRawValue());
+                        break;
+                    /**
+                     * Delete
+                     */
+                    case 'delete':
+                        console.log('delete Mail');
+                        break;
+                }
+            })
     }
 }

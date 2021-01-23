@@ -23,9 +23,6 @@ import {ChannelModel} from './store/channel/channel.model'
 })
 export class AppComponent implements OnInit, OnDestroy
 {
-
-    @Select(ChannelState.getChannelList) channels: Observable<ChannelModel[]>;
-
     fuseConfig: any;
     navigation: any;
 
@@ -57,13 +54,6 @@ export class AppComponent implements OnInit, OnDestroy
         private _platform: Platform
     )
     {
-        // Get default navigation
-
-        // this.channels
-        //     .subscribe(res => {
-        //     this.navigation = res;
-        // });
-
         // Register the navigation to the service
         this._fuseNavigationService.register('main', this.navigation);
 

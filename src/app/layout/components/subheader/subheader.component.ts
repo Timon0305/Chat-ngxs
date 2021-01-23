@@ -15,7 +15,7 @@ export class SubheaderComponent implements OnInit {
 
     selectChannel: any;
     channelName: string;
-    userNum: number;
+    status: string;
     channelType: string;
 
   constructor() {}
@@ -26,7 +26,7 @@ export class SubheaderComponent implements OnInit {
               this.selectChannel = channelData;
               if (channelData) {
                   this.channelName = channelData.data.name;
-                  // this.userNum = channelData.data.stats.users;
+                  this.status = channelData.data.status;
                   this.channelType = channelData.data.type;
               }
           })
