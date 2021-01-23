@@ -24,6 +24,7 @@ import {environment} from '../environments/environment';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {TopicState} from './store/topic/topic.state';
 import {MessageState} from './store/message/message.state';
+import {MatTableModule} from "@angular/material/table";
 
 const appRoutes: Routes = [
     {

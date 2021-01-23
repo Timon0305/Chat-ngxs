@@ -49,7 +49,6 @@ const routes: Routes = [
     ],
     imports     : [
         RouterModule.forChild(routes),
-
         MatButtonModule,
         MatCardModule,
         MatFormFieldModule,
@@ -64,7 +63,8 @@ const routes: Routes = [
         MatCheckboxModule,
         MatTabsModule,
         FuseSharedModule
-    ]
+    ],
+    entryComponents: [AddChannelComponent]
 })
 export class ChatModule
 {

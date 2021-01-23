@@ -1,9 +1,13 @@
-import {Component, Inject, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Directive, Inject, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {fuseAnimations} from "../../../../../@fuse/animations";
-import { DataSource } from '@angular/cdk/collections';
 import {Observable, Subject} from "rxjs";
+import {Select} from "@ngxs/store";
+import {ChannelState} from "../../../../store/channel/channel.state";
+import {ChannelModel} from "../../../../store/channel/channel.model";
+
+
 
 @Component({
   selector: 'app-add-channel',
@@ -12,13 +16,14 @@ import {Observable, Subject} from "rxjs";
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class AddChannelComponent implements OnInit, OnDestroy {
+export class AddChannelComponent implements OnInit {
+    @Select(ChannelState.getChannelList) channels: Observable<ChannelModel[]>;
+
     showExtraToFields: boolean;
     composeForm: FormGroup;
-    dataSource: FilesDataSource | null;
-    displayedColumns = ['checkbox', 'name', 'type', 'users', 'jobTitle'];
+    dataSource: PeriodicElement[] = [];
+    displayedColumns: string[] = ['id', 'name', 'type', 'users', 'subtitle'];
     checkboxes: {};
-    private _unsubscribeAll: Subject<any>;
 
   constructor(
       public matDialogRef: MatDialogRef<AddChannelComponent>,
@@ -30,13 +35,12 @@ export class AddChannelComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void
     {
-        // this.dataSource = new FilesDataSource();
-    }
 
-    ngOnDestroy(): void
-    {
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+        this.channels.subscribe((res: any) => {
+            console.log(res)
+            this.dataSource = res
+
+        })
     }
 
 
@@ -56,14 +60,10 @@ export class AddChannelComponent implements OnInit, OnDestroy {
     }
 }
 
-export class FilesDataSource extends DataSource<any>
-{
-    constructor() {
-        super();
-    }
-    connect(): Observable<any[]> {
-        return
-    }
-    disconnect(): void {}
+export interface PeriodicElement {
+    id: string;
+    name: string;
+    type: string;
+    users: string;
+    subtitle: string;
 }
-

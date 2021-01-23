@@ -96,6 +96,7 @@ export class FuseNavigationComponent implements OnInit {
     }
 
     addChannel(): void {
+
         this.dialogRef = this._matDialog.open(AddChannelComponent, {
             panelClass: 'mail-compose-dialog'
         });
@@ -109,15 +110,9 @@ export class FuseNavigationComponent implements OnInit {
                 const formData: FormGroup = response[1];
                 switch ( actionType )
                 {
-                    /**
-                     * Send
-                     */
                     case 'send':
                         console.log('new Mail', formData.getRawValue());
                         break;
-                    /**
-                     * Delete
-                     */
                     case 'delete':
                         console.log('delete Mail');
                         break;
