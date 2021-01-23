@@ -4,9 +4,7 @@ export class TopicModel {
         channelId?: string;
         name?: string;
         status?: string;
-        stats?: {
-            newMessages?: number;
-        }
+        description?: string;
     };
     system?: {
         createdAt?: string;
@@ -14,5 +12,8 @@ export class TopicModel {
         spaceId?: string;
         userId?: string;
         model?: number;
+    };
+    user?: {
+        isAdmin?: boolean;
     }
 }

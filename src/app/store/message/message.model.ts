@@ -1,11 +1,9 @@
 export class MessageModel {
     id?: string;
     data?: {
+        channelId?: string;
         topicId?: string;
         text?: string;
-        stats?: {
-            isRead?: boolean;
-        }
     };
     system?: {
         createdAt?: string;
@@ -13,5 +11,8 @@ export class MessageModel {
         spaceId?: string;
         userId?: string;
         model?: number
+    };
+    user?: {
+        isAdmin?: boolean;
     }
 }

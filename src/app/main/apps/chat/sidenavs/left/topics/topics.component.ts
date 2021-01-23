@@ -3,7 +3,7 @@ import {MediaObserver} from '@angular/flex-layout';
 import {Observable, Subject} from 'rxjs';
 import {fuseAnimations} from '@fuse/animations';
 import {FuseMatSidenavHelperService} from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
-import {ChangeTopic, FetchTopic} from '../../../../../../store/topic/topic.actions';
+import {ChangeTopic} from '../../../../../../store/topic/topic.actions';
 import {Select, Store} from '@ngxs/store';
 import {TopicModel} from '../../../../../../store/topic/topic.model';
 import {ChannelState} from '../../../../../../store/channel/channel.state';

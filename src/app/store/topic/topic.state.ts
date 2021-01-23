@@ -24,7 +24,7 @@ export class TopicState implements NgxsOnInit {
 
 
     ngxsOnInit(ctx: StateContext<TopicStateModel>): void {
-        // ctx.dispatch(new FetchTopic)
+        ctx.dispatch(new FetchTopic)
     }
 
     @Selector()
@@ -43,7 +43,7 @@ export class TopicState implements NgxsOnInit {
         return new Promise((resolve, reject) => {
             this.topicService.fetchTopic()
                 .subscribe((response: object) => {
-                    let res = response[0].rows;
+                    let res = response['rows'];
                     resolve(res);
                     setState({
                         ...state,

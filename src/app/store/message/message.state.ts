@@ -24,7 +24,7 @@ export class MessageState implements NgxsOnInit {
     ) {}
 
     ngxsOnInit(ctx: StateContext<MessageStateModel>): void {
-        // ctx.dispatch(new FetchMessage);
+        ctx.dispatch(new FetchMessage);
     }
 
     @Selector()
@@ -43,7 +43,7 @@ export class MessageState implements NgxsOnInit {
         return new Promise((resolve, reject) => {
             this.messageService.fetchMessage()
                 .subscribe((response: object) => {
-                    let res = response[0].rows;
+                    let res = response['rows'];
                     resolve(res);
                     setState({
                         ...state,

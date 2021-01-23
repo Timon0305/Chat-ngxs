@@ -1,5 +1,5 @@
-export const channelURL = 'https://public-api.366dev.nl/my/content';
+export const channelURL = 'https://public-api.366dev.nl/my/channels';
 
-export const messageURL = '';
+export const messageURL = 'https://public-api.366dev.nl/my/messages';
 
-export const topicURL = '';
+export const topicURL = 'https://public-api.366dev.nl/my/topics';
