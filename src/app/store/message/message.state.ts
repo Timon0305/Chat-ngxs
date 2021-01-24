@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {State, NgxsOnInit, Action, StateContext, Selector} from '@ngxs/store';
-import {SelectMessage, AddMessage, FetchMessage} from './message.actions';
+import {State,  Action, StateContext, Selector} from '@ngxs/store';
+import {AddMessage, FetchMessage} from './message.actions';
 import {MessageModel} from './message.model';
 import {MessageService} from './message.service';
 
@@ -17,15 +17,12 @@ export interface MessageStateModel {
 })
 
 @Injectable()
-export class MessageState implements NgxsOnInit {
+export class MessageState {
 
     constructor(
         private messageService: MessageService
     ) {}
 
-    ngxsOnInit(ctx: StateContext<MessageStateModel>): void {
-        ctx.dispatch(new FetchMessage);
-    }
 
     @Selector()
     static getMessageList(state: MessageStateModel) {
@@ -38,10 +35,10 @@ export class MessageState implements NgxsOnInit {
     }
 
     @Action(FetchMessage)
-    fetchMessage({getState, setState}: StateContext<MessageStateModel>) {
+    fetchMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: FetchMessage) {
         let state = getState();
         return new Promise((resolve, reject) => {
-            this.messageService.fetchMessage()
+            this.messageService.fetchMessage(payload)
                 .subscribe((response: object) => {
                     let res = response['rows'];
                     resolve(res);
@@ -53,27 +50,11 @@ export class MessageState implements NgxsOnInit {
         })
     }
 
-    @Action(SelectMessage)
-    selectMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: SelectMessage) {
-        let state = getState();
-        let topicChat = [];
-        for (let item of state.messageList) {
-            if (item.data.topicId === payload.id) {
-                topicChat.push(item)
-            }
-        }
-        setState({
-            ...state,
-            selectedMessage: topicChat
-        });
-
-    }
-
     @Action(AddMessage)
     addMessage({getState, patchState}: StateContext<MessageStateModel>, {payload}: AddMessage) {
         let state = getState();
         patchState({
-            selectedMessage: [...state.selectedMessage, payload]
+            messageList: [...state.messageList, payload]
         });
     }
 }

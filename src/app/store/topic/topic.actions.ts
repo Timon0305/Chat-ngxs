@@ -1,7 +1,8 @@
-import {TopicModel} from './topic.model';
+import {TopicModel} from "./topic.model";
 
 export class FetchTopic {
     static readonly type = '[Topic] Fetch Topic';
+    constructor(public payload: string) {}
 }
 
 export class ChangeTopic {

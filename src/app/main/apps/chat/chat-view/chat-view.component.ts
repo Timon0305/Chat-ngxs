@@ -28,7 +28,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     selectedTopic: string;
     topicId: string;
 
-    @Select(MessageState.getSelectedMessage) getMessage: Observable<MessageModel>;
+    @Select(MessageState.getMessageList) getMessage: Observable<MessageModel>;
     @Select(TopicState.getSelectedTopic) getSelectedTopic: Observable<TopicModel>;
     @Select(TopicState.getActiveTopic) getActiveTopic: Observable<TopicModel>;
 

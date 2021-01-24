@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ChannelModel} from './channel.model';
-import {channelURL} from '../../fuse-config/rest.api';
+import {domain} from '../../fuse-config/rest.api';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ export class ChannelService {
     ) {}
 
     fetchChannel() {
-        return this.http.get<ChannelModel[]>(channelURL,
+        return this.http.get<ChannelModel[]>(domain + 'channels',
             {
                 headers: {
                     'Authorization': 'Bearer ' + this.token,

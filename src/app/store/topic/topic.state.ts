@@ -16,16 +16,12 @@ export interface TopicStateModel {
     }
 })
 @Injectable()
-export class TopicState implements NgxsOnInit {
+export class TopicState {
 
     constructor(
         private topicService: TopicService,
     ) {}
 
-
-    ngxsOnInit(ctx: StateContext<TopicStateModel>): void {
-        ctx.dispatch(new FetchTopic)
-    }
 
     @Selector()
     static getSelectedTopic(state: TopicStateModel) {
@@ -38,10 +34,10 @@ export class TopicState implements NgxsOnInit {
     }
 
     @Action(FetchTopic)
-    fetchTopic({getState, setState}: StateContext<TopicStateModel>) {
+    fetchTopic({getState, setState}: StateContext<TopicStateModel>, {payload} : FetchTopic) {
         let state = getState();
         return new Promise((resolve, reject) => {
-            this.topicService.fetchTopic()
+            this.topicService.fetchTopic(payload)
                 .subscribe((response: object) => {
                     let res = response['rows'];
                     resolve(res);

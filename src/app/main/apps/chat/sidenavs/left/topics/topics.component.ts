@@ -3,12 +3,12 @@ import {MediaObserver} from '@angular/flex-layout';
 import {Observable, Subject} from 'rxjs';
 import {fuseAnimations} from '@fuse/animations';
 import {FuseMatSidenavHelperService} from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
-import {ChangeTopic} from '../../../../../../store/topic/topic.actions';
+import {ChangeTopic, FetchTopic} from '../../../../../../store/topic/topic.actions';
 import {Select, Store} from '@ngxs/store';
 import {TopicModel} from '../../../../../../store/topic/topic.model';
 import {ChannelState} from '../../../../../../store/channel/channel.state';
 import {TopicState} from '../../../../../../store/topic/topic.state';
-import {SelectMessage} from '../../../../../../store/message/message.actions';
+import {FetchMessage} from '../../../../../../store/message/message.actions';
 import {ChannelModel} from '../../../../../../store/channel/channel.model';
 
 @Component({
@@ -41,15 +41,10 @@ export class TopicsComponent implements OnInit, OnDestroy
         this.getSelectedChannel
             .subscribe(response => {
                 if (response) {
-                    this.getTopicByChannel
-                        .subscribe(res => {
-                            this.getTopics = [];
-                            for (let item in res) {
-                                if (res[item].data.channelId === response.id) {
-                                    this.getTopics.push(res[item])
-                                }
-                            }
-                        });
+                   this.store.dispatch(new FetchTopic(response.id))
+                       .subscribe(res => {
+                           this.getTopics = res.topicList.topicList;
+                       });
                 } else {
                     this.getTopics = []
                 }
@@ -76,7 +71,7 @@ export class TopicsComponent implements OnInit, OnDestroy
 
     getChat(id): void {
         this.store.dispatch(new ChangeTopic({id: id}));
-        this.store.dispatch(new SelectMessage({id: id}));
+        this.store.dispatch(new FetchMessage(id));
 
         if ( !this._mediaObserver.isActive('gt-md') )
         {
