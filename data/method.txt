@@ -1,0 +1,31 @@
+{
+"id": "3206a765-7b44-4daa-9104-a93ffebb7fb5",
+"name": "366 Team test-10 private",
+"description": null,
+"space": "own",
+"type": "group",
+"visibility": "all",
+"subscribe": "all"
+}
+
+you have to generatie a new id first
+
+and space=public for a public published channel
+
+and for topics example /my/topics and body:
+
+{
+"id": "004c569d-29d7-4efd-a376-59a1ba0ea325",
+"channelId": "3106a765-7b44-4daa-9104-a93ffebb7fb5",
+"name": "topic test-1",
+"description": "some description"
+}
+
+and last message example:
+
+{
+"id": "004c569d-29d7-4efd-a376-59a1ba0ea325",
+"channelId": "3106a765-7b44-4daa-9104-a93ffebb7fb5",
+"topicId": "004c569d-29d7-4efd-a376-59a1ba0ea325",
+"text": "msg test-1"
+}

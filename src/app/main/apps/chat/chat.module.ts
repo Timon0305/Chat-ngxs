@@ -26,6 +26,7 @@ import { AddChannelComponent } from './add-channel/add-channel.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 const routes: Routes = [
     {
@@ -54,6 +55,7 @@ const routes: Routes = [
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatPaginatorModule,
         MatListModule,
         MatMenuModule,
         MatRadioModule,

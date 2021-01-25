@@ -1,17 +1,19 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, NgxsOnInit, Store} from '@ngxs/store';
-import {FetchAllChannel, ChangeChannel, AddNewChannel} from './channel.actions';
+import {FetchAllChannel, ChangeChannel, AddNewChannel, SubscribedChannel} from './channel.actions';
 import {ChannelModel} from './channel.model';
 import {ChannelService} from './channel.service';
 
 export interface ChannelStateModel {
     channelList: ChannelModel[],
+    subscribedChannel: ChannelModel[],
     selectedChannel: ChannelModel,
 }
 @State<ChannelStateModel>({
     name: 'channelList',
     defaults: {
         channelList: [],
+        subscribedChannel: null,
         selectedChannel: null,
     }
 })
@@ -51,6 +53,22 @@ export class ChannelState implements NgxsOnInit
                     resolve(res);
                 }, reject);
         });
+    }
+
+    @Action(SubscribedChannel)
+    subscribedChannel({getState, setState} : StateContext<ChannelStateModel>) {
+        let state = getState();
+        return new Promise((resolve, reject) => {
+            this.channelService.subscribedChannel()
+                .subscribe((response: any) => {
+                    let res = response['rows'];
+                    setState({
+                        ...state,
+                        subscribedChannel: res
+                    });
+                    resolve(res);
+                }, reject)
+        })
     }
 
     @Action(ChangeChannel)

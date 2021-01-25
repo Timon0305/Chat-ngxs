@@ -20,6 +20,13 @@ export class ChannelService {
             })
     }
 
+    subscribedChannel() {
+        return this.http.get<ChannelModel[]>(domain + 'browse.channels',
+            {
+                headers: this.token
+            })
+    }
+
     addChannel(payload) {
          return this.http.post<ChannelModel[]>(domain + 'channels',
              payload,

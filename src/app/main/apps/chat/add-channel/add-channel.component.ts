@@ -3,10 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {fuseAnimations} from "../../../../../@fuse/animations";
 import {Observable, Subject} from "rxjs";
-import {Select} from "@ngxs/store";
+import {Select, Store} from "@ngxs/store";
 import {ChannelState} from "../../../../store/channel/channel.state";
 import {ChannelModel} from "../../../../store/channel/channel.model";
 import {isBoolean} from "util";
+import {SubscribedChannel} from "../../../../store/channel/channel.actions";
+import {MatPaginator} from "@angular/material/paginator";
 
 
 
@@ -18,17 +20,19 @@ import {isBoolean} from "util";
     animations   : fuseAnimations
 })
 export class AddChannelComponent implements OnInit {
-    @Select(ChannelState.getChannelList) channels: Observable<ChannelModel[]>;
 
     showExtraToFields: boolean;
     composeForm: FormGroup;
     dataSource: PeriodicElement[] = [];
     displayedColumns: string[] = ['id', 'name', 'type', 'users', 'subtitle'];
+    paginator: MatPaginator;
     checkboxes: {};
 
   constructor(
+      private store: Store,
       public matDialogRef: MatDialogRef<AddChannelComponent>,
       @Inject(MAT_DIALOG_DATA) private _data: any
+
   ) {
       this.composeForm = this.createComposeForm();
       this.showExtraToFields = false;
@@ -36,12 +40,13 @@ export class AddChannelComponent implements OnInit {
 
     ngOnInit(): void
     {
-
-        this.channels.subscribe((res: any) => {
-            this.dataSource = res
-        })
+        this.store.dispatch(new SubscribedChannel())
+            .subscribe(res => {
+                this.dataSource = res['channelList']['subscribedChannel'];
+                console.log(res['channelList'])
+                this.paginator = res['total'];
+            })
     }
-
 
     createComposeForm(): FormGroup
     {
