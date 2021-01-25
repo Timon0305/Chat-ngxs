@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
-import {FetchAllChannel, ChangeChannel} from './channel.actions';
+import {FetchAllChannel, ChangeChannel, AddNewChannel} from './channel.actions';
 import {ChannelModel} from './channel.model';
 import {ChannelService} from './channel.service';
 
@@ -63,5 +63,15 @@ export class ChannelState implements NgxsOnInit
             ...state,
             selectedChannel: channelItem,
         });
+    }
+
+    @Action(AddNewChannel)
+    addNewChannel({getState, patchState}: StateContext<ChannelStateModel>, {payload} : AddNewChannel) {
+        const state = getState();
+        patchState({
+            channelList: [...state.channelList, payload]
+        });
+        this.channelService.addChannel(payload)
+            .subscribe(() => {})
     }
 }

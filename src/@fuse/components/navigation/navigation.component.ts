@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {merge, Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
 
 import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 import {Select, Store} from '@ngxs/store';
@@ -9,6 +10,7 @@ import {ChannelModel} from '../../../app/store/channel/channel.model';
 import {MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {AddChannelComponent} from '../../../app/main/apps/chat/add-channel/add-channel.component';
+import {AddNewChannel} from "../../../app/store/channel/channel.actions";
 
 'use strict';
 
@@ -111,12 +113,24 @@ export class FuseNavigationComponent implements OnInit {
                 switch ( actionType )
                 {
                     case 'send':
-                        console.log('new Mail', formData.getRawValue());
+                        this.saveChannel(formData.getRawValue());
                         break;
                     case 'delete':
                         console.log('delete Mail');
                         break;
                 }
             })
+    }
+
+    saveChannel = (value) => {
+        let newChannel = {
+            id: uuidv4(),
+            name: value.title,
+            description: value.description,
+            type: 'group',
+            visibility: value.visibility === 'true' ? 'all' : '',
+            space: value.status === 'true' ? 'public' : 'own'
+        };
+        this.store.dispatch(new AddNewChannel(newChannel))
     }
 }

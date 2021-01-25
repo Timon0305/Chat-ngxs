@@ -22,22 +22,22 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Description</mat-label>
-                            <textarea matInput name="subtitle"
-                                      formControlName="subtitle"
+                            <textarea matInput name="description"
+                                      formControlName="description"
                                       rows="6">
                     </textarea>
                         </mat-form-field>
 
                         <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
                             <div class="group mt-32">
-                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="public">
+                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="visibility" required>
                                     <mat-radio-button class="mb-12" value="true">Public (to everyone)</mat-radio-button>
                                     <mat-radio-button class="mb-12" value="false">Private (only in existing space)</mat-radio-button>
                                 </mat-radio-group>
 
                             </div>
                             <div class="group mt-32">
-                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="publish">
+                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="status" required>
                                     <mat-radio-button class="mb-12" value="true">Publish in channel list</mat-radio-button>
                                     <mat-radio-button class="mb-12" value="false">Not published(link only, invite users)</mat-radio-button>
                                 </mat-radio-group>

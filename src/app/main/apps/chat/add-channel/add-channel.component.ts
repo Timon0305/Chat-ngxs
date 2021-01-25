@@ -6,6 +6,7 @@ import {Observable, Subject} from "rxjs";
 import {Select} from "@ngxs/store";
 import {ChannelState} from "../../../../store/channel/channel.state";
 import {ChannelModel} from "../../../../store/channel/channel.model";
+import {isBoolean} from "util";
 
 
 
@@ -37,9 +38,7 @@ export class AddChannelComponent implements OnInit {
     {
 
         this.channels.subscribe((res: any) => {
-            console.log(res)
             this.dataSource = res
-
         })
     }
 
@@ -48,9 +47,9 @@ export class AddChannelComponent implements OnInit {
     {
         return new FormGroup({
             title: new FormControl(''),
-            subtitle: new FormControl(''),
-            publish: new FormControl(''),
-            public: new FormControl('')
+            description: new FormControl(''),
+            visibility: new FormControl(''),
+            status: new FormControl('')
         });
     }
 

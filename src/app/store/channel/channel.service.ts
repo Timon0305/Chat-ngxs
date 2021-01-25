@@ -8,17 +8,24 @@ import {domain} from '../../fuse-config/rest.api';
 })
 
 export class ChannelService {
-    token = localStorage.getItem('token');
+   token = {'Authorization': 'Bearer ' + localStorage.getItem('token')};
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
     ) {}
 
     fetchChannel() {
         return this.http.get<ChannelModel[]>(domain + 'channels',
             {
-                headers: {
-                    'Authorization': 'Bearer ' + this.token,
-                }
+                headers : this.token
             })
+    }
+
+    addChannel(payload) {
+        console.log(payload)
+         return this.http.post<ChannelModel[]>(domain + 'channels',
+             {payload},
+             {
+                headers : this.token
+             })
     }
 }
