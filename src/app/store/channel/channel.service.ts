@@ -23,7 +23,7 @@ export class ChannelService {
     addChannel(payload) {
         console.log(payload)
          return this.http.post<ChannelModel[]>(domain + 'channels',
-             {payload},
+             payload,
              {
                 headers : this.token
              })

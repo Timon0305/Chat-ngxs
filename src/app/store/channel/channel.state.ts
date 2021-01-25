@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
+import {State, Action, StateContext, Selector, NgxsOnInit, Store} from '@ngxs/store';
 import {FetchAllChannel, ChangeChannel, AddNewChannel} from './channel.actions';
 import {ChannelModel} from './channel.model';
 import {ChannelService} from './channel.service';
@@ -19,6 +19,7 @@ export interface ChannelStateModel {
 export class ChannelState implements NgxsOnInit
 {
     constructor(
+        private store: Store,
         private channelService: ChannelService,
     ) {}
 
@@ -67,11 +68,9 @@ export class ChannelState implements NgxsOnInit
 
     @Action(AddNewChannel)
     addNewChannel({getState, patchState}: StateContext<ChannelStateModel>, {payload} : AddNewChannel) {
-        const state = getState();
-        patchState({
-            channelList: [...state.channelList, payload]
-        });
         this.channelService.addChannel(payload)
-            .subscribe(() => {})
+            .subscribe(() => {
+                this.store.dispatch(new FetchAllChannel())
+            })
     }
 }

@@ -126,9 +126,10 @@ export class FuseNavigationComponent implements OnInit {
         let newChannel = {
             id: uuidv4(),
             name: value.title,
-            description: value.description,
+            description: value.description ? value.description : null,
             type: 'group',
-            visibility: value.visibility === 'true' ? 'all' : '',
+            subscribe: 'all',
+            visibility: value.visibility === 'true' ? 'all' : 'link',
             space: value.status === 'true' ? 'public' : 'own'
         };
         this.store.dispatch(new AddNewChannel(newChannel))
