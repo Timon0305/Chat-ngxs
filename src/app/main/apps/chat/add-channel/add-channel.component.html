@@ -25,21 +25,43 @@
                             <textarea matInput name="description"
                                       formControlName="description"
                                       rows="6">
-                    </textarea>
+                            </textarea>
                         </mat-form-field>
 
                         <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
                             <div class="group mt-32">
-                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="visibility" required>
-                                    <mat-radio-button class="mb-12" value="true">Public (to everyone)</mat-radio-button>
-                                    <mat-radio-button class="mb-12" value="false">Private (only in existing space)</mat-radio-button>
+                                <label class="text-super mb-3 text-bold">Type</label>
+                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="type" required>
+                                    <mat-radio-button class="mb-12" value="group">Public (to everyone)</mat-radio-button>
+                                    <mat-radio-button class="mb-12" value="private">Private (only in existing space)</mat-radio-button>
                                 </mat-radio-group>
 
                             </div>
                             <div class="group mt-32">
-                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="status" required>
-                                    <mat-radio-button class="mb-12" value="true">Publish in channel list</mat-radio-button>
-                                    <mat-radio-button class="mb-12" value="false">Not published(link only, invite users)</mat-radio-button>
+                                <label class="text-super mb-3 text-bold">Subscribe</label>
+                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="subscribe" required>
+                                    <mat-radio-button class="mb-12" value="all">Publish in channel list</mat-radio-button>
+                                    <mat-radio-button class="mb-12" value="request">Not published(link only, invite users)</mat-radio-button>
+                                    <mat-radio-button class="mb-12" value="invite">Not published(link only, invite users)</mat-radio-button>
+                                </mat-radio-group>
+
+                            </div>
+                        </div>
+
+                        <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+                            <div class="group mt-32">
+                                <label class="text-super mb-3 text-bold">Space</label>
+                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="space" required>
+                                    <mat-radio-button class="mb-12" value="public">Public (to everyone)</mat-radio-button>
+                                    <mat-radio-button class="mb-12" value="own">Private (only in existing space)</mat-radio-button>
+                                </mat-radio-group>
+
+                            </div>
+                            <div class="group mt-32">
+                                <label class="text-super mb-3 text-bold">Visibility</label>
+                                <mat-radio-group fxLayout="column" fxLayoutAlign="start start" formControlName="visibility" required>
+                                    <mat-radio-button class="mb-12" value="all">Publish in channel list</mat-radio-button>
+                                    <mat-radio-button class="mb-12" value="link">Not published(link only, invite users)</mat-radio-button>
                                 </mat-radio-group>
 
                             </div>

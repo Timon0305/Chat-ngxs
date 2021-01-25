@@ -48,8 +48,10 @@ export class AddChannelComponent implements OnInit {
         return new FormGroup({
             title: new FormControl(''),
             description: new FormControl(''),
-            visibility: new FormControl(''),
-            status: new FormControl('')
+            type: new FormControl(''),
+            subscribe: new FormControl(''),
+            space: new FormControl(''),
+            visibility: new FormControl('')
         });
     }
 
