@@ -1,16 +1,12 @@
-import {Component, Directive, Inject, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {fuseAnimations} from "../../../../../@fuse/animations";
-import {Observable, Subject} from "rxjs";
 import {Select, Store} from "@ngxs/store";
-import {ChannelState} from "../../../../store/channel/channel.state";
-import {ChannelModel} from "../../../../store/channel/channel.model";
-import {isBoolean} from "util";
-import {SubscribedChannel} from "../../../../store/channel/channel.actions";
-import {MatPaginator} from "@angular/material/paginator";
-
-
+import {BrowseChannelState} from "../../../../store/browseChannel/browse.channel.state";
+import {Observable} from "rxjs";
+import {BrowseChannelModel} from "../../../../store/browseChannel/browse.channel.model";
+import {FetchPageBrowsChannel} from "../../../../store/browseChannel/browse.channel.actions";
 
 @Component({
   selector: 'app-add-channel',
@@ -21,15 +17,21 @@ import {MatPaginator} from "@angular/material/paginator";
 })
 export class AddChannelComponent implements OnInit {
 
+    @Select(BrowseChannelState.getBrowseChannelList) browseChannel: Observable<BrowseChannelModel>;
+    @Select(BrowseChannelState.getBrowseChannelPage) browseChannelPage: Observable<number>;
+    @Select(BrowseChannelState.getBrowseChannelTotalPage) browseChannelTotalPage: Observable<number>;
+
     showExtraToFields: boolean;
     composeForm: FormGroup;
     dataSource: PeriodicElement[] = [];
     displayedColumns: string[] = ['id', 'name', 'type', 'users', 'subtitle'];
-    paginator: MatPaginator;
+    pageNum: number;
+    totalNum: number;
     checkboxes: {};
 
   constructor(
       private store: Store,
+      private def: ChangeDetectorRef,
       public matDialogRef: MatDialogRef<AddChannelComponent>,
       @Inject(MAT_DIALOG_DATA) private _data: any
 
@@ -40,11 +42,20 @@ export class AddChannelComponent implements OnInit {
 
     ngOnInit(): void
     {
-        this.store.dispatch(new SubscribedChannel())
+        this.browseChannelPage
             .subscribe(res => {
-                this.dataSource = res['channelList']['subscribedChannel'];
-                console.log(res['channelList'])
-                this.paginator = res['total'];
+                this.pageNum = res;
+                this.def.detectChanges();
+            });
+
+        this.browseChannelTotalPage
+            .subscribe(res => {
+                this.totalNum = res
+            });
+
+        this.browseChannel
+            .subscribe((res: any) => {
+                this.dataSource = res;
             })
     }
 
@@ -63,6 +74,24 @@ export class AddChannelComponent implements OnInit {
     toggleExtraToFields(): void
     {
         this.showExtraToFields = !this.showExtraToFields;
+    }
+
+    prePage = (pNum) => {
+        if (pNum === 1) {
+            return;
+        } else {
+            let pageNum = --this.pageNum;
+            this.store.dispatch(new FetchPageBrowsChannel(pageNum))
+        }
+    };
+
+    nextPage = (pNum) => {
+        if (pNum === this.totalNum) {
+            return;
+        } else {
+            let pageNum = ++this.pageNum;
+            this.store.dispatch(new FetchPageBrowsChannel(pageNum))
+        }
     }
 }
 

@@ -73,33 +73,33 @@
                     <mat-table #table [dataSource]="dataSource"
                                [@animateStagger]="{value:'50'}">
                         <ng-container matColumnDef="id">
-                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                            <mat-cell *matCellDef="let contact">
+                            <mat-header-cell *matHeaderCellDef  class="width-80"></mat-header-cell>
+                            <mat-cell *matCellDef="let contact" class="width-80">
                                 <mat-checkbox
-                                              (click)="$event.stopPropagation()">
+                                    (click)="$event.stopPropagation()">
                                 </mat-checkbox>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="name">
-                            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-                            <mat-cell *matCellDef="let contact">
-                                <p class="text-truncate font-weight-600">{{contact.data.name}} </p>
+                            <mat-header-cell *matHeaderCellDef class="table-text-center">Name</mat-header-cell>
+                            <mat-cell *matCellDef="let contact" class="table-text-center">
+                                <p class="text-truncate font-weight-600" >{{contact.data.name}} </p>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="type">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Type</mat-header-cell>
-                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm>
-                                <p class="email text-truncate">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm  class="width-80">Type</mat-header-cell>
+                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm  class="width-80">
+                                <p class="email text-truncate" >
                                     {{contact.data.type}}
                                 </p>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="users">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Users</mat-header-cell>
-                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md>
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md  class="width-80">Users</mat-header-cell>
+                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md  class="width-80">
                                 <p class="phone text-truncate">
                                     {{contact.data.status}}
                                 </p>
@@ -107,8 +107,8 @@
                         </ng-container>
 
                         <ng-container matColumnDef="subtitle">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg></mat-header-cell>
-                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-lg>
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg class="table-text-center"></mat-header-cell>
+                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-lg class="table-text-center">
                                 <p class="job-title text-truncate">
                                     {{contact.data.name}}
                                 </p>
@@ -121,12 +121,28 @@
                                  [@animate]="{value:'*',params:{y:'100%'}}">
                         </mat-row>
                     </mat-table>
-                    <mat-paginator #paginator
-                                   [length]="dataSource.length"
-                                   [pageIndex]="0"
-                                   [pageSize]="10"
-                                   [pageSizeOptions]="[5, 10, 25, 100]">
-                    </mat-paginator>
+                    <div class="nav nav-group pl-3">
+                        <div class="group-items">
+                            <div class="nav-item">
+                                <a class="nav-link">
+                                    <span class=" nav-link-title text-dark"
+                                          aria-label="Compose"
+                                    >
+                                        <mat-icon class="font-size-10" (click)="prePage(pageNum)">arrow_back_ios</mat-icon>
+                                    </span>
+                                    <span class=" nav-link-title text-center text-dark"
+                                          aria-label="Compose"
+                                    >
+                                        {{pageNum}} &nbsp; / &nbsp; {{totalNum}}
+                                    </span>
+                                    <span class=" nav-link-title text-right text-dark"
+                                          aria-label="Compose">
+                                        <mat-icon class="font-size-10" (click)="nextPage(pageNum)">arrow_forward_ios</mat-icon>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </mat-tab>
             </mat-tab-group>
 

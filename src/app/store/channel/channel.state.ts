@@ -1,19 +1,21 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, NgxsOnInit, Store} from '@ngxs/store';
-import {FetchAllChannel, ChangeChannel, AddNewChannel, SubscribedChannel} from './channel.actions';
+import {ChangeChannel, AddNewChannel, FetchPageChannel} from './channel.actions';
 import {ChannelModel} from './channel.model';
 import {ChannelService} from './channel.service';
 
 export interface ChannelStateModel {
     channelList: ChannelModel[],
-    subscribedChannel: ChannelModel[],
+    page: number,
+    totalPages: number,
     selectedChannel: ChannelModel,
 }
 @State<ChannelStateModel>({
     name: 'channelList',
     defaults: {
         channelList: [],
-        subscribedChannel: null,
+        page: null,
+        totalPages: null,
         selectedChannel: null,
     }
 })
@@ -31,44 +33,40 @@ export class ChannelState implements NgxsOnInit
     }
 
     @Selector()
+    static getChannelPage(state: ChannelStateModel) {
+        return state.page
+    }
+
+    @Selector()
+    static getChannelTotalPage(state: ChannelStateModel) {
+        return state.totalPages
+    }
+
+    @Selector()
     static getSelectedChannel(state: ChannelStateModel) {
         return state.selectedChannel
     }
 
     ngxsOnInit(ctx: StateContext<ChannelStateModel>) {
-        ctx.dispatch(new FetchAllChannel())
+        ctx.dispatch(new FetchPageChannel(1))
     }
 
-    @Action(FetchAllChannel)
-    fetchAllChannel({getState, setState}: StateContext<ChannelStateModel>) {
+    @Action(FetchPageChannel)
+    fetchPageChannel({getState, setState}: StateContext<ChannelStateModel>, {payload} : FetchPageChannel) {
         let state = getState();
         return new Promise((resolve, reject) => {
-            this.channelService.fetchChannel()
+            this.channelService.fetchChannel(payload)
                 .subscribe((response: any) => {
                     let res = response['rows'];
                     setState({
                         ...state,
-                        channelList: res
+                        channelList: res,
+                        page: response.page,
+                        totalPages: response.totalPages,
                     });
                     resolve(res);
                 }, reject);
         });
-    }
-
-    @Action(SubscribedChannel)
-    subscribedChannel({getState, setState} : StateContext<ChannelStateModel>) {
-        let state = getState();
-        return new Promise((resolve, reject) => {
-            this.channelService.subscribedChannel()
-                .subscribe((response: any) => {
-                    let res = response['rows'];
-                    setState({
-                        ...state,
-                        subscribedChannel: res
-                    });
-                    resolve(res);
-                }, reject)
-        })
     }
 
     @Action(ChangeChannel)
@@ -85,10 +83,17 @@ export class ChannelState implements NgxsOnInit
     }
 
     @Action(AddNewChannel)
-    addNewChannel({getState, patchState}: StateContext<ChannelStateModel>, {payload} : AddNewChannel) {
+    addNewChannel({getState, setState}: StateContext<ChannelStateModel>, {payload} : AddNewChannel) {
+        let state = getState();
+        let pageNum = state.page;
+        if (pageNum === state.totalPages) {
+            return
+        } else {
+            ++pageNum
+        }
         this.channelService.addChannel(payload)
             .subscribe(() => {
-                this.store.dispatch(new FetchAllChannel())
+                this.store.dispatch(new FetchPageChannel(pageNum))
             })
     }
 }

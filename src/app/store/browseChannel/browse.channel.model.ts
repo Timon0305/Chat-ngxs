@@ -1,4 +1,4 @@
-export class ChannelModel {
+export class BrowseChannelModel {
     id?: string;
     data?: {
         name?: string;
@@ -20,7 +20,6 @@ export class ChannelModel {
     };
     user?: {
         test?: number;
-        isAdmin?: boolean;
+        isSubscribed?: boolean;
     };
-    active?: boolean;
 }

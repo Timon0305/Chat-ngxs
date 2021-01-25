@@ -10,7 +10,7 @@ import {ChannelModel} from '../../../app/store/channel/channel.model';
 import {MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {AddChannelComponent} from '../../../app/main/apps/chat/add-channel/add-channel.component';
-import {AddNewChannel} from "../../../app/store/channel/channel.actions";
+import {AddNewChannel, FetchPageChannel} from "../../../app/store/channel/channel.actions";
 
 'use strict';
 
@@ -23,10 +23,14 @@ import {AddNewChannel} from "../../../app/store/channel/channel.actions";
 })
 export class FuseNavigationComponent implements OnInit {
     @Select(ChannelState.getChannelList) channels: Observable<ChannelModel[]>;
+    @Select(ChannelState.getChannelPage) channelPage: Observable<number>;
+    @Select(ChannelState.getChannelTotalPage) channelTotalPage: Observable<number>;
     @Select(ChannelState.getSelectedChannel) selectedChannel: Observable<ChannelModel>;
     @Input() layout = 'vertical';
     navigation: any;
     dialogRef: any;
+    pageNum: number;
+    totalNum: number;
     private _unsubscribeAll: Subject<any>;
 
     /**
@@ -58,6 +62,17 @@ export class FuseNavigationComponent implements OnInit {
                 this.navigation = res;
                 this.def.detectChanges();
             });
+        this.channelPage
+            .subscribe(res => {
+                this.pageNum = res;
+                this.def.detectChanges();
+            });
+        this.channelTotalPage
+            .subscribe(res => {
+                this.totalNum = res;
+                this.def.detectChanges();
+            });
+
 
         this._fuseNavigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
@@ -133,5 +148,23 @@ export class FuseNavigationComponent implements OnInit {
             visibility: value.visibility,
         };
         this.store.dispatch(new AddNewChannel(newChannel))
+    };
+
+    prePage = (pNum) => {
+        if (pNum === 1) {
+            return;
+        } else {
+            let pageNum = --this.pageNum;
+            this.store.dispatch(new FetchPageChannel(pageNum))
+        }
+    };
+
+    nextPage = (pNum) => {
+        if (pNum === this.totalNum) {
+            return;
+        } else {
+            let pageNum = ++this.pageNum;
+            this.store.dispatch(new FetchPageChannel(pageNum))
+        }
     }
 }

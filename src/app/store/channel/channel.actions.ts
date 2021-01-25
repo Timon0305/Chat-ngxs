@@ -1,11 +1,8 @@
 import {ChannelModel} from './channel.model';
 
-export class FetchAllChannel {
+export class FetchPageChannel {
     static readonly type = '[Channel] Fetch All';
-}
-
-export class SubscribedChannel {
-    static readonly type = '[Channel] Subscribed Channel'
+    constructor(public payload: number) {}
 }
 
 export class ChangeChannel {

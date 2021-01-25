@@ -13,19 +13,13 @@ export class ChannelService {
         private http: HttpClient,
     ) {}
 
-    fetchChannel() {
-        return this.http.get<ChannelModel[]>(domain + 'channels',
+    fetchChannel(page) {
+        return this.http.get<ChannelModel[]>(domain + 'channels?page=' + page,
             {
                 headers : this.token
             })
     }
 
-    subscribedChannel() {
-        return this.http.get<ChannelModel[]>(domain + 'browse.channels',
-            {
-                headers: this.token
-            })
-    }
 
     addChannel(payload) {
          return this.http.post<ChannelModel[]>(domain + 'channels',
