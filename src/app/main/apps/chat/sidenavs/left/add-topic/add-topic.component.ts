@@ -18,7 +18,7 @@ export class AddTopicComponent implements OnInit {
       public matDialogRef: MatDialogRef<AddTopicComponent>,
       @Inject(MAT_DIALOG_DATA) private _data: any
     ) {
-        this.topicForm = this.createComposeForm();
+        this.topicForm = this.createTopic();
         this.showExtraToFields = false;
     }
 
@@ -26,7 +26,7 @@ export class AddTopicComponent implements OnInit {
 
   }
 
-    createComposeForm (): FormGroup
+    createTopic (): FormGroup
     {
         return new FormGroup({
             title: new FormControl(''),

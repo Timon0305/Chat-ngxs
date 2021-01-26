@@ -14,12 +14,14 @@ export class ChannelSettingComponent implements OnInit {
 
     showExtraToFields: boolean;
     settingForm: FormGroup;
+    channelId: string;
   constructor(
       public matDialogRef: MatDialogRef<ChannelSettingComponent>,
       @Inject(MAT_DIALOG_DATA) private _data: any
   ) {
       this.settingForm = this.createSetting();
       this.showExtraToFields = false;
+      this.channelId = _data.channelId
   }
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class ChannelSettingComponent implements OnInit {
     createSetting(): FormGroup
     {
         return new FormGroup({
-            isCheck: new FormControl(false)
+            isCheck: new FormControl(false),
         })
     }
 

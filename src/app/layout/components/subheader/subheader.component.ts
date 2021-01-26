@@ -1,11 +1,12 @@
 import {Component,  OnInit, } from '@angular/core';
 import {Observable} from 'rxjs';
-import {Select} from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
 import {ChannelState} from '../../../store/channel/channel.state';
 import {ChannelModel} from '../../../store/channel/channel.model';
 import {MatDialog} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
 import {ChannelSettingComponent} from "./channel-setting/channel-setting.component";
+import {SetNotification} from "../../../store/channel/channel.actions";
 
 @Component({
   selector: 'app-subheader',
@@ -25,7 +26,8 @@ export class SubheaderComponent implements OnInit {
     dialogRef: any;
 
   constructor(
-      public _matDialog: MatDialog
+      public _matDialog: MatDialog,
+      private store: Store,
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,10 @@ export class SubheaderComponent implements OnInit {
     };
 
     saveSetting = (value) => {
-        console.log(value)
+        let notification = {
+            notify: value.isCheck,
+            channelId: this.channelId
+        };
+        this.store.dispatch(new SetNotification(notification))
     }
 }

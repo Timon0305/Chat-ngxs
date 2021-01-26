@@ -9,12 +9,13 @@ import {domain} from '../../fuse-config/rest.api';
 
 export class ChannelService {
    token = {'Authorization': 'Bearer ' + localStorage.getItem('token')};
+   url = domain + 'channels';
     constructor(
         private http: HttpClient,
     ) {}
 
     fetchChannel(page) {
-        return this.http.get<ChannelModel[]>(domain + 'channels?page=' + page,
+        return this.http.get<ChannelModel[]>(this.url + '?page=' + page,
             {
                 headers : this.token
             })
@@ -22,10 +23,20 @@ export class ChannelService {
 
 
     addChannel(payload) {
-         return this.http.post<ChannelModel[]>(domain + 'channels',
+         return this.http.post<ChannelModel[]>(this.url,
              payload,
              {
                 headers : this.token
              })
+    }
+
+    setNotify(payload: any) {
+        let channelId = payload.channelId;
+        let notify = payload.notify;
+        return this.http.post(this.url + '/' + channelId + '/settings', {
+            notify: notify
+        }, {
+            headers : this.token
+        })
     }
 }

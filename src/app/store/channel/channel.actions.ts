@@ -14,3 +14,8 @@ export class AddNewChannel {
     static readonly type = '[Channel] Add New Channel';
     constructor(public payload: any) {}
 }
+
+export class SetNotification {
+    static readonly type = '[Channel] Set Channel Notification';
+    constructor(public payload: any) {}
+}
