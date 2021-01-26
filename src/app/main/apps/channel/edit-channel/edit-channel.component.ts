@@ -37,7 +37,6 @@ export class EditChannelComponent implements OnInit {
 
     editChannel(): FormGroup
     {
-        console.log(this.channel['data']['status'])
         return new FormGroup({
             title: new FormControl(this.channel['data']['name']),
             description: new FormControl(this.channel['data']['description']),

@@ -21,13 +21,21 @@ export class ChannelService {
             })
     }
 
-
     addChannel(payload) {
          return this.http.post<ChannelModel[]>(this.url,
              payload,
              {
                 headers : this.token
              })
+    }
+
+    updateChannel(payload) {
+        let channelId = payload.id;
+        return this.http.post<ChannelModel[]>(this.url + '/' + channelId + '/update',
+            payload,
+            {
+                headers: this.token
+            })
     }
 
     setNotify(payload: any) {

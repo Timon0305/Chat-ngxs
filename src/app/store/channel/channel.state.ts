@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, NgxsOnInit, Store} from '@ngxs/store';
-import {ChangeChannel, AddNewChannel, FetchPageChannel, SetNotification} from './channel.actions';
+import {ChangeChannel, AddNewChannel, FetchPageChannel, SetNotification, UpdateChannel} from './channel.actions';
 import {ChannelModel} from './channel.model';
 import {ChannelService} from './channel.service';
 
@@ -92,6 +92,16 @@ export class ChannelState implements NgxsOnInit
             ++pageNum
         }
         this.channelService.addChannel(payload)
+            .subscribe(() => {
+                this.store.dispatch(new FetchPageChannel(pageNum))
+            })
+    }
+
+    @Action(UpdateChannel)
+    updateChannel({getState, setState}: StateContext<ChannelStateModel>, {payload}: UpdateChannel) {
+        let state = getState();
+        let pageNum = state.page;
+        this.channelService.updateChannel(payload)
             .subscribe(() => {
                 this.store.dispatch(new FetchPageChannel(pageNum))
             })

@@ -6,8 +6,9 @@ import {ChannelModel} from '../../../store/channel/channel.model';
 import {MatDialog} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
 import {ChannelSettingComponent} from "../../../main/apps/channel/channel-setting/channel-setting.component";
-import {SetNotification} from "../../../store/channel/channel.actions";
+import {SetNotification, UpdateChannel} from "../../../store/channel/channel.actions";
 import {EditChannelComponent} from "../../../main/apps/channel/edit-channel/edit-channel.component";
+import {v4 as uuidv4} from "uuid";
 
 @Component({
   selector: 'app-subheader',
@@ -58,7 +59,27 @@ export class SubheaderComponent implements OnInit {
                 if (!response) {
                     return;
                 }
-            })
+                const actionType: string = response[0];
+                const formData: FormGroup = response[1];
+                switch (actionType) {
+                    case 'save' :
+                        this.editCurrentChannel(formData.getRawValue());
+                        break;
+                }
+            });
+    };
+
+    editCurrentChannel = (value) => {
+        let channel = {
+            id: this.channelId,
+            name: value.title,
+            description: value.description,
+            type: value.type,
+            subscribe: value.subscribe,
+            space: value.space,
+            visibility: value.visibility,
+        };
+        this.store.dispatch(new UpdateChannel(channel))
     };
 
     channelSetting = (id) => {
