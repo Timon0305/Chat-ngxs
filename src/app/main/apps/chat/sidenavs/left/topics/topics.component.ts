@@ -132,13 +132,19 @@ export class TopicsComponent implements OnInit, OnDestroy
     };
 
     editTopic = (data) => {
-        this.dialogRef = this._matDialog.open(TopicSettingComponent, {
-            panelClass: 'setting-dialog',
-            data: {
-                topic: data
-            }
-        });
-        this.topicAction();
+        let token = localStorage.getItem('userId');
+        if (token === data['system']['userId']) {
+            this.dialogRef = this._matDialog.open(TopicSettingComponent, {
+                panelClass: 'setting-dialog',
+                data: {
+                    topic: data
+                }
+            });
+            this.topicAction();
+        }
+        else {
+            window.confirm('you are not admin')
+        }
     };
 
     topicAction = () => {

@@ -30,7 +30,7 @@ import {SubheaderModule} from '../../components/subheader/subheader.module';
         NavbarModule,
         QuickPanelModule,
         SubheaderModule,
-        ToolbarModule
+        ToolbarModule,
     ],
     exports     : [
         VerticalLayout1Component

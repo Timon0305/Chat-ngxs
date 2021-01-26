@@ -13,11 +13,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { ChannelSettingComponent } from './channel-setting/channel-setting.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 
 @NgModule({
-  declarations: [SubheaderComponent],
+  declarations: [SubheaderComponent, ChannelSettingComponent],
   imports: [
     CommonModule,
 
@@ -29,6 +31,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
       MatListModule,
       MatMenuModule,
       MatRadioModule,
+      MatCheckboxModule,
       MatSidenavModule,
       MatToolbarModule,
 
@@ -37,6 +40,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
   ],
     exports: [
         SubheaderComponent
-    ]
+    ],
+    entryComponents: []
 })
 export class SubheaderModule { }

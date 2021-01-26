@@ -74,8 +74,9 @@
                                [@animateStagger]="{value:'50'}">
                         <ng-container matColumnDef="id">
                             <mat-header-cell *matHeaderCellDef  class="width-80"></mat-header-cell>
-                            <mat-cell *matCellDef="let contact" class="width-80">
+                            <mat-cell *matCellDef="let channel" class="width-80" >
                                 <mat-checkbox
+                                    [checked]="channel.user.isSubscribed"
                                     (click)="$event.stopPropagation()">
                                 </mat-checkbox>
                             </mat-cell>
@@ -83,40 +84,40 @@
 
                         <ng-container matColumnDef="name">
                             <mat-header-cell *matHeaderCellDef class="table-text-center">Name</mat-header-cell>
-                            <mat-cell *matCellDef="let contact" class="table-text-center">
-                                <p class="text-truncate font-weight-600" >{{contact.data.name}} </p>
+                            <mat-cell *matCellDef="let channel" class="table-text-center">
+                                <p class="text-truncate font-weight-600" >{{channel.data.name}} </p>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="type">
                             <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm  class="width-80">Type</mat-header-cell>
-                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-sm  class="width-80">
+                            <mat-cell *matCellDef="let channel" fxHide fxShow.gt-sm  class="width-80">
                                 <p class="email text-truncate" >
-                                    {{contact.data.type}}
+                                    {{channel.data.type}}
                                 </p>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="users">
                             <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md  class="width-80">Users</mat-header-cell>
-                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-md  class="width-80">
+                            <mat-cell *matCellDef="let channel" fxHide fxShow.gt-md  class="width-80">
                                 <p class="phone text-truncate">
-                                    {{contact.data.status}}
+                                    {{channel.user.test}}
                                 </p>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="subtitle">
                             <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-lg class="table-text-center"></mat-header-cell>
-                            <mat-cell *matCellDef="let contact" fxHide fxShow.gt-lg class="table-text-center">
+                            <mat-cell *matCellDef="let channel" fxHide fxShow.gt-lg class="table-text-center">
                                 <p class="job-title text-truncate">
-                                    {{contact.data.name}}
+                                    {{channel.user.isSubscribed === true ? 'Subscribed' : ''}}
                                 </p>
                             </mat-cell>
                         </ng-container>
 
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let contact; columns: displayedColumns;"
+                        <mat-row *matRowDef="let channel; columns: displayedColumns;"
                                  class="contact"
                                  [@animate]="{value:'*',params:{y:'100%'}}">
                         </mat-row>

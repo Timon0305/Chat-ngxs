@@ -37,7 +37,6 @@ export class FuseNavigationComponent implements OnInit {
      *
      * @param def
      * @param store
-     * @param channelState
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
      * @param _matDialog
@@ -45,7 +44,6 @@ export class FuseNavigationComponent implements OnInit {
     constructor(
         private def: ChangeDetectorRef,
         private store: Store,
-        private channelState: ChannelState,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
         public _matDialog: MatDialog

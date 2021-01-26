@@ -44,10 +44,13 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #userMenu="matMenu">
-                                        <button mat-menu-item>
+                                        <button mat-menu-item *ngIf="isAdmin">
                                             Edit Channel
                                         </button>
-                                        <button mat-menu-item>
+                                        <button mat-menu-item *ngIf="!isAdmin" class="text-grey" disabled>
+                                            Edit Channel
+                                        </button>
+                                        <button mat-menu-item (click)="channelSetting(channelId)">
                                             Settings
                                         </button>
                                         <button mat-menu-item>
