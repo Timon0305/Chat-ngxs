@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
 import {ChannelSettingComponent} from "../../../main/apps/channel/channel-setting/channel-setting.component";
 import {SetNotification} from "../../../store/channel/channel.actions";
+import {EditChannelComponent} from "../../../main/apps/channel/edit-channel/edit-channel.component";
 
 @Component({
   selector: 'app-subheader',
@@ -43,6 +44,23 @@ export class SubheaderComponent implements OnInit {
               }
           });
   }
+
+
+    editChannel = (channel) => {
+        this.dialogRef = this._matDialog.open(EditChannelComponent, {
+            panelClass: 'mail-compose-dialog',
+            data: {
+                channel: channel
+            }
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (!response) {
+                    return;
+                }
+            })
+    };
+
     channelSetting = (id) => {
         this.dialogRef = this._matDialog.open(ChannelSettingComponent,  {
             panelClass: 'mail-compose-dialog',

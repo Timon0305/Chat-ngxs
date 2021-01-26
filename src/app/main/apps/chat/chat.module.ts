@@ -47,7 +47,6 @@ const routes: Routes = [
         ChatRightSidenavComponent,
         ChatContactSidenavComponent,
         TopicsComponent,
-        AddChannelComponent,
         AddTopicComponent,
         TopicSettingComponent,
     ],

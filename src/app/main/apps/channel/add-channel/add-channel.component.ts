@@ -27,7 +27,6 @@ export class AddChannelComponent implements OnInit {
     displayedColumns: string[] = ['id', 'name', 'type', 'users', 'subtitle'];
     pageNum: number;
     totalNum: number;
-    checkboxes: {};
 
   constructor(
       private store: Store,
@@ -36,7 +35,7 @@ export class AddChannelComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA) private _data: any
 
   ) {
-      this.composeForm = this.createComposeForm();
+      this.composeForm = this.createNewChannel();
       this.showExtraToFields = false;
   }
 
@@ -59,7 +58,7 @@ export class AddChannelComponent implements OnInit {
             })
     }
 
-    createComposeForm(): FormGroup
+    createNewChannel(): FormGroup
     {
         return new FormGroup({
             title: new FormControl(''),
@@ -71,10 +70,6 @@ export class AddChannelComponent implements OnInit {
         });
     }
 
-    toggleExtraToFields(): void
-    {
-        this.showExtraToFields = !this.showExtraToFields;
-    }
 
     prePage = (pNum) => {
         if (pNum === 1) {

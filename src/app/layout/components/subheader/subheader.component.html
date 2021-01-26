@@ -44,7 +44,7 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #userMenu="matMenu">
-                                        <button mat-menu-item *ngIf="isAdmin">
+                                        <button mat-menu-item *ngIf="isAdmin" (click)="editChannel(selectChannel)">
                                             Edit Channel
                                         </button>
                                         <button mat-menu-item *ngIf="!isAdmin" class="text-grey" disabled>
