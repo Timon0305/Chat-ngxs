@@ -9,7 +9,7 @@ import {ChannelState} from '../../../app/store/channel/channel.state';
 import {ChannelModel} from '../../../app/store/channel/channel.model';
 import {MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
-import {AddChannelComponent} from '../../../app/main/apps/chat/add-channel/add-channel.component';
+import {AddChannelComponent} from '../../../app/main/apps/channel/add-channel/add-channel.component';
 import {AddNewChannel, FetchPageChannel} from "../../../app/store/channel/channel.actions";
 
 'use strict';

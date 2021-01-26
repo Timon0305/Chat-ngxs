@@ -5,7 +5,7 @@ import {ChannelState} from '../../../store/channel/channel.state';
 import {ChannelModel} from '../../../store/channel/channel.model';
 import {MatDialog} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
-import {ChannelSettingComponent} from "./channel-setting/channel-setting.component";
+import {ChannelSettingComponent} from "../../../main/apps/channel/channel-setting/channel-setting.component";
 import {SetNotification} from "../../../store/channel/channel.actions";
 
 @Component({
