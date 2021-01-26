@@ -26,6 +26,7 @@ import { AddChannelComponent } from './add-channel/add-channel.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AddTopicComponent } from './sidenavs/left/add-topic/add-topic.component';
 
 const routes: Routes = [
     {
@@ -45,7 +46,8 @@ const routes: Routes = [
         ChatRightSidenavComponent,
         ChatContactSidenavComponent,
         TopicsComponent,
-        AddChannelComponent
+        AddChannelComponent,
+        AddTopicComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -64,7 +66,7 @@ const routes: Routes = [
         MatTabsModule,
         FuseSharedModule
     ],
-    entryComponents: [AddChannelComponent]
+    entryComponents: [AddChannelComponent, AddTopicComponent]
 })
 export class ChatModule
 {

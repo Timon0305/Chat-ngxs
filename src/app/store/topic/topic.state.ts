@@ -1,17 +1,21 @@
 import {Injectable} from '@angular/core';
-import {State, Action, StateContext, Selector, NgxsOnInit} from '@ngxs/store';
-import {ChangeTopic, FetchTopic} from './topic.actions';
+import {State, Action, StateContext, Selector, Store} from '@ngxs/store';
+import {AddNewTopic, ChangeTopic, FetchTopic} from './topic.actions';
 import {TopicModel} from './topic.model';
 import {TopicService} from './topic.service';
 
 export interface TopicStateModel {
     topicList: TopicModel[];
+    page: number,
+    totalPages: number,
     selectedTopic: TopicModel,
 }
 @State<TopicStateModel>({
     name: 'topicList',
     defaults: {
         topicList: [],
+        page: null,
+        totalPages: null,
         selectedTopic: null,
     }
 })
@@ -19,6 +23,7 @@ export interface TopicStateModel {
 export class TopicState {
 
     constructor(
+        private store: Store,
         private topicService: TopicService,
     ) {}
 
@@ -26,6 +31,16 @@ export class TopicState {
     @Selector()
     static getSelectedTopic(state: TopicStateModel) {
         return state.topicList
+    }
+
+    @Selector()
+    static getTopicPage(state: TopicStateModel) {
+        return state.page
+    }
+
+    @Selector()
+    static getTopicTotalPage(state: TopicStateModel) {
+        return state.totalPages
     }
 
     @Selector()
@@ -43,6 +58,8 @@ export class TopicState {
                     resolve(res);
                     setState({
                         ...state,
+                        page: response['page'],
+                        totalPages: response['totalPages'],
                         topicList: res
                     })
                 }, reject);
@@ -56,5 +73,21 @@ export class TopicState {
             ...state,
             selectedTopic: payload,
         });
+    }
+
+    @Action(AddNewTopic)
+    addNewTopic({getState, setState}: StateContext<TopicStateModel>, {payload}: AddNewTopic) {
+        let state = getState();
+        let channelId = payload.channelId;
+        let pageNum = state.page;
+        if (pageNum === state.totalPages) {
+            return;
+        } else {
+            ++pageNum
+        }
+        this.topicService.addTopic(payload)
+            .subscribe(() => {
+                this.store.dispatch(new FetchTopic(channelId))
+            })
     }
 }
