@@ -164,7 +164,6 @@ export class AppComponent implements OnInit, OnDestroy
         let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
-        console.log(JSON.parse(jsonPayload))
         localStorage.setItem('userId', JSON.parse(jsonPayload)['userId'])
     }
 

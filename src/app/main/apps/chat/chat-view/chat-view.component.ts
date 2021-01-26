@@ -11,7 +11,6 @@ import {TopicModel} from '../../../../store/topic/topic.model';
 import {AddMessage} from '../../../../store/message/message.actions';
 import {MessageState} from '../../../../store/message/message.state';
 
-
 @Component({
     selector     : 'chat-view',
     templateUrl  : './chat-view.component.html',
@@ -30,7 +29,6 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
     @Select(MessageState.getMessageList) getMessage: Observable<MessageModel>;
     @Select(TopicState.getSelectedTopic) getSelectedTopic: Observable<TopicModel>;
-    @Select(TopicState.getActiveTopic) getActiveTopic: Observable<TopicModel>;
 
     @ViewChild(FusePerfectScrollbarDirective)
     directiveScroll: FusePerfectScrollbarDirective;
@@ -60,20 +58,6 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
                     this.readyToReply();
                 }
             });
-
-        this.getActiveTopic.subscribe(response => {
-            if (response) {
-                this.topicId = response.id;
-                this.getSelectedTopic
-                    .subscribe((res) => {
-                        for (let item in res) {
-                            if (res[item].id === response.id) {
-                                this.selectedTopic = res[item].data.name;
-                            }
-                        }
-                    })
-            }
-        });
     }
 
     ngAfterViewInit(): void

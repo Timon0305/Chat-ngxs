@@ -131,7 +131,7 @@ export class FuseNavigationComponent implements OnInit {
                         this.saveChannel(formData.getRawValue());
                         break;
                     case 'delete':
-                        console.log('delete Mail');
+                        console.log('delete Channel');
                         break;
                 }
             })

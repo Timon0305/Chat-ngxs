@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit, OnDestroy
     selectedChat: any;
     private _unsubscribeAll: Subject<any>;
     @Select(MessageState.getMessageList) getMessage: Observable<MessageModel>;
-    @Select(TopicState.getActiveTopic) selectedTopic: Observable<TopicModel>;
+    @Select(TopicState.getSelectedTopic) selectedTopic: Observable<TopicModel>;
 
     constructor() {
         this._unsubscribeAll = new Subject();

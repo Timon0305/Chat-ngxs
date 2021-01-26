@@ -1,4 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
 import {MediaObserver} from '@angular/flex-layout';
 import {Observable, Subject} from 'rxjs';
 import {fuseAnimations} from '@fuse/animations';
@@ -14,6 +20,7 @@ import {AddTopicComponent} from "../add-topic/add-topic.component";
 import {MatDialog} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
 import { v4 as uuidv4 } from 'uuid';
+import {TopicSettingComponent} from "../topic-setting/topic-setting.component";
 
 @Component({
     selector     : 'topics-sidenav',
@@ -22,15 +29,17 @@ import { v4 as uuidv4 } from 'uuid';
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
+
 export class TopicsComponent implements OnInit, OnDestroy
 {
     getTopics: any;
+    selectedTopic: TopicModel;
     private _unsubscribeAll: Subject<any>;
     @Select(ChannelState.getSelectedChannel) getSelectedChannel: Observable<ChannelModel>;
-    @Select(TopicState.getSelectedTopic) getTopicByChannel: Observable<TopicModel>;
+    @Select(TopicState.getTopicsList) getTopicsList: Observable<TopicModel>;
+    @Select(TopicState.getSelectedTopic) getSelectedTopic: Observable<TopicModel>;
     @Select(TopicState.getTopicPage) getTopicPage: Observable<number>;
     @Select(TopicState.getTopicTotalPage) getTopicTotalPage: Observable<number>;
-    @Select(TopicState.getActiveTopic) getActiveTopic: Observable<TopicModel>;
     channelId: string;
     dialogRef: any;
     pageNum: number ;
@@ -40,7 +49,8 @@ export class TopicsComponent implements OnInit, OnDestroy
         private channelState : ChannelState,
         private _fuseMatSidenavHelperService: FuseMatSidenavHelperService,
         public _mediaObserver: MediaObserver,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
+        private def: ChangeDetectorRef,
     )
     {
         this._unsubscribeAll = new Subject();
@@ -64,6 +74,13 @@ export class TopicsComponent implements OnInit, OnDestroy
                 }
             });
 
+        this.getTopicsList
+            .subscribe(res => {
+                if (res) {
+                    this.getTopics = res
+                }
+            });
+
         this.getTopicPage
             .subscribe(res => {
                 this.pageNum = res;
@@ -74,11 +91,13 @@ export class TopicsComponent implements OnInit, OnDestroy
                 this.totalNum = res;
             });
 
-        this.getActiveTopic.subscribe(response => {
+        this.getSelectedTopic.subscribe(response => {
             if (response) {
+                this.selectedTopic = response;
                 for (let items of this.getTopics) {
                     if (items.id === response.id) {
                         items = Object.assign({active:true}, items);
+                        this.def.detectChanges();
                     }
                 }
             }
@@ -92,9 +111,9 @@ export class TopicsComponent implements OnInit, OnDestroy
     }
 
 
-    getChat(id): void {
-        this.store.dispatch(new ChangeTopic({id: id}));
-        this.store.dispatch(new FetchMessage(id));
+    getChat(data): void {
+        this.store.dispatch(new ChangeTopic(data));
+        this.store.dispatch(new FetchMessage(data.id));
 
         if ( !this._mediaObserver.isActive('gt-md') )
         {
@@ -102,10 +121,27 @@ export class TopicsComponent implements OnInit, OnDestroy
         }
     }
 
-    addTopic = () => {
+    addTopic = (data) => {
         this.dialogRef = this._matDialog.open(AddTopicComponent, {
-            panelClass: 'mail-compose-dialog'
+            panelClass: 'mail-compose-dialog',
+            data: {
+                topic: data
+            }
         });
+        this.topicAction()
+    };
+
+    editTopic = (data) => {
+        this.dialogRef = this._matDialog.open(TopicSettingComponent, {
+            panelClass: 'setting-dialog',
+            data: {
+                topic: data
+            }
+        });
+        this.topicAction();
+    };
+
+    topicAction = () => {
         this.dialogRef.afterClosed()
             .subscribe(response => {
                 if (!response) {
@@ -115,11 +151,11 @@ export class TopicsComponent implements OnInit, OnDestroy
                 const formData: FormGroup = response[1];
                 switch ( actionType )
                 {
-                    case 'send':
+                    case 'addTopic':
                         this.saveTopic(formData.getRawValue());
                         break;
-                    case 'delete':
-                        console.log('delete Topic');
+                    case 'editTopic':
+                        this.updateTopic(formData.getRawValue());
                         break;
                 }
             })
@@ -134,6 +170,10 @@ export class TopicsComponent implements OnInit, OnDestroy
         };
         this.store.dispatch(new AddNewTopic(topic))
     };
+
+    updateTopic = (value) => {
+        console.log(value)
+    }
 
     prePage = (pNum) => {
         if (pNum === 1) {

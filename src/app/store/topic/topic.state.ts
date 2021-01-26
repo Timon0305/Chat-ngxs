@@ -27,10 +27,14 @@ export class TopicState {
         private topicService: TopicService,
     ) {}
 
+    @Selector()
+    static getTopicsList(state: TopicStateModel) {
+        return state.topicList
+    }
 
     @Selector()
     static getSelectedTopic(state: TopicStateModel) {
-        return state.topicList
+        return state.selectedTopic
     }
 
     @Selector()
@@ -43,11 +47,6 @@ export class TopicState {
         return state.totalPages
     }
 
-    @Selector()
-    static getActiveTopic(state: TopicStateModel) {
-        return state.selectedTopic
-    }
-
     @Action(FetchTopic)
     fetchTopic({getState, setState}: StateContext<TopicStateModel>, {payload} : FetchTopic) {
         let state = getState();
@@ -55,13 +54,13 @@ export class TopicState {
             this.topicService.fetchTopic(payload)
                 .subscribe((response: object) => {
                     let res = response['rows'];
-                    resolve(res);
                     setState({
                         ...state,
                         page: response['page'],
                         totalPages: response['totalPages'],
                         topicList: res
-                    })
+                    });
+                    resolve(res);
                 }, reject);
         });
     }
@@ -81,13 +80,15 @@ export class TopicState {
         let channelId = payload.channelId;
         let pageNum = state.page;
         if (pageNum === state.totalPages) {
-            return;
         } else {
             ++pageNum
         }
         this.topicService.addTopic(payload)
             .subscribe(() => {
-                this.store.dispatch(new FetchTopic(channelId))
+                this.store.dispatch(new FetchTopic({
+                    "channelId": channelId,
+                    "pageNum": pageNum
+                }))
             })
     }
 }

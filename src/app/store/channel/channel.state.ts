@@ -87,7 +87,7 @@ export class ChannelState implements NgxsOnInit
         let state = getState();
         let pageNum = state.page;
         if (pageNum === state.totalPages) {
-            return
+
         } else {
             ++pageNum
         }

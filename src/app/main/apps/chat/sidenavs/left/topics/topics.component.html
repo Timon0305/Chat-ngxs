@@ -9,7 +9,7 @@
             <div>
                 <button mat-icon-button
                         aria-label="more"
-                        (click)="addTopic(channelId)"
+                        (click)="addTopic()"
                 >
                     <mat-icon>add</mat-icon>
                 </button>
@@ -30,7 +30,8 @@
             <button mat-button class="contact"
                     *ngFor="let topic of getTopics"
                     [ngClass]="topic.active === true ? 'accent active': ''"
-                    (click)="getChat(topic.id)" ngClass="{'unread':contact.unread}"
+                    (click)="getChat(topic)"
+                    ngClass="{'unread':contact.unread}"
                     [@animate]="{value:'*',params:{y:'100%'}}">
 
                 <div fxLayout="row" fxLayoutAlign="start center">
@@ -42,19 +43,16 @@
                             <div class="contact-last-message mat-badge">{{topic.data.status}}</div>
                         </div>
 
-                        <div fxLayout="column" fxLayoutAlign="start end">
-                            <div class="contact-last-message-time">
+                        <div fxLayout="column" fxLayoutAlign="start end" class="layout-button-margin">
+                            <div class="contact-last-message-time ">
                                 {{topic.system.updatedAt | date}}
                             </div>
                             <!--<div *ngIf="topic.data.stats.newMessages > 0" class="mt-4 unread-message-count accent">{{topic.data.stats.newMessages}}</div>-->
                         </div>
-
+                        <mat-icon class="nav-link-icon" (click)="editTopic(topic)">more_vert</mat-icon>
                     </div>
-
                 </div>
-
             </button>
-
         </div>
 
     </div>

@@ -15,8 +15,8 @@ export class TopicService {
 
     fetchTopic(payload: any) {
         let channelId = payload['channelId'];
-        let pageNum = payload['pageNum'];
-        return this.http.get<TopicModel[]>(domain + 'channels/' + channelId + '/topics?pages=' + pageNum,
+        let pageNum = payload['pageNum'] === null ? 1 : payload['pageNum'];
+        return this.http.get<TopicModel[]>(domain + 'channels/' + channelId + '/topics?page=' + pageNum,
             {
                 headers : this.token
             })

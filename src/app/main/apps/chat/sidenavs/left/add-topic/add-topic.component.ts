@@ -1,9 +1,4 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {Select} from "@ngxs/store";
-import {Observable} from "rxjs";
-import {ChannelState} from "../../../../../../store/channel/channel.state";
-
-import {ChannelModel} from "../../../../../../store/channel/channel.model";
 import {fuseAnimations} from "../../../../../../../@fuse/animations";
 import {FormControl, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
@@ -31,7 +26,7 @@ export class AddTopicComponent implements OnInit {
 
   }
 
-    createComposeForm(): FormGroup
+    createComposeForm (): FormGroup
     {
         return new FormGroup({
             title: new FormControl(''),
