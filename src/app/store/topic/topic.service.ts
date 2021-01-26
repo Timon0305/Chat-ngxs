@@ -9,6 +9,7 @@ import {domain} from '../../fuse-config/rest.api';
 
 export class TopicService {
     token = {'Authorization': 'Bearer ' + localStorage.getItem('token')};
+    userId = localStorage.getItem('userId');
     constructor(
         private http: HttpClient
     ) {}
@@ -24,6 +25,14 @@ export class TopicService {
 
     addTopic(payload) {
         return this.http.post<TopicModel[]>(domain + 'topics',
+            payload,
+            {
+                headers: this.token
+            })
+    }
+
+    updateTopic(payload) {
+        return this.http.post<TopicModel[]>(domain + 'topics/' + this.userId + '/update',
             payload,
             {
                 headers: this.token

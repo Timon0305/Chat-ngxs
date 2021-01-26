@@ -9,7 +9,7 @@ import {MediaObserver} from '@angular/flex-layout';
 import {Observable, Subject} from 'rxjs';
 import {fuseAnimations} from '@fuse/animations';
 import {FuseMatSidenavHelperService} from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
-import {AddNewTopic, ChangeTopic, FetchTopic} from '../../../../../../store/topic/topic.actions';
+import {AddNewTopic, ChangeTopic, FetchTopic, UpdateTopic} from '../../../../../../store/topic/topic.actions';
 import {Select, Store} from '@ngxs/store';
 import {TopicModel} from '../../../../../../store/topic/topic.model';
 import {ChannelState} from '../../../../../../store/channel/channel.state';
@@ -172,8 +172,14 @@ export class TopicsComponent implements OnInit, OnDestroy
     };
 
     updateTopic = (value) => {
-        console.log(value)
-    }
+        let topic = {
+            id: this.selectedTopic.id,
+            channelId: this.channelId,
+            name: value['title'],
+            description: value['description']
+        };
+        this.store.dispatch(new UpdateTopic(topic));
+    };
 
     prePage = (pNum) => {
         if (pNum === 1) {

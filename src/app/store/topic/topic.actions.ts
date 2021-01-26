@@ -14,3 +14,8 @@ export class AddNewTopic {
     static readonly type = '[Topic] Add New Topic';
     constructor(public payload: any) {}
 }
+
+export class UpdateTopic {
+    static readonly type = '[Topic] Edit Topic';
+    constructor(public payload: any) {}
+}

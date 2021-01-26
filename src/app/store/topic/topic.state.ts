@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, Store} from '@ngxs/store';
-import {AddNewTopic, ChangeTopic, FetchTopic} from './topic.actions';
+import {AddNewTopic, ChangeTopic, FetchTopic, UpdateTopic} from './topic.actions';
 import {TopicModel} from './topic.model';
 import {TopicService} from './topic.service';
 
@@ -84,6 +84,20 @@ export class TopicState {
             ++pageNum
         }
         this.topicService.addTopic(payload)
+            .subscribe(() => {
+                this.store.dispatch(new FetchTopic({
+                    "channelId": channelId,
+                    "pageNum": pageNum
+                }))
+            })
+    }
+
+    @Action(UpdateTopic)
+    updateTopic({getState, setState}: StateContext<TopicStateModel>, {payload}: UpdateTopic) {
+        let state = getState();
+        let channelId = payload.channelId;
+        let pageNum = state.page;
+        this.topicService.updateTopic(payload)
             .subscribe(() => {
                 this.store.dispatch(new FetchTopic({
                     "channelId": channelId,
