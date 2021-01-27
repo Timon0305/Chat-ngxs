@@ -123,6 +123,7 @@ export class FuseNavigationComponent implements OnInit {
     addChannel(): void {
         this.dialogRef = this._matDialog.open(AddChannelComponent, {
             panelClass: 'mail-compose-dialog',
+            disableClose: true,
         });
         this.dialogRef.afterClosed()
             .subscribe(response => {

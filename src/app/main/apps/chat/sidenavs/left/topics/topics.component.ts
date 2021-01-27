@@ -124,6 +124,7 @@ export class TopicsComponent implements OnInit, OnDestroy
     addTopic = (data) => {
         this.dialogRef = this._matDialog.open(AddTopicComponent, {
             panelClass: 'mail-compose-dialog',
+            disableClose: true,
             data: {
                 topic: data
             }
@@ -136,6 +137,7 @@ export class TopicsComponent implements OnInit, OnDestroy
         if (token === data['system']['userId']) {
             this.dialogRef = this._matDialog.open(TopicSettingComponent, {
                 panelClass: 'setting-dialog',
+                disableClose: true,
                 data: {
                     topic: data
                 }

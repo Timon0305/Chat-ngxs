@@ -49,6 +49,7 @@ export class SubheaderComponent implements OnInit {
     editChannel = (channel) => {
         this.dialogRef = this._matDialog.open(EditChannelComponent, {
             panelClass: 'mail-compose-dialog',
+            disableClose: true,
             data: {
                 channel: channel
             }
@@ -80,6 +81,7 @@ export class SubheaderComponent implements OnInit {
     channelSetting = (id) => {
         this.dialogRef = this._matDialog.open(ChannelSettingComponent,  {
             panelClass: 'mail-compose-dialog',
+            disableClose: true,
             data: {
                 channelId: id
             }
