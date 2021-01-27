@@ -39,16 +39,19 @@
 
                 <img *ngIf="message.system.userId !== user.id"
                      src="assets/images/avatars/profile.jpg"
-                     class="avatar">
+                     class="avatar margin-top-12">
 
                 <div class="me-text">
-                    <div style="display: flex; justify-content: flex-end">
-                        <div class="time black-text pr-5 text-16">{{message.system.userId === user.id ? 'me' : message.system.userId }}</div> &nbsp;
-                        <div class="time secondary-text">{{message.system.updatedAt | date:'short'}}</div>
+                    <div style="display: flex; justify-content: flex-start">
+                        <div class="time black-text pr-5 text-16 ml-4 sender">
+                            {{message.system.userId === user.id ? '' : message.system.userId.split('-')[0] }}
+                            <div class="time secondary-text message-time">{{message.system.updatedAt | date:'short'}}</div>
+                        </div> &nbsp;
                     </div>
 
                     <div class="bubble">
                         <div class="message">{{message.data.text}}</div>
+
                     </div>
                 </div>
             </div>
@@ -85,9 +88,8 @@
             </form>
 
         </div>
-        <input type="file" #fileInput
+        <input hidden type="file" #fileInput
                class="hidden-input"
-               accept="'*'"
         />
 
     </div>

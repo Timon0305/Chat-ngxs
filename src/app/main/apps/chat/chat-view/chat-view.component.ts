@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewChildren,
+    ViewEncapsulation
+} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
 import {Observable, Subject} from 'rxjs';
@@ -44,7 +53,8 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private store: Store
+        private store: Store,
+        private def: ChangeDetectorRef,
     ) {
         this._unsubscribeAll = new Subject();
     }

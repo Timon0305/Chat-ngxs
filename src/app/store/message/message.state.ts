@@ -41,6 +41,9 @@ export class MessageState {
             this.messageService.fetchMessage(payload)
                 .subscribe((response: object) => {
                     let res = response['rows'];
+                    res.sort((a, b) => {
+                        return b['system']['updatedAt'] > a['system']['updatedAt'] ? -1: 1;
+                    });
                     resolve(res);
                     setState({
                         ...state,
