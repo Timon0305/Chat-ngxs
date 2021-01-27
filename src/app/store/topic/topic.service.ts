@@ -38,4 +38,14 @@ export class TopicService {
                 headers: this.token
             })
     }
+
+    setNotification(payload) {
+        let topicId =  payload.topicId;
+        let notify = payload.notify;
+        return this.http.post(domain + 'topics/' + topicId + 'settings', {
+                 notify: notify
+            }, {
+                    headers: this.token
+            })
+    }
 }

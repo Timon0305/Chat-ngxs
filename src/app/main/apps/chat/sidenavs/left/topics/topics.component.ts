@@ -9,7 +9,13 @@ import {MediaObserver} from '@angular/flex-layout';
 import {Observable, Subject} from 'rxjs';
 import {fuseAnimations} from '@fuse/animations';
 import {FuseMatSidenavHelperService} from '@fuse/directives/fuse-mat-sidenav/fuse-mat-sidenav.service';
-import {AddNewTopic, ChangeTopic, FetchTopic, UpdateTopic} from '../../../../../../store/topic/topic.actions';
+import {
+    AddNewTopic,
+    ChangeTopic,
+    FetchTopic,
+    SetTopicNotification,
+    UpdateTopic
+} from '../../../../../../store/topic/topic.actions';
 import {Select, Store} from '@ngxs/store';
 import {TopicModel} from '../../../../../../store/topic/topic.model';
 import {ChannelState} from '../../../../../../store/channel/channel.state';
@@ -20,6 +26,7 @@ import {AddTopicComponent} from "../add-topic/add-topic.component";
 import {MatDialog} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
 import { v4 as uuidv4 } from 'uuid';
+import {EditTopicComponent} from "../edit-topic/edit-topic.component";
 import {TopicSettingComponent} from "../topic-setting/topic-setting.component";
 
 @Component({
@@ -135,7 +142,7 @@ export class TopicsComponent implements OnInit, OnDestroy
     editTopic = (data) => {
         let token = localStorage.getItem('userId');
         if (token === data['system']['userId']) {
-            this.dialogRef = this._matDialog.open(TopicSettingComponent, {
+            this.dialogRef = this._matDialog.open(EditTopicComponent, {
                 panelClass: 'setting-dialog',
                 disableClose: true,
                 data: {
@@ -187,6 +194,37 @@ export class TopicsComponent implements OnInit, OnDestroy
             description: value['description']
         };
         this.store.dispatch(new UpdateTopic(topic));
+    };
+
+    settingTopic = (topic) => {
+        this.dialogRef = this._matDialog.open(TopicSettingComponent, {
+            panelClass: 'setting-dialog',
+            disableClose: true,
+            data: {
+                topic: topic
+            }
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (!response) {
+                    return;
+                }
+                const actionType: string = response[0];
+                const formData: FormGroup = response[1];
+                switch (actionType) {
+                    case 'setting' :
+                        this.saveSetting(formData.getRawValue());
+                        break;
+                }
+            })
+    };
+
+    saveSetting = (value) => {
+        let notification = {
+            notify: value.isCheck,
+            topicId : this.selectedTopic.id
+        };
+        this.store.dispatch(new SetTopicNotification(notification))
     };
 
     prePage = (pNum) => {

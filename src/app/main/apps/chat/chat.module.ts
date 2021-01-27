@@ -28,6 +28,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AddTopicComponent } from './sidenavs/left/add-topic/add-topic.component';
 import { TopicSettingComponent } from './sidenavs/left/topic-setting/topic-setting.component';
+import { EditTopicComponent } from './sidenavs/left/edit-topic/edit-topic.component';
 
 const routes: Routes = [
     {
@@ -49,6 +50,7 @@ const routes: Routes = [
         TopicsComponent,
         AddTopicComponent,
         TopicSettingComponent,
+        EditTopicComponent,
     ],
     imports     : [
         RouterModule.forChild(routes),

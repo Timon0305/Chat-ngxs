@@ -19,3 +19,8 @@ export class UpdateTopic {
     static readonly type = '[Topic] Edit Topic';
     constructor(public payload: any) {}
 }
+
+export class SetTopicNotification {
+    static readonly type = '[Topic] Set Notification';
+    constructor(public payload: any) {}
+}

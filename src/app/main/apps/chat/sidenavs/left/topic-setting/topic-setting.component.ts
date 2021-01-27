@@ -14,7 +14,7 @@ import {TopicModel} from "../../../../../../store/topic/topic.model";
 export class TopicSettingComponent implements OnInit {
 
     showExtraToFields: boolean;
-    topicForm: FormGroup;
+    settingForm: FormGroup;
     topic: TopicModel;
     constructor(
       public matDialogRef: MatDialogRef<TopicSettingComponent>,
@@ -22,28 +22,19 @@ export class TopicSettingComponent implements OnInit {
       private _formBuilder: FormBuilder,
       @Inject(MAT_DIALOG_DATA) private _data: any
     ) {
-      this.topicForm = this.editTopic();
       this.showExtraToFields = false;
       this.topic = _data.topic;
-      this.topicForm = this.createSettingForm()
+      this.settingForm = this.createSettingForm()
     }
 
     ngOnInit(): void {}
 
     createSettingForm(): FormGroup {
         return this._formBuilder.group({
-            title: [this.topic.data.name],
-            description: [this.topic.data.description]
+            isCheck: new FormControl(false),
         })
     }
 
-    editTopic (): FormGroup
-    {
-        return new FormGroup({
-            title: new FormControl(''),
-            description: new FormControl(''),
-        });
-    }
 
     topicOff = () => {
         if (window.confirm('This form will lose changes')) {

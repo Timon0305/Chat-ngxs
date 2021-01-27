@@ -9,22 +9,31 @@
     </mat-toolbar>
 
     <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
-        <form name="settingForm" [formGroup]="settingForm"
-              class="compose-form pt-16" fxLayout="column" fxFlex>
-            <mat-checkbox
-                name="isCheck"
-                formControlName="isCheck">
-                Channel Notification turn on/off
-            </mat-checkbox>
+        <form name="topicForm" [formGroup]="topicForm" class="compose-form pt-16" fxLayout="column" fxFlex>
+            <mat-form-field appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput name="title"
+                       formControlName="title"
+                       type="text" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput name="description"
+                          formControlName="description"
+                          required
+                          rows="4">
+                </textarea>
+            </mat-form-field>
         </form>
     </div>
     <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
         <div>
             <button mat-raised-button
                     color="accent"
-                    (click)="matDialogRef.close(['setting',settingForm])"
+                    (click)="matDialogRef.close(['editTopic',topicForm])"
                     class="save-button"
-                    [disabled]="settingForm.invalid"
+                    [disabled]="topicForm.invalid"
                     aria-label="SAVE">
                 SAVE
             </button>
