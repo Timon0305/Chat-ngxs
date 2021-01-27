@@ -20,4 +20,12 @@ export class MessageService {
                 headers: this.token
             })
     }
+
+    addNewMessage(payload) {
+        return this.http.post<MessageModel[]>(domain + 'message',
+            payload,
+            {
+                headers: this.token
+            })
+    }
 }

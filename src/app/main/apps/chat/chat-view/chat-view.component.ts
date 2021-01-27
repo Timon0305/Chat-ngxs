@@ -1,6 +1,5 @@
 import {
     AfterViewInit,
-    ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
@@ -20,6 +19,7 @@ import {TopicState} from '../../../../store/topic/topic.state';
 import {TopicModel} from '../../../../store/topic/topic.model';
 import {AddMessage} from '../../../../store/message/message.actions';
 import {MessageState} from '../../../../store/message/message.state';
+import {ChannelModel} from "../../../../store/channel/channel.model";
 
 @Component({
     selector     : 'chat-view',
@@ -34,12 +34,11 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     dialog: any;
     contact: any;
     replyInput: any;
+    topic: TopicModel;
     selectedChat: any;
-    selectedTopic: string;
-    topicId: string;
 
+    @Select(TopicState.getSelectedTopic) selectedTopic: Observable<TopicModel>;
     @Select(MessageState.getMessageList) getMessage: Observable<MessageModel>;
-    @Select(TopicState.getSelectedTopic) getSelectedTopic: Observable<TopicModel>;
 
     @ViewChild(FusePerfectScrollbarDirective)
     directiveScroll: FusePerfectScrollbarDirective;
@@ -54,13 +53,17 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
     constructor(
         private store: Store,
-        private def: ChangeDetectorRef,
     ) {
         this._unsubscribeAll = new Subject();
     }
 
      ngOnInit(): void
     {
+        this.selectedTopic
+            .subscribe(data => {
+                this.topic = data
+            });
+
         this.getMessage
             .subscribe(chatData => {
                 if ( chatData )
@@ -121,29 +124,13 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             return;
         }
         let replyMessage = {
-            data: {
-                text: '',
-                topicId: this.topicId,
-                stats: {
-                    isRead: false,
-                }
-            },
             id: uuidv4(),
-            system: {
-                createdAt: '',
-                updatedAt: '',
-                spaceId: uuidv4(),
-                model: 0,
-                userId: this.user
-            }
+            channelId: this.topic.data.channelId,
+            topicId: this.topic.id,
+            text: this.replyForm.form.value.message
         };
-
-        replyMessage.data.text = this.replyForm.form.value.message;
-        replyMessage.system.updatedAt = new Date().toISOString();
-        replyMessage.system.createdAt = new Date().toISOString();
 
         this.store.dispatch(new AddMessage(replyMessage));
         this.replyForm.reset();
-
     }
 }

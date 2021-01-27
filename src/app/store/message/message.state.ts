@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {State,  Action, StateContext, Selector} from '@ngxs/store';
+import {State, Action, StateContext, Selector, Store} from '@ngxs/store';
 import {AddMessage, FetchMessage} from './message.actions';
 import {MessageModel} from './message.model';
 import {MessageService} from './message.service';
@@ -20,6 +20,7 @@ export interface MessageStateModel {
 export class MessageState {
 
     constructor(
+        private store: Store,
         private messageService: MessageService
     ) {}
 
@@ -54,10 +55,14 @@ export class MessageState {
     }
 
     @Action(AddMessage)
-    addMessage({getState, patchState}: StateContext<MessageStateModel>, {payload}: AddMessage) {
-        let state = getState();
-        patchState({
-            messageList: [...state.messageList, payload]
-        });
+    addMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: AddMessage) {
+        let topicId = payload.topicId;
+        return new Promise((resolve, reject) => {
+            this.messageService.addNewMessage(payload)
+                .subscribe(() => {
+                    this.store.dispatch(new FetchMessage(topicId));
+                    resolve();
+                }, reject)
+        })
     }
 }
