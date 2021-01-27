@@ -1,8 +1,10 @@
 import {Injectable} from "@angular/core";
-import {Action, NgxsOnInit, Selector, State, StateContext} from "@ngxs/store";
-import {FetchPageBrowsChannel} from "./browse.channel.actions";
+import {Action, NgxsOnInit, Selector, State, StateContext, Store} from "@ngxs/store";
+import {FetchPageBrowsChannel, SubscribeChannel} from "./browse.channel.actions";
 import {BrowseChannelModel} from "./browse.channel.model";
 import {BrowseChannelService} from "./browse.channel.service";
+import {FetchPageChannel} from "../channel/channel.actions";
+import {reject} from "q";
 
 export interface BrowseChannelStateModel {
     browseChannelList: BrowseChannelModel[],
@@ -21,6 +23,7 @@ export interface BrowseChannelStateModel {
 @Injectable()
 export class BrowseChannelState implements NgxsOnInit {
     constructor(
+        private store: Store,
         private browseChannelService: BrowseChannelService
     ) {}
 
@@ -58,6 +61,21 @@ export class BrowseChannelState implements NgxsOnInit {
                     });
                     resolve(res);
                 }, reject)
+        })
+    }
+
+    @Action(SubscribeChannel)
+    subscribeChannel({getState, setState}: StateContext<BrowseChannelStateModel>, {payload}: SubscribeChannel) {
+        return new Promise((resolve, reject) => {
+            let state = getState();
+            let browseChannelNum = state.page;
+            let channelNum = 1;
+            this.browseChannelService.subscribeIntoChannel(payload)
+                .subscribe(() => {
+                    this.store.dispatch(new FetchPageBrowsChannel(browseChannelNum));
+                    this.store.dispatch(new FetchPageChannel(channelNum));
+                    resolve();
+                }, reject);
         })
     }
 }

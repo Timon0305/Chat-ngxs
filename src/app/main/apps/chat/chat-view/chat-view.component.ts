@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
 import {Observable, Subject} from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
+import { fuseAnimations } from '@fuse/animations';
 
 import {FusePerfectScrollbarDirective} from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import {MessageModel} from '../../../../store/message/message.model';
@@ -15,7 +16,8 @@ import {MessageState} from '../../../../store/message/message.state';
     selector     : 'chat-view',
     templateUrl  : './chat-view.component.html',
     styleUrls    : ['./chat-view.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    animations   : fuseAnimations
 })
 export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 {

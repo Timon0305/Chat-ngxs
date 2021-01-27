@@ -9,13 +9,23 @@ import {BrowseChannelModel} from "./browse.channel.model";
 
 export class BrowseChannelService {
     token = {'Authorization': 'Bearer ' + localStorage.getItem('token')};
+    url = domain + 'browse.channels';
     constructor(
         private http: HttpClient,
     ) {}
 
 
     browseChannel(page) {
-        return this.http.get<BrowseChannelModel[]>(domain + 'browse.channels?page=' + page,
+        return this.http.get<BrowseChannelModel[]>( this.url + '?page=' + page,
+            {
+                headers: this.token
+            })
+    }
+
+    subscribeIntoChannel(payload) {
+        let channelId = payload.id;
+        return this.http.post(this.url + '/' + channelId + '/subscribe',
+            {},
             {
                 headers: this.token
             })

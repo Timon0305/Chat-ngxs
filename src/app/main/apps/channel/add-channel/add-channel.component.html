@@ -118,7 +118,8 @@
 
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                         <mat-row *matRowDef="let channel; columns: displayedColumns;"
-                                 class="contact"
+                                 class="contact row-point"
+                                 (click)="subscribeToChannel(channel)"
                                  [@animate]="{value:'*',params:{y:'100%'}}">
                         </mat-row>
                     </mat-table>

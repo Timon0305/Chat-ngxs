@@ -1,17 +1,17 @@
 @import "src/@fuse/scss/fuse";
 
-.mail-compose-dialog {
+.sub-compose-dialog {
 
     @include media-breakpoint('xs') {
         width: 100%;
     }
 
     @include media-breakpoint('gt-xs') {
-        width: 640px;
+        width: 440px;
     }
 
     .mat-dialog-container {
-        padding: 0;
+        padding: 0!important;
 
         .compose-form {
 
@@ -58,6 +58,12 @@
 .table-text-center {
     text-align: center!important;
 }
-.row-point {
-    cursor: pointer!important;
+.sub-full-width {
+    width: 100%!important;
+}
+.space-around {
+    justify-content: space-around!important;
+}
+.width-200 {
+    width: 200px!important;
 }

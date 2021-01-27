@@ -8,7 +8,6 @@ import {FormGroup} from "@angular/forms";
 import {ChannelSettingComponent} from "../../../main/apps/channel/channel-setting/channel-setting.component";
 import {SetNotification, UpdateChannel} from "../../../store/channel/channel.actions";
 import {EditChannelComponent} from "../../../main/apps/channel/edit-channel/edit-channel.component";
-import {v4 as uuidv4} from "uuid";
 
 @Component({
   selector: 'app-subheader',

@@ -61,6 +61,13 @@
 
         <div class="reply-form" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center">
 
+            <button mat-icon-button
+                    aria-label="Add Attach"
+                    (click)="fileInput.click()"
+                    [@animate]="{value:'*', params:{delay:'300ms',scale:'0.2'}}">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+
             <form #replyForm="ngForm"
                   (ngSubmit)="reply($event)"
                   (keydown.enter)="reply($event)"
@@ -78,6 +85,10 @@
             </form>
 
         </div>
+        <input type="file" #fileInput
+               class="hidden-input"
+               accept="'*'"
+        />
 
     </div>
 

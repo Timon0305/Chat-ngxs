@@ -1,0 +1,34 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar class="mat-accent m-0">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{channelData['data']['name']}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div class="p-24 m-0" >
+        <div>
+            <h2>Description :</h2>
+            <p>{{channelData['data']['description']}}</p>
+        </div>
+    </div>
+    <hr />
+    <div class="pb-36 text-center">
+        <mat-icon class="font-size-100 font-100 width-200">check_circle_outline</mat-icon>
+    </div>
+
+    <div class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="sub-full-width">
+            <button mat-raised-button
+                    color="accent"
+                    (click)="matDialogRef.close(['conform',subscribeForm])"
+                    class="save-button sub-full-width"
+                    aria-label="SAVE">
+                SUBSCRIBED
+            </button>
+        </div>
+
+    </div>
+</div>
