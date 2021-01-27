@@ -33,4 +33,10 @@ export class SubscibeChannelComponent implements OnInit {
       return new FormGroup({})
     }
 
+    channelOff = () => {
+        if (window.confirm('This form will lose changes')) {
+            this.matDialogRef.close()
+        }
+    }
+
 }

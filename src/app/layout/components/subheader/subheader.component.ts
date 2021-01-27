@@ -73,10 +73,6 @@ export class SubheaderComponent implements OnInit {
             id: this.channelId,
             name: value.title,
             description: value.description,
-            type: value.type,
-            subscribe: value.subscribe,
-            space: value.space,
-            visibility: value.visibility,
         };
         this.store.dispatch(new UpdateChannel(channel))
     };

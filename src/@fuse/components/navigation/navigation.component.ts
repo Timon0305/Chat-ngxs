@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
 import {merge, Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,6 +18,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {AddChannelComponent} from '../../../app/main/apps/channel/add-channel/add-channel.component';
 import {AddNewChannel, FetchPageChannel} from "../../../app/store/channel/channel.actions";
+import {FuseSidebarService} from "../sidebar/sidebar.service";
 
 'use strict';
 
@@ -39,6 +47,7 @@ export class FuseNavigationComponent implements OnInit {
      * @param store
      * @param {ChangeDetectorRef} _changeDetectorRef
      * @param {FuseNavigationService} _fuseNavigationService
+     * @param _fuseSidebarService
      * @param _matDialog
      */
     constructor(
@@ -46,6 +55,7 @@ export class FuseNavigationComponent implements OnInit {
         private store: Store,
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
+        private _fuseSidebarService: FuseSidebarService,
         public _matDialog: MatDialog
     ) {
         this._unsubscribeAll = new Subject();
@@ -111,9 +121,8 @@ export class FuseNavigationComponent implements OnInit {
     }
 
     addChannel(): void {
-
         this.dialogRef = this._matDialog.open(AddChannelComponent, {
-            panelClass: 'mail-compose-dialog'
+            panelClass: 'mail-compose-dialog',
         });
         this.dialogRef.afterClosed()
             .subscribe(response => {
@@ -128,8 +137,8 @@ export class FuseNavigationComponent implements OnInit {
                     case 'send':
                         this.saveChannel(formData.getRawValue());
                         break;
-                    case 'delete':
-                        console.log('delete Channel');
+                    case 'close':
+                        // window.confirm('This form will lose changes');
                         break;
                 }
             })

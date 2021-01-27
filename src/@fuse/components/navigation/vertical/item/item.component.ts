@@ -13,6 +13,7 @@ import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import {Store} from '@ngxs/store';
 import {ChangeChannel} from '../../../../../app/store/channel/channel.actions';
+import {FuseSidebarService} from "../../../sidebar/sidebar.service";
 
 
 @Component({
@@ -39,11 +40,13 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
      *
      * @param store
      * @param {ChangeDetectorRef} _changeDetectorRef
+     * @param _fuseSidebarService
      * @param {FuseNavigationService} _fuseNavigationService
      */
     constructor(
         private store: Store,
         private _changeDetectorRef: ChangeDetectorRef,
+        private _fuseSidebarService: FuseSidebarService,
         private _fuseNavigationService: FuseNavigationService
     )
     {
@@ -72,6 +75,7 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy
 
 
     clickChannel(channelId): void {
+        this._fuseSidebarService.getSidebar('navbar').toggleOpen();
         this.store.dispatch(new ChangeChannel({id: channelId}))
     }
 

@@ -44,4 +44,10 @@ export class TopicSettingComponent implements OnInit {
             description: new FormControl(''),
         });
     }
+
+    topicOff = () => {
+        if (window.confirm('This form will lose changes')) {
+            this.matDialogRef.close()
+        }
+    }
 }

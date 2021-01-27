@@ -34,4 +34,9 @@ export class AddTopicComponent implements OnInit {
         });
     }
 
+    topicOff = () => {
+        if (window.confirm('This form will lose changes')) {
+            this.matDialogRef.close()
+        }
+    }
 }

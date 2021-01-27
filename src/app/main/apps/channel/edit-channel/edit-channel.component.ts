@@ -26,7 +26,7 @@ export class EditChannelComponent implements OnInit {
       public matDialogRef: MatDialogRef<EditChannelComponent>,
       @Inject(MAT_DIALOG_DATA) private _data: any
   ) {
-      this.channel = _data.channel
+      this.channel = _data.channel;
       this.editChannelForm = this.editChannel();
       this.showExtraToFields = false;
 
@@ -40,10 +40,12 @@ export class EditChannelComponent implements OnInit {
         return new FormGroup({
             title: new FormControl(this.channel['data']['name']),
             description: new FormControl(this.channel['data']['description']),
-            type: new FormControl(this.channel['data']['type']),
-            subscribe: new FormControl(this.channel['data']['subscribe']),
-            space: new FormControl(this.channel['data']['status']),
-            visibility: new FormControl(this.channel['data']['visibility'])
         });
+    }
+
+    channelOff = () => {
+      if (window.confirm('This form will lose changes')) {
+          this.matDialogRef.close()
+      }
     }
 }

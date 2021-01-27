@@ -30,7 +30,7 @@ import {MessageState} from '../../../../store/message/message.state';
 })
 export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 {
-    user: any;
+    user = localStorage.getItem('userId');
     dialog: any;
     contact: any;
     replyInput: any;
@@ -61,7 +61,6 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
      ngOnInit(): void
     {
-        this.user = {id : 'f32dc9ae-7ca8-44ca-8f25-f258f7331c55'};
         this.getMessage
             .subscribe(chatData => {
                 if ( chatData )
@@ -135,7 +134,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
                 updatedAt: '',
                 spaceId: uuidv4(),
                 model: 0,
-                userId: this.user.id
+                userId: this.user
             }
         };
 

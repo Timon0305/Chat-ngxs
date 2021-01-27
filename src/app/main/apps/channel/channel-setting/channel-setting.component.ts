@@ -34,4 +34,10 @@ export class ChannelSettingComponent implements OnInit {
         })
     }
 
+    channelOff = () => {
+      if (window.confirm('This form will lose changes')) {
+          this.matDialogRef.close()
+      }
+    }
+
 }

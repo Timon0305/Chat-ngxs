@@ -21,7 +21,6 @@
                 <mat-label>Description</mat-label>
                 <textarea matInput name="description"
                           formControlName="description"
-                          required
                           rows="4">
                 </textarea>
             </mat-form-field>
@@ -39,7 +38,7 @@
             </button>
         </div>
 
-        <button mat-raised-button (click)="matDialogRef.close()" aria-label="Close dialog">
+        <button mat-raised-button (click)="topicOff()" aria-label="Close dialog">
             CLOSE
         </button>
     </div>

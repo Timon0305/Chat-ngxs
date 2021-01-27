@@ -116,6 +116,12 @@ export class AddChannelComponent implements OnInit {
 
     isSubscribed = (channel) => {
         this.store.dispatch(new SubscribeChannel(channel))
+    };
+
+    channelOff = () => {
+        if (window.confirm('This form will lose changes')) {
+            this.matDialogRef.close(['close', this.composeForm])
+        }
     }
 }
 
