@@ -29,6 +29,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AddTopicComponent } from './sidenavs/left/add-topic/add-topic.component';
 import { TopicSettingComponent } from './sidenavs/left/topic-setting/topic-setting.component';
 import { EditTopicComponent } from './sidenavs/left/edit-topic/edit-topic.component';
+import { TopicStatusComponent } from './sidenavs/left/topic-status/topic-status.component';
 
 const routes: Routes = [
     {
@@ -51,6 +52,7 @@ const routes: Routes = [
         AddTopicComponent,
         TopicSettingComponent,
         EditTopicComponent,
+        TopicStatusComponent,
     ],
     imports     : [
         RouterModule.forChild(routes),

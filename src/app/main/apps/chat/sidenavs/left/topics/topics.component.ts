@@ -13,7 +13,7 @@ import {
     AddNewTopic,
     ChangeTopic,
     FetchTopic,
-    SetTopicNotification,
+    SetTopicNotification, SetTopicStatus,
     UpdateTopic
 } from '../../../../../../store/topic/topic.actions';
 import {Select, Store} from '@ngxs/store';
@@ -28,6 +28,7 @@ import {FormGroup} from "@angular/forms";
 import { v4 as uuidv4 } from 'uuid';
 import {EditTopicComponent} from "../edit-topic/edit-topic.component";
 import {TopicSettingComponent} from "../topic-setting/topic-setting.component";
+import {TopicStatusComponent} from "../topic-status/topic-status.component";
 
 @Component({
     selector     : 'topics-sidenav',
@@ -51,6 +52,7 @@ export class TopicsComponent implements OnInit, OnDestroy
     dialogRef: any;
     pageNum: number ;
     totalNum: number;
+    status: Boolean = false;
     constructor(
         private store: Store,
         private channelState : ChannelState,
@@ -225,6 +227,33 @@ export class TopicsComponent implements OnInit, OnDestroy
             topicId : this.selectedTopic.id
         };
         this.store.dispatch(new SetTopicNotification(notification))
+    };
+
+    topicState = () => {
+        this.dialogRef = this._matDialog.open(TopicStatusComponent, {
+            panelClass: 'setting-dialog',
+            disableClose: true,
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (!response) {
+                    return;
+                }
+                const actionType: string = response[0];
+                switch (actionType) {
+                    case 'status' :
+                        this.saveStatus();
+                        break;
+                }
+            })
+    };
+
+    saveStatus = () => {
+        let status = {
+            topicId : this.selectedTopic.id,
+            active: this.status
+        };
+        this.store.dispatch(new SetTopicStatus(status))
     };
 
     prePage = (pNum) => {

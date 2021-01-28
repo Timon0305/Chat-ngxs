@@ -24,3 +24,8 @@ export class SetTopicNotification {
     static readonly type = '[Topic] Set Notification';
     constructor(public payload: any) {}
 }
+
+export class SetTopicStatus {
+    static readonly type = '[Type] Set Topic Status';
+    constructor(public payload: any) {}
+}

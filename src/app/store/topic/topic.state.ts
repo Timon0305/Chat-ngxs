@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, Store} from '@ngxs/store';
-import {AddNewTopic, ChangeTopic, FetchTopic, SetTopicNotification, UpdateTopic} from './topic.actions';
+import {AddNewTopic, ChangeTopic, FetchTopic, SetTopicNotification, SetTopicStatus, UpdateTopic} from './topic.actions';
 import {TopicModel} from './topic.model';
 import {TopicService} from './topic.service';
 
@@ -111,8 +111,18 @@ export class TopicState {
         return new Promise((resolve, reject) => {
             this.topicService.setNotification(payload)
                 .subscribe(() => {
+                    resolve()
+                }, reject)
+        })
+    }
 
-                })
+    @Action(SetTopicStatus)
+    setTopicStatus({getState, setState}: StateContext<TopicStateModel>, {payload}: SetTopicStatus) {
+        return new Promise((resolve, reject) => {
+            this.topicService.setStatus(payload)
+                .subscribe(() => {
+                    resolve()
+                }, reject)
         })
     }
 }

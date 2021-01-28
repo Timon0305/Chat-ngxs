@@ -1,7 +1,7 @@
 <div class="dialog-content-wrapper">
     <mat-toolbar class="mat-accent m-0">
         <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="title dialog-title">Edit Topic</span>
+            <span class="title dialog-title">Active/Inactive Topic</span>
             <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
                 <mat-icon>close</mat-icon>
             </button>
@@ -9,12 +9,12 @@
     </mat-toolbar>
 
     <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
-        <form name="settingForm" [formGroup]="settingForm"
+        <form name="settingForm" [formGroup]="statusForm"
               class="compose-form pt-16" fxLayout="column" fxFlex>
             <mat-checkbox
                 name="isCheck"
                 formControlName="isCheck">
-                Topic Notification turn on/off
+                Topic Active/Inactive
             </mat-checkbox>
         </form>
     </div>
@@ -22,9 +22,9 @@
         <div>
             <button mat-raised-button
                     color="accent"
-                    (click)="matDialogRef.close(['setting',settingForm])"
+                    (click)="matDialogRef.close(['status',statusForm])"
                     class="save-button"
-                    [disabled]="settingForm.invalid"
+                    [disabled]="statusForm.invalid"
                     aria-label="SAVE">
                 SAVE
             </button>
