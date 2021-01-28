@@ -32,7 +32,6 @@ export class TopicStatusComponent implements OnInit {
         })
     }
 
-
     topicOff = () => {
         if (window.confirm('This form will lose changes')) {
             this.matDialogRef.close()

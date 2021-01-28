@@ -1,6 +1,13 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, NgxsOnInit, Store} from '@ngxs/store';
-import {ChangeChannel, AddNewChannel, FetchPageChannel, SetNotification, UpdateChannel} from './channel.actions';
+import {
+    ChangeChannel,
+    AddNewChannel,
+    FetchPageChannel,
+    SetNotification,
+    UpdateChannel,
+    SetChannelStatus
+} from './channel.actions';
 import {ChannelModel} from './channel.model';
 import {ChannelService} from './channel.service';
 
@@ -112,8 +119,18 @@ export class ChannelState implements NgxsOnInit
         return new Promise((resolve, reject) => {
             this.channelService.setNotify(payload)
                 .subscribe(() => {
+                    resolve()
+                }, reject)
+        })
+    }
 
-                })
+    @Action(SetChannelStatus)
+    setChannelStatus({getStatus, setStatus}: StateContext<ChannelStateModel>, {payload}: SetChannelStatus) {
+        return new Promise((resolve, reject) => {
+            this.channelService.setStatus(payload)
+                .subscribe(() => {
+                    resolve()
+                }, reject)
         })
     }
 }

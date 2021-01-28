@@ -6,8 +6,9 @@ import {ChannelModel} from '../../../store/channel/channel.model';
 import {MatDialog} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
 import {ChannelSettingComponent} from "../../../main/apps/channel/channel-setting/channel-setting.component";
-import {SetNotification, UpdateChannel} from "../../../store/channel/channel.actions";
+import {SetChannelStatus, SetNotification, UpdateChannel} from "../../../store/channel/channel.actions";
 import {EditChannelComponent} from "../../../main/apps/channel/edit-channel/edit-channel.component";
+import {ChannelStatusComponent} from "../../../main/apps/channel/channel-status/channel-status.component";
 
 @Component({
   selector: 'app-subheader',
@@ -25,6 +26,7 @@ export class SubheaderComponent implements OnInit {
     channelType: string;
     isAdmin: boolean;
     dialogRef: any;
+    status: Boolean = true;
 
   constructor(
       public _matDialog: MatDialog,
@@ -107,5 +109,32 @@ export class SubheaderComponent implements OnInit {
             channelId: this.channelId
         };
         this.store.dispatch(new SetNotification(notification))
+    };
+
+    channelStatus = () => {
+        this.dialogRef = this._matDialog.open(ChannelStatusComponent,  {
+            panelClass: 'mail-compose-dialog',
+            disableClose: true,
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (!response) {
+                    return;
+                }
+                const actionType: string = response[0];
+                switch (actionType) {
+                    case 'status' :
+                        this.saveStatus();
+                        break;
+                }
+            })
+    };
+
+    saveStatus = () => {
+        let status = {
+            channelId: this.channelId,
+            active: this.status
+        };
+        this.store.dispatch(new SetChannelStatus(status))
     }
 }

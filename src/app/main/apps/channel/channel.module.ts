@@ -18,6 +18,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import { SubscibeChannelComponent } from './subscibe-channel/subscibe-channel.component';
+import { ChannelStatusComponent } from './channel-status/channel-status.component';
 
 
 
@@ -27,6 +28,7 @@ import { SubscibeChannelComponent } from './subscibe-channel/subscibe-channel.co
       EditChannelComponent,
       ChannelSettingComponent,
       SubscibeChannelComponent,
+      ChannelStatusComponent,
   ],
   imports: [
     CommonModule,

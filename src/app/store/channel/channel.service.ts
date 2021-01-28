@@ -47,4 +47,14 @@ export class ChannelService {
             headers : this.token
         })
     }
+
+    setStatus(payload: any) {
+        let channelId = payload.channelId;
+        let status = payload.status ? '/inactive' : '/active';
+        return this.http.post(this.url + channelId + status,
+            {},
+            {
+                headers : this.token
+            })
+    }
 }
