@@ -125,9 +125,9 @@ export class ChannelState implements NgxsOnInit
     }
 
     @Action(SetChannelStatus)
-    setChannelStatus({getStatus, setStatus}: StateContext<ChannelStateModel>, {payload}: SetChannelStatus) {
+    setChannelStatus({getState, setState}: StateContext<ChannelStateModel>, {payload}: SetChannelStatus) {
         return new Promise((resolve, reject) => {
-            this.channelService.setStatus(payload)
+            this.channelService.setChannelStatus(payload)
                 .subscribe(() => {
                     resolve()
                 }, reject)

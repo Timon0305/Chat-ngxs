@@ -104,6 +104,7 @@ export class TopicsComponent implements OnInit, OnDestroy
             if (response) {
                 this.selectedTopic = response;
                 for (let items of this.getTopics) {
+                    console.log('=>>>>', this.getTopics);
                     if (items.id === response.id) {
                         items = Object.assign({active:true}, items);
                         this.def.detectChanges();
