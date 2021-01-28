@@ -1,7 +1,7 @@
 <div class="dialog-content-wrapper">
     <mat-toolbar class="mat-accent m-0">
         <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="title dialog-title">Channel Setting</span>
+            <span class="title dialog-title">Channel Notification</span>
             <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
                 <mat-icon>close</mat-icon>
             </button>
@@ -13,8 +13,10 @@
               class="compose-form pt-16" fxLayout="column" fxFlex>
             <mat-checkbox
                 name="isCheck"
+                (click)="changeCheckbox(_status)"
+                [ngModel]="_status"
                 formControlName="isCheck">
-                Channel Notification turn on/off
+                Channel Notification turn {{_status?'on':'off'}}
             </mat-checkbox>
         </form>
     </div>

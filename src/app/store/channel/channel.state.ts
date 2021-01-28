@@ -15,6 +15,7 @@ export interface ChannelStateModel {
     channelList: ChannelModel[],
     page: number,
     totalPages: number,
+    isActive: boolean,
     selectedChannel: ChannelModel,
 }
 @State<ChannelStateModel>({
@@ -23,6 +24,7 @@ export interface ChannelStateModel {
         channelList: [],
         page: null,
         totalPages: null,
+        isActive: null,
         selectedChannel: null,
     }
 })
@@ -54,6 +56,11 @@ export class ChannelState implements NgxsOnInit
         return state.selectedChannel
     }
 
+    @Selector()
+    static getChannelStatus(state: ChannelStateModel) {
+        return state.isActive;
+    }
+
     ngxsOnInit(ctx: StateContext<ChannelStateModel>) {
         ctx.dispatch(new FetchPageChannel(1))
     }
@@ -79,12 +86,12 @@ export class ChannelState implements NgxsOnInit
     @Action(ChangeChannel)
     changeChannel({getState, setState} : StateContext<ChannelStateModel>, {payload}: ChangeChannel) {
         let state = getState();
-
         let channelItem = state.channelList.find((item) => {
             return item.id === payload.id
         });
         setState({
             ...state,
+            isActive: channelItem.user.isActive,
             selectedChannel: channelItem,
         });
     }

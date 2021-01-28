@@ -26,7 +26,7 @@ export class SubheaderComponent implements OnInit {
     channelType: string;
     isAdmin: boolean;
     dialogRef: any;
-    status: Boolean = true;
+    status: Boolean = false;
 
   constructor(
       public _matDialog: MatDialog,
@@ -42,6 +42,7 @@ export class SubheaderComponent implements OnInit {
                   this.userNum = channelData.data.stats.userCount;
                   this.channelId = channelData.id;
                   this.channelType = channelData.data.type;
+                  this.status = channelData.user.isActive;
                   this.isAdmin = channelData.system.userId === localStorage.getItem('userId')
               }
           });

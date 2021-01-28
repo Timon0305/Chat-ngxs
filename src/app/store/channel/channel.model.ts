@@ -19,8 +19,9 @@ export class ChannelModel {
         model?: number;
     };
     user?: {
-        test?: number;
         isAdmin?: boolean;
+        isActive?: boolean;
+        settings?: string;
     };
     active?: boolean;
 }

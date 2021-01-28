@@ -19,6 +19,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import { SubscibeChannelComponent } from './subscibe-channel/subscibe-channel.component';
 import { ChannelStatusComponent } from './channel-status/channel-status.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -31,7 +32,9 @@ import { ChannelStatusComponent } from './channel-status/channel-status.componen
       ChannelStatusComponent,
   ],
   imports: [
-    CommonModule,
+      ReactiveFormsModule
+          .withConfig({warnOnNgModelWithFormControl: 'never'}),
+      CommonModule,
       MatButtonModule,
       MatCardModule,
       MatFormFieldModule,
