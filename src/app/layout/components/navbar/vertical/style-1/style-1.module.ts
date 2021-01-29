@@ -6,6 +6,9 @@ import { FuseNavigationModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { NavbarVerticalStyle1Component } from 'app/layout/components/navbar/vertical/style-1/style-1.component';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {httpTranslateLoader} from "../../../../../app.module";
+import {HttpClient} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -16,7 +19,14 @@ import { NavbarVerticalStyle1Component } from 'app/layout/components/navbar/vert
         MatIconModule,
 
         FuseSharedModule,
-        FuseNavigationModule
+        FuseNavigationModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpTranslateLoader,
+                deps: [HttpClient]
+            }
+        })
     ],
     exports     : [
         NavbarVerticalStyle1Component

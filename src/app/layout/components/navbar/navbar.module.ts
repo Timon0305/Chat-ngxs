@@ -14,10 +14,12 @@ import { NavbarVerticalStyle1Module } from 'app/layout/components/navbar/vertica
         FuseSharedModule,
         NavbarHorizontalStyle1Module,
         NavbarVerticalStyle1Module,
+
     ],
     exports     : [
-        NavbarComponent
-    ]
+        NavbarComponent,
+    ],
+
 })
 
 export class NavbarModule
