@@ -39,7 +39,7 @@ export class SubheaderComponent implements OnInit {
               this.selectChannel = channelData;
               if (channelData) {
                   this.channelName = channelData.data.name;
-                  this.userNum = channelData.data.stats.userCount;
+                  this.userNum = channelData.data.stats?channelData.data.stats.userCount:0;
                   this.channelId = channelData.id;
                   this.channelType = channelData.data.type;
                   this.status = channelData.user.isActive;
