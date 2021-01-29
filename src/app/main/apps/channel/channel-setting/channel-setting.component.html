@@ -14,6 +14,7 @@
             <mat-checkbox
                 name="isCheck"
                 [ngModel]="true"
+                (click)="changeCheckbox(_isSetting)"
                 formControlName="isCheck">
                 Channel Notification is turned on
             </mat-checkbox>
@@ -26,6 +27,7 @@
             <mat-checkbox
                 name="isCheck"
                 [ngModel]="false"
+                (click)="changeCheckbox(_isSetting)"
                 formControlName="isCheck">
                 Channel Notification is turned off
             </mat-checkbox>

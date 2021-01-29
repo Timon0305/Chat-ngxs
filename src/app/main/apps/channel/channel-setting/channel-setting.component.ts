@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {fuseAnimations} from "../../../../../@fuse/animations";
 import {FormControl, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
@@ -21,6 +21,7 @@ export class ChannelSettingComponent implements OnInit {
     channelId: string;
     _isSetting: Boolean = false;
   constructor(
+      private def: ChangeDetectorRef,
       public matDialogRef: MatDialogRef<ChannelSettingComponent>,
       @Inject(MAT_DIALOG_DATA) private _data: any
   ) {
@@ -42,6 +43,11 @@ export class ChannelSettingComponent implements OnInit {
             isCheck: new FormControl(false),
         })
     }
+
+    changeCheckbox = (event) => {
+        this._isSetting = !event;
+        this.def.detectChanges();
+    };
 
     channelOff = () => {
       if (window.confirm('This form will lose changes')) {

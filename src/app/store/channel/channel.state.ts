@@ -153,7 +153,7 @@ export class ChannelState implements NgxsOnInit
                     resolve();
                     setState({
                         ...state,
-                        isActive: !state.isActive
+                        isActive: payload.active
                     })
                 }, reject)
         })
