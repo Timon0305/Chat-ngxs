@@ -26,7 +26,7 @@ export class SubheaderComponent implements OnInit {
     channelType: string;
     isAdmin: boolean;
     dialogRef: any;
-    status: Boolean = false;
+    _isStatus: Boolean = false;
 
   constructor(
       public _matDialog: MatDialog,
@@ -42,7 +42,7 @@ export class SubheaderComponent implements OnInit {
                   this.userNum = channelData.data.stats?channelData.data.stats.userCount:0;
                   this.channelId = channelData.id;
                   this.channelType = channelData.data.type;
-                  this.status = channelData.user.isActive;
+                  this._isStatus = channelData.user.isActive;
                   this.isAdmin = channelData.system.userId === localStorage.getItem('userId')
               }
           });
@@ -134,7 +134,7 @@ export class SubheaderComponent implements OnInit {
     saveStatus = () => {
         let status = {
             channelId: this.channelId,
-            active: this.status
+            active: this._isStatus
         };
         this.store.dispatch(new SetChannelStatus(status))
     }

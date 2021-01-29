@@ -16,6 +16,7 @@ export interface ChannelStateModel {
     page: number,
     totalPages: number,
     isActive: boolean,
+    isSetting: Boolean,
     selectedChannel: ChannelModel,
 }
 @State<ChannelStateModel>({
@@ -25,6 +26,7 @@ export interface ChannelStateModel {
         page: null,
         totalPages: null,
         isActive: null,
+        isSetting: null,
         selectedChannel: null,
     }
 })
@@ -61,6 +63,11 @@ export class ChannelState implements NgxsOnInit
         return state.isActive;
     }
 
+    @Selector()
+    static getChannelSetting(state: ChannelStateModel) {
+        return state.isSetting;
+    }
+
     ngxsOnInit(ctx: StateContext<ChannelStateModel>) {
         ctx.dispatch(new FetchPageChannel(1))
     }
@@ -92,6 +99,7 @@ export class ChannelState implements NgxsOnInit
         setState({
             ...state,
             isActive: channelItem.user.isActive,
+            isSetting: channelItem.user.settings===null?false:channelItem.user.settings['notify'],
             selectedChannel: channelItem,
         });
     }
@@ -123,10 +131,15 @@ export class ChannelState implements NgxsOnInit
 
     @Action(SetNotification)
     setNotification({getState, setState}: StateContext<ChannelStateModel>, {payload}: SetNotification) {
+        let state = getState();
         return new Promise((resolve, reject) => {
             this.channelService.setNotify(payload)
                 .subscribe(() => {
-                    resolve()
+                    resolve();
+                    setState({
+                        ...state,
+                        isSetting: payload.notify
+                    })
                 }, reject)
         })
     }

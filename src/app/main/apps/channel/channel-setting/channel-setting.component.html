@@ -8,13 +8,26 @@
         </mat-toolbar-row>
     </mat-toolbar>
 
-    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar *ngIf="_isSetting">
         <form name="settingForm" [formGroup]="settingForm"
               class="compose-form pt-16" fxLayout="column" fxFlex>
             <mat-checkbox
                 name="isCheck"
+                [ngModel]="true"
                 formControlName="isCheck">
-                Channel Notification turn on/off
+                Channel Notification is turned on
+            </mat-checkbox>
+        </form>
+    </div>
+
+    <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar *ngIf="!_isSetting">
+        <form name="settingForm" [formGroup]="settingForm"
+              class="compose-form pt-16" fxLayout="column" fxFlex>
+            <mat-checkbox
+                name="isCheck"
+                [ngModel]="false"
+                formControlName="isCheck">
+                Channel Notification is turned off
             </mat-checkbox>
         </form>
     </div>

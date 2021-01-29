@@ -2,6 +2,9 @@ import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {fuseAnimations} from "../../../../../@fuse/animations";
 import {FormControl, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Observable} from "rxjs";
+import {ChannelState} from "../../../../store/channel/channel.state";
+import {Select} from "@ngxs/store";
 
 @Component({
   selector: 'app-channel-setting',
@@ -12,9 +15,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class ChannelSettingComponent implements OnInit {
 
+    @Select(ChannelState.getChannelSetting) channelSetting: Observable<Boolean>;
     showExtraToFields: boolean;
     settingForm: FormGroup;
     channelId: string;
+    _isSetting: Boolean = false;
   constructor(
       public matDialogRef: MatDialogRef<ChannelSettingComponent>,
       @Inject(MAT_DIALOG_DATA) private _data: any
@@ -25,6 +30,10 @@ export class ChannelSettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      this.channelSetting
+          .subscribe(res => {
+              this._isSetting = res;
+          })
   }
 
     createSetting(): FormGroup
