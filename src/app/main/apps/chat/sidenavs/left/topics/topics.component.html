@@ -4,7 +4,7 @@
         <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
 
             <div matSubheader>
-                Topics
+                {{'_topic' | translate}}
             </div>
             <div>
                 <button mat-icon-button
@@ -56,13 +56,13 @@
                         </button>
                         <mat-menu #topicMenu="matMenu">
                             <button mat-menu-item  (click)="editTopic(topic)">
-                                Edit Topic
+                                {{'_editTopic' | translate}}
                             </button>
                             <button mat-menu-item (click)="settingTopic(topic)">
-                                Settings
+                                {{'_settings' | translate}}
                             </button>
                             <button mat-menu-item (click)="topicState()">
-                                Status
+                                {{'_status' | translate}}
                             </button>
                         </mat-menu>
                     </div>

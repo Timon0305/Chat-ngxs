@@ -1,3 +1,13 @@
 {
-    "LOGO": "LOGO"
+    "_title": "366 office",
+
+    "_settings": "Settings",
+    "_status": "Status",
+
+    "_createChannel": "+ Create Channel",
+    "_editChannel" : "Edit Channel",
+    "_leaveChannel": "Leave Channel",
+
+    "_topic" : "Topic",
+    "_editTopic": "Edit Channel"
 }

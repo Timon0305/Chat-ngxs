@@ -1,3 +1,13 @@
 {
-    "LOGO": "YUO"
+    "_title": "366 kantoor",
+
+    "_settings": "Instellingen",
+    "_status": "Toestand",
+
+    "_createChannel": "+ kanaal maken",
+    "_editChannel" : "Kanaal bewerken",
+    "_leaveChannel": "Verlaat kanaal",
+
+    "_topic" : "Onderwerp",
+    "_editTopic": "Kanaal bewerken"
 }

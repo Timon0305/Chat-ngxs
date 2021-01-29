@@ -45,19 +45,19 @@
                                     </button>
                                     <mat-menu #userMenu="matMenu">
                                         <button mat-menu-item *ngIf="isAdmin" (click)="editChannel(selectChannel)">
-                                            Edit Channel
+                                            {{'_editChannel' | translate}}
                                         </button>
                                         <button mat-menu-item *ngIf="!isAdmin" class="text-grey" disabled>
-                                            Edit Channel
+                                            {{'_editChannel' | translate}}
                                         </button>
                                         <button mat-menu-item (click)="channelSetting(channelId)">
-                                            Settings
+                                            {{'_settings' | translate}}
                                         </button>
                                         <button mat-menu-item (click)="channelStatus()">
-                                            Status
+                                            {{'_status' | translate}}
                                         </button>
                                         <button mat-menu-item>
-                                            Leave channel
+                                            {{'_leaveChannel' | translate}}
                                         </button>
                                     </mat-menu>
                                 </div>

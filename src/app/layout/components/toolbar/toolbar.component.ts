@@ -42,8 +42,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
     )
     {
-        // _translateService.addLangs(['en', 'nl']);
-        // _translateService.setDefaultLang('en');
         // Set the defaults
         this.userStatusOptions = [
             {
@@ -80,9 +78,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 flag : 'us'
             },
             {
-                id   : 'du',
+                id   : 'nl',
                 title: 'Dutch',
-                flag : 'du'
+                flag : 'nl'
             }
         ];
 
