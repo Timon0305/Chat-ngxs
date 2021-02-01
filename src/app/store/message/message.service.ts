@@ -22,7 +22,7 @@ export class MessageService {
     }
 
     addNewMessage(payload) {
-        return this.http.post<MessageModel[]>(domain + 'message',
+        return this.http.post<MessageModel[]>(domain + 'messages',
             payload,
             {
                 headers: this.token
