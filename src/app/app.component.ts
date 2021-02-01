@@ -2,15 +2,17 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Store} from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
+import { locale as navigationEnglish } from 'app/navigation/i18n/en';
+import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 
 @Component({
     selector   : 'app',
@@ -59,13 +61,13 @@ export class AppComponent implements OnInit, OnDestroy
         this._fuseNavigationService.setCurrentNavigation('main');
 
         // Add languages
-        this._translateService.addLangs(['en', 'nl']);
+        this._translateService.addLangs(['en', 'tr']);
 
         // Set the default language
         this._translateService.setDefaultLang('en');
 
         // Set the navigation translations
-        // this._fuseTranslationLoaderService.loadTranslations(navigationEnglish, navigationDutch);
+        this._fuseTranslationLoaderService.loadTranslations(navigationEnglish, navigationTurkish);
 
         // Use a language
         this._translateService.use('en');

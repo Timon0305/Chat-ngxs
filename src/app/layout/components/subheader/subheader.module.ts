@@ -15,9 +15,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {EditChannelComponent} from "../../../main/apps/channel/edit-channel/edit-channel.component";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {httpTranslateLoader} from "../../../app.module";
-import {HttpClient} from "@angular/common/http";
 
 
 
@@ -37,13 +34,6 @@ import {HttpClient} from "@angular/common/http";
       MatCheckboxModule,
       MatSidenavModule,
       MatToolbarModule,
-      TranslateModule.forRoot({
-          loader: {
-              provide: TranslateLoader,
-              useFactory: httpTranslateLoader,
-              deps: [HttpClient]
-          }
-      }),
 
       RouterModule,
       FuseSharedModule,

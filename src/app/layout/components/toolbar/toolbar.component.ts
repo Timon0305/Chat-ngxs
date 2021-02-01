@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-// import { navigation } from 'app/navigation/navigation';
+import { navigation } from 'app/navigation/navigation';
 
 @Component({
     selector     : 'toolbar',
@@ -39,7 +39,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService,
+        private _translateService: TranslateService
     )
     {
         // Set the defaults
@@ -78,13 +78,13 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 flag : 'us'
             },
             {
-                id   : 'nl',
-                title: 'Dutch',
-                flag : 'nl'
+                id   : 'tr',
+                title: 'Turkish',
+                flag : 'tr'
             }
         ];
 
-        // this.navigation = navigation;
+        this.navigation = navigation;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -109,7 +109,6 @@ export class ToolbarComponent implements OnInit, OnDestroy
             });
 
         // Set the selected language from default languages
-
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
     }
 

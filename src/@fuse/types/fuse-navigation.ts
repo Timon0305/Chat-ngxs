@@ -5,7 +5,6 @@ export interface FuseNavigationItem
     name?: string,
     type?: string,
     status?: string,
-    translate?: string,
     title?: any,
     subtitle?: any,
     classes?: string,
