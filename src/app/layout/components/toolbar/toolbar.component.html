@@ -21,6 +21,13 @@
                 <!--<fuse-shortcuts [navigation]="navigation"></fuse-shortcuts>-->
             <!--</div>-->
 
+
+        </div>
+
+        <div class="mr-5">
+            <mat-slide-toggle [checked]="status" (change)="changeUser(userId)">
+                {{!status?'User 1':'User 2'}}
+            </mat-slide-toggle>
         </div>
 
         <div class="toolbar-separator"></div>

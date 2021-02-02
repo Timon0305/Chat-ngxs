@@ -26,6 +26,7 @@ import {TopicState} from './store/topic/topic.state';
 import {MessageState} from './store/message/message.state';
 import {MatTableModule} from "@angular/material/table";
 import {BrowseChannelState} from "./store/browseChannel/browse.channel.state";
+import {TokenState} from "./store/token/token.state";
 
 const appRoutes: Routes = [
     {
@@ -71,7 +72,7 @@ const appRoutes: Routes = [
         // App modules
         LayoutModule,
 
-        NgxsModule.forRoot([MessageState, TopicState, BrowseChannelState, ChannelState], {
+        NgxsModule.forRoot([MessageState, TopicState, BrowseChannelState, TokenState, ChannelState], {
             developmentMode: !environment.production
         }),
         NgxsLoggerPluginModule.forRoot()

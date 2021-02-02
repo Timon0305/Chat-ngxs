@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
@@ -8,6 +8,10 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import {Select, Store} from "@ngxs/store";
+import {TokenState} from "../../../store/token/token.state";
+import {TokenModel} from "../../../store/token/token.model";
+import {ChangeToken} from "../../../store/token/token.actions";
 
 @Component({
     selector     : 'toolbar',
@@ -18,6 +22,7 @@ import { navigation } from 'app/navigation/navigation';
 
 export class ToolbarComponent implements OnInit, OnDestroy
 {
+    @Select(TokenState.getToken) selectToken: Observable<TokenModel>;
     horizontalNavbar: boolean;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
@@ -25,6 +30,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
+    userId: string;
+    status: Boolean = false;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -35,11 +42,13 @@ export class ToolbarComponent implements OnInit, OnDestroy
      * @param {FuseConfigService} _fuseConfigService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {TranslateService} _translateService
+     * @param store
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
+        private _translateService: TranslateService,
+        private store: Store,
     )
     {
         // Set the defaults
@@ -88,6 +97,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -110,6 +120,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
 
         // Set the selected language from default languages
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
+
+        this.selectToken
+            .subscribe(res => {
+                this.userId = res.userId
+            })
     }
 
     /**
@@ -160,4 +175,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         // Use the selected language for translations
         this._translateService.use(lang.id);
     }
+
+    changeUser = (id) => {
+        this.status = this.status === false;
+        this.store.dispatch(new ChangeToken(id))
+    };
 }
