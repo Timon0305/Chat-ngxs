@@ -1,7 +1,7 @@
 <div class="dialog-content-wrapper">
     <mat-toolbar class="mat-accent m-0">
         <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="title dialog-title">Add Topic</span>
+            <span class="title dialog-title">{{'TOPIC.CREATE' | translate}}</span>
             <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
                 <mat-icon>close</mat-icon>
             </button>
@@ -11,14 +11,14 @@
     <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
         <form name="topicForm" [formGroup]="topicForm" class="compose-form pt-16" fxLayout="column" fxFlex>
             <mat-form-field appearance="outline">
-                <mat-label>Title</mat-label>
+                <mat-label>{{'OTHER.TITLE' | translate}}</mat-label>
                 <input matInput name="title"
                        formControlName="title"
                        type="text" required>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>Description</mat-label>
+                <mat-label>{{'OTHER.DESCRIPTION' | translate}}</mat-label>
                 <textarea matInput name="description"
                           formControlName="description"
                           rows="4">
@@ -34,12 +34,12 @@
                     class="save-button"
                     [disabled]="topicForm.invalid"
                     aria-label="SAVE">
-                SAVE
+                {{'OTHER.SAVE' | translate}}
             </button>
         </div>
 
         <button mat-raised-button (click)="topicOff()" aria-label="Close dialog">
-            CLOSE
+            {{'OTHER.CLOSE' | translate}}
         </button>
     </div>
 </div>

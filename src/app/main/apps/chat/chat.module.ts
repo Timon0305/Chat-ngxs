@@ -30,6 +30,7 @@ import { AddTopicComponent } from './sidenavs/left/add-topic/add-topic.component
 import { TopicSettingComponent } from './sidenavs/left/topic-setting/topic-setting.component';
 import { EditTopicComponent } from './sidenavs/left/edit-topic/edit-topic.component';
 import { TopicStatusComponent } from './sidenavs/left/topic-status/topic-status.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 const routes: Routes = [
     {
@@ -69,7 +70,8 @@ const routes: Routes = [
         MatCheckboxModule,
         MatIconModule,
         MatTabsModule,
-        FuseSharedModule
+        FuseSharedModule,
+        TranslateModule.forChild()
     ],
     entryComponents: [AddChannelComponent, AddTopicComponent]
 })

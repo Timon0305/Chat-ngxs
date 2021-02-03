@@ -7,7 +7,6 @@ import * as _ from 'lodash';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-import { navigation } from 'app/navigation/navigation';
 import {Select, Store} from "@ngxs/store";
 import {TokenState} from "../../../store/token/token.state";
 import {TokenModel} from "../../../store/token/token.model";
@@ -87,22 +86,18 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 flag : 'us'
             },
             {
-                id   : 'tr',
-                title: 'Turkish',
-                flag : 'tr'
+                id   : 'nl',
+                title: 'Dutch',
+                flag : 'nl'
             }
         ];
 
-        this.navigation = navigation;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
 
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * On init

@@ -24,7 +24,6 @@ import {environment} from '../environments/environment';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {TopicState} from './store/topic/topic.state';
 import {MessageState} from './store/message/message.state';
-import {MatTableModule} from "@angular/material/table";
 import {BrowseChannelState} from "./store/browseChannel/browse.channel.state";
 import {TokenState} from "./store/token/token.state";
 

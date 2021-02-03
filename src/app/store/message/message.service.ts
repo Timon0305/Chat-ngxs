@@ -15,6 +15,9 @@ export class MessageService {
     ) {}
 
     fetchMessage(topicId) {
+        console.log('------------1');
+        console.log('user', localStorage.getItem('userId'));
+        console.log('------------2');
         return this.http.get<MessageModel[]>(domain + 'topics/' + topicId + '/messages',
             {
                 headers: this.token

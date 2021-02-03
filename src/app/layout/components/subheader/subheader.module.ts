@@ -15,6 +15,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {EditChannelComponent} from "../../../main/apps/channel/edit-channel/edit-channel.component";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 
@@ -34,6 +35,7 @@ import {EditChannelComponent} from "../../../main/apps/channel/edit-channel/edit
       MatCheckboxModule,
       MatSidenavModule,
       MatToolbarModule,
+      TranslateModule.forChild(),
 
       RouterModule,
       FuseSharedModule,

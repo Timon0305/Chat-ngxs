@@ -20,6 +20,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { SubscibeChannelComponent } from './subscibe-channel/subscibe-channel.component';
 import { ChannelStatusComponent } from './channel-status/channel-status.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 
@@ -48,7 +49,8 @@ import {ReactiveFormsModule} from "@angular/forms";
       MatCheckboxModule,
       MatIconModule,
       MatTabsModule,
-      FuseSharedModule
+      FuseSharedModule,
+      TranslateModule.forChild()
   ],
     entryComponents: [
         AddChannelComponent,

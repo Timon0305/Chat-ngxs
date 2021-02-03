@@ -19,6 +19,7 @@ import {FormGroup} from '@angular/forms';
 import {AddChannelComponent} from '../../../app/main/apps/channel/add-channel/add-channel.component';
 import {AddNewChannel, FetchPageChannel} from "../../../app/store/channel/channel.actions";
 import {FuseSidebarService} from "../sidebar/sidebar.service";
+import {FuseNavigationItem} from "../../types";
 
 'use strict';
 

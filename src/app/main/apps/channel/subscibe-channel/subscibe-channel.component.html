@@ -10,7 +10,7 @@
 
     <div class="p-24 m-0" >
         <div>
-            <h2>Description :</h2>
+            <h2>{{'OTHER.DESCRIPTION' | translate}} :</h2>
             <p>{{channelData['data']['description']}}</p>
         </div>
     </div>
@@ -26,7 +26,7 @@
                     (click)="matDialogRef.close(['conform',subscribeForm])"
                     class="save-button sub-full-width"
                     aria-label="SAVE">
-                SUBSCRIBED
+                {{'OTHER.SUBSCRIBE' | translate}}
             </button>
         </div>
 

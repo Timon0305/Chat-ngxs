@@ -1,22 +1,38 @@
 export const locale = {
     lang: 'en',
     data: {
-        'NAV': {
-            'APPLICATIONS': 'Applications',
-            'DASHBOARDS'  : 'Dashboards',
-            'CALENDAR'    : 'Calendar',
-            'ECOMMERCE'   : 'E-Commerce',
-            'ACADEMY'     : 'Academy',
-            'MAIL'        : {
-                'TITLE': 'Mail',
-                'BADGE': '25'
-            },
-
-            'CHAT'        : 'Chat',
-            'FILE_MANAGER': 'File Manager',
-            'CONTACTS'    : 'Contacts',
-            'TODO'        : 'To-Do',
-            'SCRUMBOARD'  : 'Scrumboard'
+        'LOGO' : {
+            'TITLE': '366 Office'
+        },
+        'CHANNEL': {
+            'CREATE': '+ Create Channel',
+            'ADD': 'Add Channel',
+            'SUBSCRIBE': 'Subscribe Channel',
+            'EDIT': 'Edit Channel',
+            'LEAVE': 'Leave Channel',
+            'SETTING': 'Channel Setting',
+            'STATUS' : 'Channel Status'
+        },
+        'TOPIC': {
+            'TITLE': 'Topic',
+            'CREATE': 'Create Topic',
+            'SETTING' : 'Topic Setting',
+            'EDIT': 'Edit Topic',
+        },
+        'OTHER' : {
+            'SETTINGS' : 'Settings',
+            'STATUS' : 'Status',
+            'TYPE': 'Type',
+            'SUBSCRIBE': 'Subscribe',
+            'SPACE': 'Space',
+            'VISIBILITY': 'Visibility',
+            'SAVE': 'Save',
+            'CLOSE' : 'Close',
+            'TITLE': 'Title',
+            'DESCRIPTION': 'Description',
+            'PROFILE': 'My Profile',
+            'INBOX': 'Inbox',
+            'LOGOUT': 'Logout',
         }
     }
 };
