@@ -268,7 +268,7 @@ export class TopicsComponent implements OnInit, OnDestroy
         }
     };
 
-    nextPage = (pNum) => {
+    moreTopic = (pNum) => {
         if (pNum === this.totalNum) {
             return;
         } else {

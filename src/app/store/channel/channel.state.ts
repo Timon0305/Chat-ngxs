@@ -79,10 +79,17 @@ export class ChannelState implements NgxsOnInit
             this.channelService.fetchChannel(payload)
                 .subscribe((response: any) => {
                     let res = response['rows'];
-
+                    let currentChannel = state.channelList;
+                    let data = [];
+                    for (let item of currentChannel) {
+                        data.push(item)
+                    }
+                    for (let item of res) {
+                        data.push(item)
+                    }
                     setState({
                         ...state,
-                        channelList: res,
+                        channelList: data,
                         page: response.page,
                         totalPages: response.totalPages,
                     });

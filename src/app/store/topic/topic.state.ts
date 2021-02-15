@@ -54,12 +54,40 @@ export class TopicState {
             this.topicService.fetchTopic(payload)
                 .subscribe((response: object) => {
                     let res = response['rows'];
-                    setState({
-                        ...state,
-                        page: response['page'],
-                        totalPages: response['totalPages'],
-                        topicList: res
-                    });
+                    let currentTopic = state.topicList;
+                    let data = [];
+                    if (!currentTopic.length) {
+                        setState({
+                            ...state,
+                            page: response['page'],
+                            totalPages: response['totalPages'],
+                            topicList: res
+                        });
+                    } else {
+                        let currentChannelId = currentTopic[0]['data']['channelId'];
+                        let newChannelId = res[0]['data']['channelId'];
+                        if (currentChannelId === newChannelId) {
+                            for (let item of currentTopic) {
+                                data.push(item)
+                            }
+                            for (let item of res) {
+                                data.push(item)
+                            }
+                            setState({
+                                ...state,
+                                page: response['page'],
+                                totalPages: response['totalPages'],
+                                topicList: data
+                            });
+                        } else {
+                            setState({
+                                ...state,
+                                page: response['page'],
+                                totalPages: response['totalPages'],
+                                topicList: res
+                            });
+                        }
+                    }
                     resolve(res);
                 }, reject);
         });

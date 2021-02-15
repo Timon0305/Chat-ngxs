@@ -9,21 +9,13 @@
         <div class="nav nav-group pl-3">
             <div class="group-items fuse-navy-700">
                 <div class="nav-item">
-                    <a class="nav-link text-center text-blue">
-                        <span class=" nav-link-title "
+                    <a class="nav-link text-center text-blue ">
+                        <span class=" nav-link-title"
                               aria-label="Compose"
+                              (click)="moreChannel(pageNum)"
                         >
-                           more &nbsp; <mat-icon class="font-size-10" (click)="moreChannel(pageNum)">arrow_drop_down</mat-icon>
+                           more &nbsp; <mat-icon class="font-size-10">arrow_drop_down</mat-icon>
                         </span>
-                        <!--<span class=" nav-link-title text-center"-->
-                              <!--aria-label="Compose"-->
-                        <!--&gt;-->
-                            <!--{{pageNum}} &nbsp; / &nbsp; {{totalNum}}-->
-                        <!--</span>-->
-                        <!--<span class=" nav-link-title text-right"-->
-                              <!--aria-label="Compose">-->
-                            <!--<mat-icon class="font-size-10" (click)="nextPage(pageNum)">arrow_forward_ios</mat-icon>-->
-                        <!--</span>-->
                     </a>
                 </div>
             </div>
@@ -31,7 +23,7 @@
         <div class="nav nav-group pl-3">
             <div class="group-items fuse-navy-700">
                 <div class="nav-item">
-                    <a class="nav-link text-center">
+                    <a class="nav-link">
                         <span class=" nav-link-title"
                               (click)="addChannel()"
                               aria-label="Compose"

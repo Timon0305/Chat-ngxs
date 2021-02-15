@@ -77,21 +77,22 @@
 <div class="nav nav-group pl-3" *ngIf="pageNum">
     <div class="group-items">
         <div class="nav-item">
-            <a class="nav-link">
+            <a class="nav-link text-center">
                 <span class=" nav-link-title text-black"
                       aria-label="Compose"
+                      (click)="moreTopic(pageNum)"
                 >
-                    <mat-icon class="font-size-10" (click)="prePage(pageNum)">arrow_back_ios</mat-icon>
+                  more &nbsp;  <mat-icon class="font-size-10" >arrow_drop_down</mat-icon>
                 </span>
-                <span class=" nav-link-title text-center text-black"
-                      aria-label="Compose"
-                >
-                    {{pageNum}} &nbsp; / &nbsp; {{totalNum}}
-                </span>
-                <span class=" nav-link-title text-right text-black"
-                  aria-label="Compose">
-                    <mat-icon class="font-size-10" (click)="nextPage(pageNum)">arrow_forward_ios</mat-icon>
-                </span>
+                <!--<span class=" nav-link-title text-center text-black"-->
+                      <!--aria-label="Compose"-->
+                <!--&gt;-->
+                    <!--{{pageNum}} &nbsp; / &nbsp; {{totalNum}}-->
+                <!--</span>-->
+                <!--<span class=" nav-link-title text-right text-black"-->
+                  <!--aria-label="Compose">-->
+                    <!--<mat-icon class="font-size-10" (click)="nextPage(pageNum)">arrow_forward_ios</mat-icon>-->
+                <!--</span>-->
             </a>
         </div>
     </div>
