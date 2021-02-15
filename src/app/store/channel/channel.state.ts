@@ -73,12 +73,13 @@ export class ChannelState implements NgxsOnInit
     }
 
     @Action(FetchPageChannel)
-    fetchPageChannel({getState, setState}: StateContext<ChannelStateModel>, {payload} : FetchPageChannel) {
+    fetchPageChannel({getState, setState, patchState}: StateContext<ChannelStateModel>, {payload} : FetchPageChannel) {
         let state = getState();
         return new Promise((resolve, reject) => {
             this.channelService.fetchChannel(payload)
                 .subscribe((response: any) => {
                     let res = response['rows'];
+
                     setState({
                         ...state,
                         channelList: res,

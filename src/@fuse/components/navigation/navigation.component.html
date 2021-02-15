@@ -9,21 +9,21 @@
         <div class="nav nav-group pl-3">
             <div class="group-items fuse-navy-700">
                 <div class="nav-item">
-                    <a class="nav-link">
-                        <span class=" nav-link-title"
+                    <a class="nav-link text-center text-blue">
+                        <span class=" nav-link-title "
                               aria-label="Compose"
                         >
-                            <mat-icon class="font-size-10" (click)="prePage(pageNum)">arrow_back_ios</mat-icon>
+                           more &nbsp; <mat-icon class="font-size-10" (click)="moreChannel(pageNum)">arrow_drop_down</mat-icon>
                         </span>
-                        <span class=" nav-link-title text-center"
-                              aria-label="Compose"
-                        >
-                            {{pageNum}} &nbsp; / &nbsp; {{totalNum}}
-                        </span>
-                        <span class=" nav-link-title text-right"
-                              aria-label="Compose">
-                            <mat-icon class="font-size-10" (click)="nextPage(pageNum)">arrow_forward_ios</mat-icon>
-                        </span>
+                        <!--<span class=" nav-link-title text-center"-->
+                              <!--aria-label="Compose"-->
+                        <!--&gt;-->
+                            <!--{{pageNum}} &nbsp; / &nbsp; {{totalNum}}-->
+                        <!--</span>-->
+                        <!--<span class=" nav-link-title text-right"-->
+                              <!--aria-label="Compose">-->
+                            <!--<mat-icon class="font-size-10" (click)="nextPage(pageNum)">arrow_forward_ios</mat-icon>-->
+                        <!--</span>-->
                     </a>
                 </div>
             </div>
@@ -31,11 +31,11 @@
         <div class="nav nav-group pl-3">
             <div class="group-items fuse-navy-700">
                 <div class="nav-item">
-                    <a class="nav-link">
+                    <a class="nav-link text-center">
                         <span class=" nav-link-title"
                               (click)="addChannel()"
                               aria-label="Compose"
-                        >{{'CHANNEL.CREATE' | translate}}</span>
+                        >+ &nbsp; {{'CHANNEL.CREATE' | translate}}</span>
                     </a>
                 </div>
             </div>

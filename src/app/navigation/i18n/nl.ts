@@ -5,7 +5,7 @@ export const locale = {
             'TITLE': '366 Kantoor'
         },
         'CHANNEL': {
-            'CREATE': '+ Kanaal maken',
+            'CREATE': 'Kanaal maken',
             'ADD': 'Kanaal toevoegen',
             'SUBSCRIBE': 'Abonneer op kanaal',
             'EDIT': 'Kanaal bewerken',

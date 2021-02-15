@@ -5,7 +5,7 @@ export const locale = {
             'TITLE': '366 Office'
         },
         'CHANNEL': {
-            'CREATE': '+ Create Channel',
+            'CREATE': 'Create Channel',
             'ADD': 'Add Channel',
             'SUBSCRIBE': 'Subscribe Channel',
             'EDIT': 'Edit Channel',

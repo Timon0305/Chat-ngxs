@@ -159,16 +159,7 @@ export class FuseNavigationComponent implements OnInit {
         this.store.dispatch(new AddNewChannel(newChannel))
     };
 
-    prePage = (pNum) => {
-        if (pNum === 1) {
-            return;
-        } else {
-            let pageNum = --this.pageNum;
-            this.store.dispatch(new FetchPageChannel(pageNum))
-        }
-    };
-
-    nextPage = (pNum) => {
+    moreChannel = (pNum) => {
         if (pNum === this.totalNum) {
             return;
         } else {
