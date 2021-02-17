@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterViewInit, ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
@@ -48,11 +48,14 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
     @ViewChild('replyForm')
     replyForm: NgForm;
+    compId: string;
+    myMessageNum: number;
 
     private _unsubscribeAll: Subject<any>;
 
     constructor(
         private store: Store,
+        private def: ChangeDetectorRef,
     ) {
         this._unsubscribeAll = new Subject();
     }
@@ -71,6 +74,15 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
                     this.selectedChat = chatData;
                     this.readyToReply();
                 }
+                let data = [];
+                for (let item in chatData) {
+                    if (chatData[item].system.userId !== localStorage.getItem('userId')) {
+                        this.compId = chatData[item].system.userId;
+                    }
+                    data.push(chatData[item])
+                }
+                this.myMessageNum = data.length - 1;
+                this.def.detectChanges();
             });
     }
 

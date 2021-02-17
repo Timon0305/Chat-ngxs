@@ -33,6 +33,7 @@ export const locale = {
             'PROFILE': 'Mijn profiel',
             'INBOX': 'Postvak IN',
             'LOGOUT': 'Uitloggen',
+            'MORE' : 'meer',
         }
     }
 };

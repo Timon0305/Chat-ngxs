@@ -33,6 +33,7 @@ export const locale = {
             'PROFILE': 'My Profile',
             'INBOX': 'Inbox',
             'LOGOUT': 'Logout',
+            'MORE' : 'more',
         }
     }
 };

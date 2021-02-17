@@ -34,14 +34,14 @@
                             'me': message.system.userId === user,
                             'contact': message.system.userId !== user
                             }"
-            >
+            [style]="{}">
                 <img *ngIf="message.system.userId !== user"
                      src="assets/images/avatars/profile.jpg"
                      class="avatar margin-top-12">
                 <div class="me-text">
                     <div style="display: flex; justify-content: flex-start">
                         <div class="time black-text pr-5 text-16 ml-4 sender">
-                            {{message.system.userId === user ? '' : message.system.userId.split('-')[0] }}
+                            {{message.system.userId === user ? '' : message.system.userId.substring(0,2) }}
                             <div class="time secondary-text message-time">{{message.system.updatedAt | date:'short'}}</div>
                         </div> &nbsp;
                     </div>
@@ -50,8 +50,8 @@
                         <div class="message">{{message.data.text}}</div>
                     </div>
                 </div>
-                <div class="text-right full-width-100 pr-10" *ngIf="message.length">
-                    <span class="chatting-client">{{message.system.userId.substring(0,2)}}</span>
+                <div class="text-right full-width-100 pr-10" *ngIf="message.system.userId===user">
+                    <span class="chatting-client" *ngIf="i === myMessageNum">{{compId.substring(0,2)}}</span>
                 </div>
             </div>
 
