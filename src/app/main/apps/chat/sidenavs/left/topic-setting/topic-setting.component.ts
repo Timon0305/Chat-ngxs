@@ -3,6 +3,9 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {fuseAnimations} from "../../../../../../../@fuse/animations";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {TopicModel} from "../../../../../../store/topic/topic.model";
+import {Select} from "@ngxs/store";
+import {TopicState} from "../../../../../../store/topic/topic.state";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-topic-setting',
@@ -13,9 +16,11 @@ import {TopicModel} from "../../../../../../store/topic/topic.model";
 })
 export class TopicSettingComponent implements OnInit {
 
+    @Select(TopicState.getTopicSetting) topicSetting: Observable<Boolean>;
     showExtraToFields: boolean;
     settingForm: FormGroup;
     topic: TopicModel;
+    _isSetting: Boolean = false;
     constructor(
       public matDialogRef: MatDialogRef<TopicSettingComponent>,
       private def: ChangeDetectorRef,
@@ -27,7 +32,12 @@ export class TopicSettingComponent implements OnInit {
       this.settingForm = this.createSettingForm()
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.topicSetting
+            .subscribe(res => {
+                this._isSetting = res
+            })
+    }
 
     createSettingForm(): FormGroup {
         return this._formBuilder.group({

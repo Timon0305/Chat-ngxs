@@ -8,6 +8,7 @@ export interface TopicStateModel {
     topicList: TopicModel[];
     page: number,
     totalPages: number,
+    isSetting: Boolean,
     selectedTopic: TopicModel,
 }
 @State<TopicStateModel>({
@@ -16,6 +17,7 @@ export interface TopicStateModel {
         topicList: [],
         page: null,
         totalPages: null,
+        isSetting: null,
         selectedTopic: null,
     }
 })
@@ -45,6 +47,11 @@ export class TopicState {
     @Selector()
     static getTopicTotalPage(state: TopicStateModel) {
         return state.totalPages
+    }
+
+    @Selector()
+    static getTopicSetting(state: TopicStateModel) {
+        return state.isSetting;
     }
 
     @Action(FetchTopic)
@@ -98,6 +105,7 @@ export class TopicState {
         let state = getState();
         setState({
             ...state,
+            isSetting: payload.user['settings']===null?false:payload.user['settings']['notify'],
             selectedTopic: payload,
         });
     }
@@ -136,10 +144,15 @@ export class TopicState {
 
     @Action(SetTopicNotification)
     setTopicNotification({getState, setState}: StateContext<TopicStateModel>, {payload}: SetTopicNotification) {
+        let state = getState();
         return new Promise((resolve, reject) => {
             this.topicService.setNotification(payload)
                 .subscribe(() => {
-                    resolve()
+                    resolve();
+                    setState({
+                        ...state,
+                        isSetting: payload.notify
+                    })
                 }, reject)
         })
     }

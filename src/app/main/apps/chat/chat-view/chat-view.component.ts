@@ -50,6 +50,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     replyForm: NgForm;
     compId: string;
     myMessageNum: number;
+    increaseNum : number = 0;
 
     private _unsubscribeAll: Subject<any>;
 
@@ -68,7 +69,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
             });
 
         this.getMessage
-            .subscribe(chatData => {
+            .subscribe(async chatData => {
                 if ( chatData )
                 {
                     this.selectedChat = chatData;
@@ -79,9 +80,10 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
                     if (chatData[item].system.userId !== localStorage.getItem('userId')) {
                         this.compId = chatData[item].system.userId;
                     }
-                    data.push(chatData[item])
+                    await data.push(chatData[item]);
                 }
                 this.myMessageNum = data.length - 1;
+                ++this.increaseNum;
                 this.def.detectChanges();
             });
     }

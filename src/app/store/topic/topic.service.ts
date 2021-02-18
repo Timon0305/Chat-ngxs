@@ -42,7 +42,7 @@ export class TopicService {
     setNotification(payload) {
         let topicId =  payload.topicId;
         let notify = payload.notify;
-        return this.http.post(domain + 'topics/' + topicId + 'settings',
+        return this.http.post(domain + 'topics/' + topicId + '/settings',
             {
                  notify: notify
             }, {
@@ -53,7 +53,7 @@ export class TopicService {
     setStatus(payload) {
         let topicId = payload.topicId;
         let status = payload.status ? '/inactive' : '/active';
-        return this.http.post(domain + 'topics/' + topicId + status,
+        return this.http.post(domain + 'topics/' + topicId + '/' + status,
             {},
             {
                 headers: this.token
