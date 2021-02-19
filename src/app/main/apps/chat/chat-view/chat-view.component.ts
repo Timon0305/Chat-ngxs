@@ -51,7 +51,6 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
     compId: string;
     myMessageNum: number;
     increaseNum : number = 0;
-    num: number = 1;
 
     private _unsubscribeAll: Subject<any>;
 
@@ -83,10 +82,9 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
                     }
                     await data.push(chatData[item]);
                 }
-                this.myMessageNum = data.length - this.num;
+                this.myMessageNum = data.length - this.increaseNum;
                 ++this.increaseNum;
                 this.def.detectChanges();
-                ++this.num;
             });
     }
 
