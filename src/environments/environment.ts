@@ -4,7 +4,8 @@
 
 export const environment = {
     production: false,
-    hmr       : false
+    hmr       : false,
+    websocketUrl: 'https://websocket-api.366dev.nl/private.v1',
 };
 
 /*

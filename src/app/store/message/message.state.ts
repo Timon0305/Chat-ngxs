@@ -3,6 +3,7 @@ import {State, Action, StateContext, Selector, Store} from '@ngxs/store';
 import {AddMessage, FetchMessage} from './message.actions';
 import {MessageModel} from './message.model';
 import {MessageService} from './message.service';
+import {environment} from "../../../environments/environment";
 
 export interface MessageStateModel {
     messageList: MessageModel[],
@@ -22,7 +23,9 @@ export class MessageState {
     constructor(
         private store: Store,
         private messageService: MessageService
-    ) {}
+    ) {
+
+    }
 
 
     @Selector()

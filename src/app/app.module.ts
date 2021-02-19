@@ -74,7 +74,8 @@ const appRoutes: Routes = [
         NgxsModule.forRoot([MessageState, TopicState, BrowseChannelState, TokenState, ChannelState], {
             developmentMode: !environment.production
         }),
-        NgxsLoggerPluginModule.forRoot()
+        NgxsLoggerPluginModule.forRoot(),
+
     ],
     bootstrap   : [
         AppComponent
