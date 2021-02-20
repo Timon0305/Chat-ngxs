@@ -26,6 +26,8 @@ import {TopicState} from './store/topic/topic.state';
 import {MessageState} from './store/message/message.state';
 import {BrowseChannelState} from "./store/browseChannel/browse.channel.state";
 import {TokenState} from "./store/token/token.state";
+import {SocketIoModule, SocketIoConfig} from "ngx-socket-io";
+const config: SocketIoConfig = {url : 'https://websocket-api.366dev.nl/private.v1', options: {}};
 
 const appRoutes: Routes = [
     {
@@ -76,6 +78,7 @@ const appRoutes: Routes = [
         }),
         NgxsLoggerPluginModule.forRoot(),
 
+        SocketIoModule.forRoot(config)
     ],
     bootstrap   : [
         AppComponent

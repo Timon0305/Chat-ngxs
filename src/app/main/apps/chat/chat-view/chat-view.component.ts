@@ -70,6 +70,7 @@ export class ChatViewComponent implements OnInit, OnDestroy, AfterViewInit
 
         this.getMessage
             .subscribe(async chatData => {
+                this.myMessageNum = 0;
                 if ( chatData )
                 {
                     this.selectedChat = chatData;

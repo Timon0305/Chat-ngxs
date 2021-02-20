@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import {State, Action, StateContext, Selector, Store} from '@ngxs/store';
-import {AddMessage, FetchMessage} from './message.actions';
+import {Socket} from 'ngx-socket-io';
+import {AddMessage, FetchMessage, MessageUpdate} from './message.actions';
 import {MessageModel} from './message.model';
 import {MessageService} from './message.service';
 import {environment} from "../../../environments/environment";
+import {map} from "rxjs/operators";
 
 export interface MessageStateModel {
     messageList: MessageModel[],
@@ -18,14 +20,49 @@ export interface MessageStateModel {
 })
 
 @Injectable()
-export class MessageState {
+export class MessageState  {
 
     constructor(
         private store: Store,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private socket: Socket
     ) {
+        this.socket.on('connect', () => {
+            console.log('connect to->>>>>>>>>>>>>>>>>>>>>>>>>>>: ')
+        });
 
+        this.socket.on('connect_error', (e) => {
+            console.log('error connecting web socket server', e);
+        });
+
+        this.socket.on('reconnect', (data) => {
+            console.log('reconnected!', data);
+        });
+
+        this.socket.emit('whoami', 'test123', (data) => {
+            console.log('who am i=>>>>>>', data)
+        });
+
+        this.socket.fromEvent('message.added').subscribe((item: any) => {
+            console.log('received changed', item);
+
+            const temp = Object.assign({}, item.new);
+            delete temp._id;
+            const message : MessageModel = Object.assign({}, temp);
+
+            this.store.dispatch(new MessageUpdate(message.id, message));
+        });
     }
+
+    getMessageUpdate = () => {
+        const event = 'core.message.projection.updated';
+        console.log('socket subscribe to :', event);
+        return this.socket.fromEvent(event)
+            .pipe(map((data) => {
+                console.log('DEBUG WS', data);
+                return data;
+            }))
+    };
 
 
     @Selector()
@@ -59,6 +96,7 @@ export class MessageState {
 
     @Action(AddMessage)
     addMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: AddMessage) {
+        this.socket.emit("message.added", payload);
         let topicId = payload.topicId;
         return new Promise((resolve, reject) => {
             this.messageService.addNewMessage(payload)

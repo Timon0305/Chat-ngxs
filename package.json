@@ -12,7 +12,8 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "bundle-report": "webpack-bundle-analyzer dist/stats.json"
+        "bundle-report": "webpack-bundle-analyzer dist/stats.json",
+        "postinstall": "ngcc"
     },
     "private": true,
     "dependencies": {
@@ -51,6 +52,7 @@
         "ng2-charts": "2.4.2",
         "ngx-color-picker": "10.1.0",
         "ngx-cookie-service": "10.1.1",
+        "ngx-socket-io": "3.2.0",
         "perfect-scrollbar": "1.5.0",
         "prismjs": "1.22.0",
         "rxjs": "6.6.3",
@@ -71,6 +73,7 @@
         "@types/node": "12.19.4",
         "@types/uuid": "8.3.0",
         "codelyzer": "6.0.1",
+        "https-proxy-agent": "5.0.0",
         "jasmine-core": "3.6.0",
         "jasmine-spec-reporter": "5.0.2",
         "karma": "5.1.1",
