@@ -30,6 +30,7 @@ export class MessageState  {
         this.socket.on('connect', () => {
             console.log('connect to->>>>>>>>>>>>>>>>>>>>>>>>>>>: ')
         });
+        console.log('reload~~~~~~~~~~~~~');
 
         this.socket.on('connect_error', (e) => {
             console.log('error connecting web socket server', e);

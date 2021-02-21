@@ -128,7 +128,6 @@ export class FuseMatSidenavTogglerDirective
     @HostListener('click')
     onClick(): void
     {
-        console.log('selected')
         this._fuseMatSidenavHelperService.getSidenav(this.fuseMatSidenavToggler).toggle();
     }
 }
