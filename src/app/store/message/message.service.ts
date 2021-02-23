@@ -15,7 +15,7 @@ export class MessageService {
     ) {}
 
     fetchMessage(topicId) {
-        return this.http.get<MessageModel[]>(domain + 'topics/' + topicId + '/messages',
+        return this.http.get<MessageModel[]>(domain + 'topics/' + topicId + '/messages?pageSize=100',
             {
                 headers: this.token
             })
