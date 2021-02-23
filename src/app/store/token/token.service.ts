@@ -11,10 +11,7 @@ export class TokenService implements OnInit {
     sUser: string;
     constructor() {}
 
-    ngOnInit(): void {
-
-        console.log('==================',this.fUser)
-    }
+    ngOnInit(): void {}
 
     changeToken(id) {
         let f_base64Url = this.token1.split('.')[1];

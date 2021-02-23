@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {State, Action, StateContext, Selector, Store} from '@ngxs/store';
+import {State, Action, StateContext, Selector, Store, NgxsOnInit} from '@ngxs/store';
 import {Socket} from 'ngx-socket-io';
 import {AddMessage, FetchMessage, MessageUpdate} from './message.actions';
 import {MessageModel} from './message.model';
@@ -20,7 +20,7 @@ export interface MessageStateModel {
 })
 
 @Injectable()
-export class MessageState  {
+export class MessageState implements NgxsOnInit {
 
     constructor(
         private store: Store,
@@ -30,7 +30,10 @@ export class MessageState  {
         this.socket.on('connect', () => {
             console.log('connect to->>>>>>>>>>>>>>>>>>>>>>>>>>>: ')
         });
-        console.log('reload~~~~~~~~~~~~~');
+
+        this.getEventListener().subscribe(() => {
+            console.log(123)
+        });
 
         this.socket.on('connect_error', (e) => {
             console.log('error connecting web socket server', e);
@@ -55,15 +58,9 @@ export class MessageState  {
         });
     }
 
-    getMessageUpdate = () => {
-        const event = 'core.message.projection.updated';
-        console.log('socket subscribe to :', event);
-        return this.socket.fromEvent(event)
-            .pipe(map((data) => {
-                console.log('DEBUG WS', data);
-                return data;
-            }))
-    };
+    ngxsOnInit() {
+
+    }
 
 
     @Selector()
@@ -97,7 +94,6 @@ export class MessageState  {
 
     @Action(AddMessage)
     addMessage({getState, setState}: StateContext<MessageStateModel>, {payload}: AddMessage) {
-        this.socket.emit("message.added", payload);
         let topicId = payload.topicId;
         return new Promise((resolve, reject) => {
             this.messageService.addNewMessage(payload)
@@ -106,5 +102,9 @@ export class MessageState  {
                     resolve();
                 }, reject)
         })
+    }
+
+    public getEventListener() {
+        return this.socket.fromEvent('notification');
     }
 }
